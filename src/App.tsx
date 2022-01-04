@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ErrorBoundary from "./components/ErrorBoundary";
+import Search from "./components/Search";
+import SelectNetworks from "./components/SelectNetwork";
+import { useCurrentChain } from "./contexts/ChainsContext";
 
-function App() {
+const App = () => {
+  const chain = useCurrentChain();
+  console.log(chain);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section>
+      <SelectNetworks />
+      <Search />
+      <ErrorBoundary>{<></>}</ErrorBoundary>
+    </section>
   );
-}
+};
 
 export default App;
