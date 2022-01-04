@@ -2,6 +2,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Search from "./components/Search";
 import SelectNetworks from "./components/SelectNetwork";
 import { useCurrentChain } from "./contexts/ChainsContext";
+import routes from "./routes";
 
 const App = () => {
   const chain = useCurrentChain();
@@ -11,7 +12,7 @@ const App = () => {
     <section>
       <SelectNetworks />
       <Search />
-      <ErrorBoundary>{<></>}</ErrorBoundary>
+      <ErrorBoundary>{routes}</ErrorBoundary>
     </section>
   );
 };

@@ -1,5 +1,5 @@
 /* ibc */
-type IBCWhitelist = Record<string, IBCTokenItem>;
+type IBCWhitelist = Record<string, Record<string, IBCTokenItem>>;
 
 interface IBCTokenInfoResponse {
   path: string;

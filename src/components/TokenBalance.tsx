@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { useBankBalance } from "../queries/bank";
 import { isIbcDenom } from "../scripts/utility";
+import IBCAmount from "./IBCAmount";
 import NativeAmount from "./NativeAmount";
 
 const TokenBalance = () => {
@@ -15,14 +16,14 @@ const TokenBalance = () => {
       <div>
         <h2>Coins</h2>
         {native?.map((coin) => (
-          <NativeAmount coin={coin} />
+          <NativeAmount coin={coin} key={coin.toString()} />
         ))}
       </div>
 
       <div>
         <h2>Tokens</h2>
-        {ibc?.map((coin) => (
-          <NativeAmount coin={coin} />
+        {ibc?.map((token) => (
+          <IBCAmount token={token} key={token.toString()} />
         ))}
       </div>
     </article>
