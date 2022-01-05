@@ -1,3 +1,4 @@
+import Delegations from "../components/Delegations";
 import TokenBalance from "../components/TokenBalance";
 
 const SmartContract = () => {
@@ -5,6 +6,7 @@ const SmartContract = () => {
     <section>
       SmartContract
       <TokenBalance />
+      <Delegations />
     </section>
   );
 };

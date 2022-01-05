@@ -1,3 +1,4 @@
+import Delegations from "../components/Delegations";
 import TokenBalance from "../components/TokenBalance";
 
 const Account = () => {
@@ -5,6 +6,7 @@ const Account = () => {
     <section>
       Account
       <TokenBalance />
+      <Delegations />
     </section>
   );
 };

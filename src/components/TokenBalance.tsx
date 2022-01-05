@@ -6,7 +6,7 @@ import NativeAmount from "./NativeAmount";
 
 const TokenBalance = () => {
   const { address = "" } = useParams();
-  const balance = useBankBalance(address);
+  const { data: balance } = useBankBalance(address);
   const native = balance?.filter((coin) => !isIbcDenom(coin.denom));
   const ibc = balance?.filter((coin) => isIbcDenom(coin.denom));
 
