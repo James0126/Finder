@@ -12,7 +12,7 @@ const TokenBalance = () => {
 
   return (
     <article>
-      {/* TODO: Card Component */}
+      {/* TODO: Card Component, Add Tokens*/}
       <div>
         <h2>Coins</h2>
         {native?.map((coin) => (

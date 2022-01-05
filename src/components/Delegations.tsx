@@ -1,30 +1,31 @@
 import { useParams } from "react-router";
-import { useStaking } from "../queries/validator";
+import { useStaking, useValidators } from "../queries/validator";
 import format from "../scripts/format";
+import { getFindMoniker } from "../scripts/utility";
 
 const Delegations = () => {
   const { address = "" } = useParams();
   const { data } = useStaking(address);
+  const { data: validators } = useValidators();
 
-  console.log(data);
-
-  if (!data) {
-    return <></>;
+  if (!data || !validators) {
+    return null;
   }
 
-  const [delegations, validators] = data;
+  const [delegations] = data;
 
-  return (
+  return delegations.length ? (
     <article>
       <h2>Delegations</h2>
       <div>
         {delegations?.map((data, key) => {
-          const validator = validators[key];
+          const { validator_address } = data;
+          const moniker = getFindMoniker(validators)(validator_address);
           const { denom, amount } = data.balance;
 
           return (
             <div key={key}>
-              <span>{validator.description.moniker}</span>
+              <span>{moniker}</span>
               <span>{` ${format.amount(amount.toString())} ${format.denom(
                 denom
               )}`}</span>
@@ -33,6 +34,8 @@ const Delegations = () => {
         })}
       </div>
     </article>
+  ) : (
+    <></>
   );
 };
 

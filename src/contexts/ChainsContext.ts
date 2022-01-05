@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { ASSET_URL } from "../scripts/utility";
+import { ASSET } from "../config/constants";
 import { createContext } from "./createContext";
 
 export const getChains = () =>
-  fetch(`${ASSET_URL}/chains.json`)
+  fetch(`${ASSET}/chains.json`)
     .then((res) => res.json())
     .then((data: Record<string, ChainOption>) => Object.values(data));
 

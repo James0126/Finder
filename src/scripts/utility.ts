@@ -1,6 +1,5 @@
+import { AccAddress, Validator } from "@terra-money/terra.js";
 import { isInteger } from "./math";
-
-export const ASSET_URL = "https://assets.terra.money";
 
 export function getEndpointByKeyword(keyword: string) {
   const key = keyword.toLowerCase();
@@ -19,3 +18,19 @@ export function getEndpointByKeyword(keyword: string) {
 }
 
 export const isIbcDenom = (string = "") => string.startsWith("ibc/");
+
+/* helpers */
+export const getFindValidator = (validators: Validator[]) => {
+  return (address: AccAddress) => {
+    const validator = validators.find((v) => v.operator_address === address);
+    if (!validator) throw new Error(`${address} is not a validator`);
+    return validator;
+  };
+};
+
+export const getFindMoniker = (validators: Validator[]) => {
+  return (address: AccAddress) => {
+    const validator = getFindValidator(validators)(address);
+    return validator.description.moniker;
+  };
+};

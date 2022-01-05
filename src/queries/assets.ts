@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { useQuery } from "react-query";
-import { ASSET_URL } from "../scripts/utility";
+import { ASSET } from "../config/constants";
 
-const config = { baseURL: ASSET_URL };
+const config = { baseURL: ASSET };
 
 export const useTerraAssets = <T>(path: string) =>
   useQuery<T, AxiosError>(["assets", path], async () => {
