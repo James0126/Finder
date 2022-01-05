@@ -34,9 +34,7 @@ const Delegations = () => {
         })}
       </div>
     </article>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export default Delegations;

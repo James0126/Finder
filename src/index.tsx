@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { RecoilRoot } from "recoil";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -15,14 +16,16 @@ const queryClient = new QueryClient({
 getChains().then((chains) => {
   ReactDOM.render(
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <ChainsProvider value={chains}>
-          <Routes>
-            <Route path="/*" element={<App />} />
-            <Route path=":network/*" element={<App />} />
-          </Routes>
-        </ChainsProvider>
-      </QueryClientProvider>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <ChainsProvider value={chains}>
+            <Routes>
+              <Route path="/*" element={<App />} />
+              <Route path=":network/*" element={<App />} />
+            </Routes>
+          </ChainsProvider>
+        </QueryClientProvider>
+      </RecoilRoot>
     </BrowserRouter>,
     document.getElementById("root")
   );

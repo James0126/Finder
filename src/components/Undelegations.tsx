@@ -26,9 +26,7 @@ const Undelegations = () => {
         );
       })}
     </article>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export default Undelegations;

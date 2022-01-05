@@ -26,8 +26,9 @@ export const Pagination = {
 
 export const useValidators = () => {
   const lcd = useLCDClient();
+  const { name } = useCurrentChain();
 
-  return useQuery(["vaidators"], async () => {
+  return useQuery([name, "vaidators"], async () => {
     // TODO: Pagination
     // Required when the number of results exceed LAZY_LIMIT
 
