@@ -51,18 +51,3 @@ export const setLocalSetting = <T>(key: string, value: T) => {
   const item = typeof value === "string" ? value : JSON.stringify(value);
   localStorage.setItem(key, item);
 };
-
-export const sortDenoms = (denoms: string[], currency = "") =>
-  denoms.sort(
-    (a, b) =>
-      compareIs("uluna")(a, b) ||
-      compareIs("uusd")(a, b) ||
-      compareIs(currency)(a, b) ||
-      compareIsDenomIBC(a, b)
-  );
-
-export const compareIsDenomIBC = (a: string, b: string) =>
-  Number(isIbcDenom(a)) - Number(isIbcDenom(b));
-
-export const compareIs = (k: string) => (a: string, b: string) =>
-  Number(b === k) - Number(a === k);

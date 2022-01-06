@@ -18,9 +18,7 @@ const IBCAmount = ({ token }: { token: Coin }) => {
       <img alt="denom" src={tokenInfo?.icon} width={"60px"} height={"60px"} />
       {`${value} ${tokenInfo?.symbol}`}
     </div>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export default IBCAmount;

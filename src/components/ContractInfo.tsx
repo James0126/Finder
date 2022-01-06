@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useContractInfo } from "../queries/contract";
+import { useContractInfo } from "../queries/address";
 import Dropdown from "./Dropdown";
 
 const ContractInfo = () => {

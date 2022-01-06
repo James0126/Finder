@@ -12,3 +12,9 @@ interface IBCTokenItem extends IBCTokenInfoResponse {
   name: string;
   icon: string;
 }
+
+/* native */
+interface CoinData {
+  amount: Amount;
+  denom: Denom;
+}

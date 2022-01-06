@@ -1,38 +1,30 @@
-import { useRecoilValue } from "recoil";
 import { Coin } from "@terra-money/terra.js";
 import { ASSET } from "../config/constants";
 import format from "../scripts/format";
-import { currencyState } from "../store/CurrencyStore";
+import { useCurrency } from "../store/CurrencyStore";
+import { useMemoizedCalcValue } from "../queries/oracle";
 
 const NativeAmount = ({ coin }: { coin: Coin }) => {
-  const { amount, denom } = coin;
-  const coinValue = format.amount(amount.toString());
-  const coinDenom = format.denom(denom);
-  const iconLink = `${ASSET}/icon/60/${coinDenom}.png`;
+  const amount = format.amount(coin.amount.toString());
+  const denom = format.denom(coin.denom);
+  const iconLink = `${ASSET}/icon/60/${denom}.png`;
 
-  const currnecy = useRecoilValue(currencyState);
+  const currnecy = useCurrency();
+  const calcCurrency = useMemoizedCalcValue(currnecy);
+  const value = calcCurrency(coin);
 
-  // const currnecyRender = () => {
-  //   if (!currnecy) {
-  //     return null;
-  //   }
-
-  //   const result = div(amount?.toString(), currnecy?.amount?.toString());
-
-  //   return (
-  //     currnecy.denom !== denom && (
-  //       <span>{`${format.denom(result?.toString())} ${format.denom(
-  //         currnecy.denom
-  //       )}`}</span>
-  //     )
-  //   );
-  // };
+  const currnecyRender = value && denom !== currnecy && (
+    <span>
+      {format.amount(value)} {format.denom(currnecy)}
+    </span>
+  );
 
   return (
     <div>
       <img alt="denom" src={iconLink} />
-      {`${coinValue} ${coinDenom}`}
+      {`${amount} ${denom}`}
       <br />
+      {currnecyRender}
     </div>
   );
 };

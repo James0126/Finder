@@ -1,21 +1,83 @@
+import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { path, uniqBy } from "ramda";
+import BigNumber from "bignumber.js";
+import {
+  DelegateValidator,
+  ValAddress,
+  Validator,
+} from "@terra-money/terra.js";
 /* TODO: Fix */
 import { BondStatus } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking";
 import { LAZY_LIMIT } from "../config/constants";
-import { useCurrentChain } from "../contexts/ChainsContext";
 import { useLCDClient } from "./lcdClient";
 
 /* For Validator page */
 
 export const useValidator = (address: string) => {
   const lcd = useLCDClient();
-  const { name } = useCurrentChain();
   return useQuery(
-    [name, "validator", address],
+    [lcd.config, "validator", address],
     async () => await lcd.staking.validator(address)
   );
 };
+
+export const useValidatorsVotingPower = () => {
+  const lcd = useLCDClient();
+  return useQuery([lcd.config, "validatorsVotingPower"], async () => {
+    //TODO: Iterator
+    const [v1] = await lcd.tendermint.validatorSet();
+    const [v2] = await lcd.tendermint.validatorSet(undefined, {
+      "pagination.offset": String(v1.length),
+    });
+
+    return [...v1, ...v2];
+  });
+};
+
+export const useVotingPowerRate = (address: ValAddress, pubKey: string) => {
+  const { data: validators, ...state } = useValidatorsVotingPower();
+
+  const calcRate = useMemo(() => {
+    if (!validators) return;
+    return getCalcVotingPowerRate(validators, pubKey);
+  }, [validators, pubKey]);
+
+  const data = useMemo(() => {
+    if (!calcRate) return;
+    return calcRate(address);
+  }, [address, calcRate]);
+
+  return { data, ...state };
+};
+
+//TODO: Fix voting power (station과 비교 했을 때 오차)
+export const getCalcVotingPowerRate = (
+  validators: DelegateValidator[],
+  pubKey: string
+) => {
+  const total = BigNumber.sum(
+    ...validators.map((validator) => validator.voting_power)
+  ).toNumber();
+
+  return (address: ValAddress) => {
+    const validator = validators.find(
+      (validator) => validator.pub_key.key === pubKey
+    );
+
+    if (!validator) return;
+    const { voting_power } = validator;
+    return voting_power ? Number(voting_power) / total : undefined;
+  };
+};
+
+export const calcSelfDelegation = (validator?: Validator) => {
+  if (!validator) return;
+  const { min_self_delegation: self, tokens } = validator;
+  return self ? Number(self) / Number(tokens) : undefined;
+};
+
+/* TODO: Uptime hook */
 
 /* For SmartContract or Account page */
 
@@ -26,9 +88,8 @@ export const Pagination = {
 
 export const useValidators = () => {
   const lcd = useLCDClient();
-  const { name } = useCurrentChain();
 
-  return useQuery([name, "vaidators"], async () => {
+  return useQuery([lcd.config, "vaidators"], async () => {
     // TODO: Pagination
     // Required when the number of results exceed LAZY_LIMIT
 
@@ -53,17 +114,15 @@ export const useValidators = () => {
 
 export const useStaking = (address: string) => {
   const lcd = useLCDClient();
-  const { name } = useCurrentChain();
   return useQuery(
-    [name, "staking", address],
+    [lcd.config, "staking", address],
     async () => await lcd.staking.delegations(address)
   );
 };
 
 export const useUnstaking = (address: string) => {
   const lcd = useLCDClient();
-  const { name } = useCurrentChain();
-  return useQuery([name, "unstaking", address], async () => {
+  return useQuery([lcd.config, "unstaking", address], async () => {
     const [undelegations] = await lcd.staking.unbondingDelegations(address);
     return undelegations;
   });
