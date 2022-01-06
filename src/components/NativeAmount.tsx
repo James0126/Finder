@@ -3,6 +3,7 @@ import { ASSET } from "../config/constants";
 import format from "../scripts/format";
 import { useCurrency } from "../store/CurrencyStore";
 import { useMemoizedCalcValue } from "../queries/oracle";
+import { useCurrentChain } from "../contexts/ChainsContext";
 
 const NativeAmount = ({ coin }: { coin: Coin }) => {
   const amount = format.amount(coin.amount.toString());
@@ -13,11 +14,14 @@ const NativeAmount = ({ coin }: { coin: Coin }) => {
   const calcCurrency = useMemoizedCalcValue(currnecy);
   const value = calcCurrency(coin);
 
-  const currnecyRender = value && denom !== currnecy && (
-    <span>
-      {format.amount(value)} {format.denom(currnecy)}
-    </span>
-  );
+  const { name } = useCurrentChain();
+  const currnecyRender = value &&
+    denom !== currnecy &&
+    name !== "localterra" && (
+      <span>
+        {format.amount(value)} {format.denom(currnecy)}
+      </span>
+    );
 
   return (
     <div>

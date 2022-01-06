@@ -1,9 +1,10 @@
 import { useMemo } from "react";
-import { Validator } from "@terra-money/terra.js";
+import { AccAddress, Validator } from "@terra-money/terra.js";
 import { readPercent } from "@terra.kitchen/utils";
 import { useUptime } from "../queries/oracle";
 import { calcSelfDelegation, useVotingPowerRate } from "../queries/validator";
 import { toNow } from "../scripts/date";
+import FinderLink from "./FinderLink";
 
 const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   const {
@@ -63,6 +64,19 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
     [rate, max_rate, max_change_rate, update_time]
   );
 
+  const account = AccAddress.fromValAddress(operator_address);
+  const address = [
+    {
+      title: "Account",
+      content: (
+        <FinderLink q="address" v={account}>
+          {account}
+        </FinderLink>
+      ),
+    },
+    { title: "Validator", content: <span>{operator_address}</span> },
+  ];
+
   return (
     <div>
       <h2>{moniker}</h2>
@@ -76,6 +90,13 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
         </div>
       ))}
       {commissions.map(({ title, content }, key) => (
+        <div key={key}>
+          <span>
+            {title}: {content}
+          </span>
+        </div>
+      ))}
+      {address.map(({ title, content }, key) => (
         <div key={key}>
           <span>
             {title}: {content}
