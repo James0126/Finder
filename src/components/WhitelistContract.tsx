@@ -1,10 +1,10 @@
 import { useParams } from "react-router";
-import { useCW20Contracts, useNFTContracts } from "../queries/assets";
+import { useCW20Contracts, useCW721Contracts } from "../queries/assets";
 
 const WhitelistContract = () => {
   const { address = "" } = useParams();
   const cw20Contracts = useCW20Contracts();
-  const cw721Contracts = useNFTContracts();
+  const cw721Contracts = useCW721Contracts();
 
   const cw20 = cw20Contracts?.[address];
   const cw721 = cw721Contracts?.[address];

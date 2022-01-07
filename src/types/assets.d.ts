@@ -13,9 +13,9 @@ interface Contracts {
   icon: string;
 }
 
-type NFTWhitelist = Record<string, Record<string, NFTContracts>>;
+type CW721Whitelist = Record<string, Record<string, NFTContracts>>;
 
-interface NFTContracts {
+interface CW721Contracts {
   name: string;
   icon: string;
   contract: string;

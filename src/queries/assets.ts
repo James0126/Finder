@@ -17,8 +17,8 @@ export const useCW20Contracts = () => {
   return data?.[name];
 };
 
-export const useNFTContracts = () => {
+export const useCW721Contracts = () => {
   const { name } = useCurrentChain();
-  const { data } = useTerraAssets<NFTWhitelist>("/cw721/contracts.json");
+  const { data } = useTerraAssets<CW721Whitelist>("/cw721/contracts.json");
   return data?.[name];
 };
