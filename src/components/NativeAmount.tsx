@@ -1,9 +1,9 @@
 import { Coin } from "@terra-money/terra.js";
 import { ASSET } from "../config/constants";
 import format from "../scripts/format";
-import { useCurrency } from "../store/currencyStore";
+import { useCurrency } from "../store/Currency";
 import { useMemoizedCalcValue } from "../queries/oracle";
-import { useCurrentChain } from "../contexts/chainsContext";
+import { useCurrentChain } from "../contexts/ChainsContext";
 import Amount from "./Amount";
 
 //TODO: Sort native coins

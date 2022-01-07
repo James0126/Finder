@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useCurrentChain } from "../contexts/chainsContext";
+import { useCurrentChain } from "../contexts/ChainsContext";
 
 type Props = {
   q: string;

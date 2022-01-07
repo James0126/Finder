@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useChains, useCurrentChain } from "../contexts/chainsContext";
+import { useChains, useCurrentChain } from "../contexts/ChainsContext";
 
 const SelectNetworks = () => {
   const chains = useChains();

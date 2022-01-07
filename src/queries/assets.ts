@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { useQuery } from "react-query";
 import { ASSET } from "../config/constants";
-import { useCurrentChain } from "../contexts/chainsContext";
+import { useCurrentChain } from "../contexts/ChainsContext";
 
 const config = { baseURL: ASSET };
 

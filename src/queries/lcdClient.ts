@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { LCDClient } from "@terra-money/terra.js";
-import { useCurrentChain } from "../contexts/chainsContext";
+import { useCurrentChain } from "../contexts/ChainsContext";
 
 export const useLCDClient = () => {
   const network = useCurrentChain();

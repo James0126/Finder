@@ -1,5 +1,5 @@
 import { useActiveDenoms } from "../queries/oracle";
-import { useCurrencyState } from "../store/currencyStore";
+import { useCurrencyState } from "../store/Currency";
 
 const SelectCurrency = () => {
   const { data } = useActiveDenoms();

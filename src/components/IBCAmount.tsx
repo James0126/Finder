@@ -1,5 +1,5 @@
 import { Coin } from "@terra-money/terra.js";
-import { useCurrentChain } from "../contexts/chainsContext";
+import { useCurrentChain } from "../contexts/ChainsContext";
 import { useTerraAssets } from "../queries/assets";
 import format from "../scripts/format";
 import Amount from "./Amount";
