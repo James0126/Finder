@@ -1,12 +1,10 @@
-import { useParams } from "react-router";
 import { useBankBalance } from "../queries/bank";
 import { isIbcDenom } from "../scripts/coin";
 import Card from "./Card";
 import IBCAmount from "./IBCAmount";
 import NativeAmount from "./NativeAmount";
 
-const TokenBalance = () => {
-  const { address = "" } = useParams();
+const TokenBalance = ({ address }: { address: string }) => {
   const { data: balance } = useBankBalance(address);
   const native = balance?.filter((coin) => !isIbcDenom(coin.denom)).toArray();
   const ibc = balance?.filter((coin) => isIbcDenom(coin.denom)).toArray();

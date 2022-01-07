@@ -1,4 +1,3 @@
-import { useParams } from "react-router";
 import {
   getFindMoniker,
   useDelegations,
@@ -7,8 +6,7 @@ import {
 import format from "../scripts/format";
 import Card from "./Card";
 
-const Delegations = () => {
-  const { address = "" } = useParams();
+const Delegations = ({ address }: { address: string }) => {
   const { data } = useDelegations(address);
   const { data: validators } = useValidators();
 
@@ -20,6 +18,7 @@ const Delegations = () => {
 
   return delegations.length ? (
     <Card title={"Delegations"}>
+      {/* TODO: Table */}
       <div>
         {delegations?.map((data, key) => {
           const { validator_address } = data;

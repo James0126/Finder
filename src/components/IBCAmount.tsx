@@ -13,6 +13,8 @@ const IBCAmount = ({ token }: { token: Coin }) => {
   const value = format.amount(amount.toString());
   const whitelist = data?.[network];
   const tokenInfo = whitelist?.[hash];
+
+  //임시
   const iconSize = "60px";
 
   return tokenInfo ? (

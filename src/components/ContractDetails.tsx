@@ -1,24 +1,17 @@
-import { useParams } from "react-router";
-import { useContractInfo } from "../queries/address";
+import { ContractInfo } from "@terra-money/terra.js";
 import Dropdown from "./Dropdown";
 import FinderLink from "./FinderLink";
 import ModalWithButton from "./ModalWithButton";
 import Query from "./Query";
 
-const ContractInfo = () => {
-  const { address = "" } = useParams();
-  const { data } = useContractInfo(address);
-
-  if (!data) {
-    return null;
-  }
-
-  const { init_msg, admin, code_id } = data;
+const ContractDetails = ({ contractInfo }: { contractInfo: ContractInfo }) => {
+  const { init_msg, admin, code_id } = contractInfo;
   const msg = JSON.stringify(init_msg, undefined, 2);
 
   return (
     <article>
       <ModalWithButton buttonLabel={"Query"} modalContent={<Query />} />
+      {/* TODO: Table */}
       <div>code ID : {code_id}</div>
       {admin && (
         <div>
@@ -35,4 +28,4 @@ const ContractInfo = () => {
   );
 };
 
-export default ContractInfo;
+export default ContractDetails;

@@ -15,9 +15,9 @@ const Address = () => {
   }
 
   return contract.data ? (
-    <SmartContract />
+    <SmartContract contractInfo={contract.data} address={address} />
   ) : account.data ? (
-    <Account />
+    <Account address={address} />
   ) : (
     <NotFound />
   );

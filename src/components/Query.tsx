@@ -23,7 +23,6 @@ const ACE_PROPS = {
 };
 
 /* TODO: Refactor codes */
-
 const Query = () => {
   const lcd = useLCDClient();
   const { address = "" } = useParams();
@@ -63,7 +62,7 @@ const Query = () => {
       {backButton}
       <Card title={"Query Result"}>
         <h2>JSON Output</h2>
-        <section>{data}</section>
+        <pre>{data}</pre>
       </Card>
     </>
   ) : (

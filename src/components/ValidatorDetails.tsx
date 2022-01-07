@@ -76,6 +76,7 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
       <h2>{moniker}</h2>
       <span>{jailed ? "Jailed" : "Active"}</span>
       <p>{details}</p>
+      {/* TODO: Table */}
       {render(contents)}
       {render(commissions)}
       {render(address)}

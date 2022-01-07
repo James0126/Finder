@@ -5,6 +5,7 @@ type Props = {
   children: ReactNode;
 };
 
+//TODO: Design
 const Card = ({ title, children }: Props) => (
   <div>
     <h2>{title}</h2>
