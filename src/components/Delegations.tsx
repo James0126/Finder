@@ -19,21 +19,19 @@ const Delegations = ({ address }: { address: string }) => {
   return delegations.length ? (
     <Card title={"Delegations"}>
       {/* TODO: Table */}
-      <div>
-        {delegations?.map((data, key) => {
-          const { validator_address } = data;
-          const moniker = getFindMoniker(validators)(validator_address);
-          const { denom, amount } = data.balance;
+      {delegations?.map((data, key) => {
+        const { validator_address } = data;
+        const moniker = getFindMoniker(validators)(validator_address);
+        const { denom, amount } = data.balance;
 
-          return (
-            <div key={key}>
-              {`${moniker} ${format.amount(amount.toString())} ${format.denom(
-                denom
-              )}`}
-            </div>
-          );
-        })}
-      </div>
+        return (
+          <div key={key}>
+            {`${moniker} ${format.amount(amount.toString())} ${format.denom(
+              denom
+            )}`}
+          </div>
+        );
+      })}
     </Card>
   ) : null;
 };

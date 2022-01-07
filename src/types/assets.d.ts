@@ -5,9 +5,9 @@ interface Whitelist {
   icon?: string;
 }
 
-type CW20Whitelist = Record<string, Record<string, Contracts>>;
+type CW20Whitelist = Record<string, Record<string, CW20Contracts>>;
 
-interface Contracts {
+interface CW20Contracts {
   protocol: string;
   name: string;
   icon: string;

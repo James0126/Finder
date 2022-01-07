@@ -1,3 +1,5 @@
+import Image from "./Image";
+
 type Props = {
   iconUrl: string;
   amount: string;
@@ -8,14 +10,12 @@ type Props = {
 
 const Amount = (props: Props) => {
   const { iconUrl, amount, denom, hideIcon, iconSize } = props;
-  const size = { width: iconSize, height: iconSize };
-  const render = (
+  return (
     <div>
-      {!hideIcon && <img alt="icon" src={iconUrl} {...size} />}
+      {!hideIcon && <Image url={iconUrl} size={iconSize} />}
       {`${amount} ${denom}`}
     </div>
   );
-  return render;
 };
 
 export default Amount;

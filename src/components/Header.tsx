@@ -3,14 +3,12 @@ import SelectCurrency from "./SelectCurrency";
 import SelectNetworks from "./SelectNetwork";
 
 //TODO: Add language selector?
-const Header = () => {
-  return (
-    <div>
-      <SelectNetworks />
-      <SelectCurrency />
-      <Search />
-    </div>
-  );
-};
+const Header = () => (
+  <div>
+    <SelectNetworks />
+    <SelectCurrency />
+    <Search />
+  </div>
+);
 
 export default Header;

@@ -15,7 +15,7 @@ const SmartContract = ({ contractInfo, address }: Props) => {
   return (
     <section>
       <h1>SmartContract</h1>
-      <WhitelistContract />
+      <WhitelistContract address={address} />
       <ContractDetails contractInfo={contractInfo} />
       <TokenBalance address={address} />
       <Delegations address={address} />

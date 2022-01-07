@@ -1,6 +1,7 @@
 @import "../styles/mixins";
 @import "../styles/variables";
 
+//TODO: Refactor
 .overlay {
   @include flex();
 

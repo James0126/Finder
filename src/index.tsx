@@ -15,18 +15,18 @@ const queryClient = new QueryClient({
 
 getChains().then((chains) => {
   ReactDOM.render(
-    <BrowserRouter>
-      <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <ChainsProvider value={chains}>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <ChainsProvider value={chains}>
+          <BrowserRouter>
             <Routes>
               <Route path="/*" element={<App />} />
               <Route path=":network/*" element={<App />} />
             </Routes>
-          </ChainsProvider>
-        </QueryClientProvider>
-      </RecoilRoot>
-    </BrowserRouter>,
+          </BrowserRouter>
+        </ChainsProvider>
+      </QueryClientProvider>
+    </RecoilRoot>,
     document.getElementById("root")
   );
 });

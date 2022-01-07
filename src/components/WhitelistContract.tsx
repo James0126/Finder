@@ -1,24 +1,24 @@
-import { useParams } from "react-router";
 import { useCW20Contracts, useCW721Contracts } from "../queries/assets";
+import Image from "./Image";
 
-const WhitelistContract = () => {
-  const { address = "" } = useParams();
+const WhitelistContract = ({ address }: { address: string }) => {
   const cw20Contracts = useCW20Contracts();
   const cw721Contracts = useCW721Contracts();
 
   const cw20 = cw20Contracts?.[address];
   const cw721 = cw721Contracts?.[address];
 
-  const iconSize = { width: "60px", height: "60px" };
+  //임시
+  const iconSize = "60px";
 
   return cw20 ? (
     <div>
-      <img alt="icon" src={cw20.icon} {...iconSize} />
+      <Image url={cw20.icon} size={iconSize} />
       {cw20.protocol} | {cw20.name}
     </div>
   ) : cw721 ? (
     <div>
-      <img alt="icon" src={cw721.icon} {...iconSize} />
+      <Image url={cw721.icon} size={iconSize} />
       {cw721.name}
     </div>
   ) : null;
