@@ -85,11 +85,11 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
 
 export default ValidatorInfo;
 
-type Render = {
+type RenderData = {
   title: string;
   content: ReactNode;
 };
-const render = (data: Render[]) =>
+const render = (data: RenderData[]) =>
   data.map(({ title, content }, key) => (
     <div key={key}>
       {title}: {content}

@@ -1,10 +1,9 @@
 import { useActiveDenoms } from "../queries/oracle";
-import { useCurrency, useCurrencyState } from "../store/currencyStore";
+import { useCurrencyState } from "../store/currencyStore";
 
 const SelectCurrency = () => {
   const { data } = useActiveDenoms();
-  const [, setCurrency] = useCurrencyState();
-  const defaultDenom = useCurrency();
+  const [currency, setCurrency] = useCurrencyState();
 
   if (!data) {
     return null;
@@ -12,7 +11,7 @@ const SelectCurrency = () => {
 
   return (
     <select
-      value={defaultDenom.substr(1).toUpperCase()}
+      value={currency.substr(1).toUpperCase()}
       onChange={(e) => setCurrency(`u${e.target.value}`.toLowerCase())}
     >
       {data.map((denom, key) => {

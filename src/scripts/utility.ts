@@ -1,6 +1,6 @@
 import { isInteger } from "./math";
 
-export function getEndpointByKeyword(keyword: string) {
+export const getEndpointByKeyword = (keyword: string) => {
   const key = keyword.toLowerCase();
 
   if (isInteger(key)) {
@@ -14,4 +14,13 @@ export function getEndpointByKeyword(keyword: string) {
   } else {
     return `/notfound/${keyword}`;
   }
-}
+};
+
+export const isJson = (param: any) => {
+  try {
+    JSON.parse(param);
+    return true;
+  } catch {
+    return false;
+  }
+};

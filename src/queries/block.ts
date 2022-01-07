@@ -3,10 +3,8 @@ import { useLCDClient } from "./lcdClient";
 
 export const useBlock = (height?: number) => {
   const lcd = useLCDClient();
-  const { data } = useQuery(
-    [height, "block"],
+  return useQuery(
+    [height, "block", lcd.config],
     async () => await lcd.tendermint.blockInfo()
   );
-
-  return data;
 };

@@ -28,11 +28,9 @@ const Delegations = () => {
 
           return (
             <div key={key}>
-              <span>
-                {`${moniker} ${format.amount(amount.toString())} ${format.denom(
-                  denom
-                )}`}
-              </span>
+              {`${moniker} ${format.amount(amount.toString())} ${format.denom(
+                denom
+              )}`}
             </div>
           );
         })}

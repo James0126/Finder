@@ -14,7 +14,7 @@ const Dropdown = (props: Props) => {
 
   return (
     <>
-      {isOpen ? children : ""}
+      {isOpen ? children : null}
       {button}
     </>
   );
