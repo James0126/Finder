@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { useContractInfo } from "../queries/address";
 import Dropdown from "./Dropdown";
+import FinderLink from "./FinderLink";
 import ModalWithButton from "./ModalWithButton";
 import Query from "./Query";
 
@@ -19,7 +20,11 @@ const ContractInfo = () => {
     <article>
       <ModalWithButton buttonLabel={"Query"} modalContent={<Query />} />
       <div>code ID : {code_id}</div>
-      {admin && <div>admin : {admin}</div>}
+      {admin && (
+        <div>
+          admin : <FinderLink q="address">{admin}</FinderLink>
+        </div>
+      )}
       <div>
         init msg :
         <Dropdown>

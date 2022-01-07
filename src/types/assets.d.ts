@@ -5,11 +5,15 @@ interface Whitelist {
   icon?: string;
 }
 
+type CW20Whitelist = Record<string, Record<string, Contracts>>;
+
 interface Contracts {
   protocol: string;
   name: string;
   icon: string;
 }
+
+type NFTWhitelist = Record<string, Record<string, NFTContracts>>;
 
 interface NFTContracts {
   name: string;
