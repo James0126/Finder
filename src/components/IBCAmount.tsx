@@ -1,7 +1,8 @@
 import { Coin } from "@terra-money/terra.js";
-import { useCurrentChain } from "../contexts/ChainsContext";
+import { useCurrentChain } from "../contexts/chainsContext";
 import { useTerraAssets } from "../queries/assets";
 import format from "../scripts/format";
+import Amount from "./Amount";
 
 const IBCAmount = ({ token }: { token: Coin }) => {
   const { denom, amount } = token;
@@ -12,12 +13,15 @@ const IBCAmount = ({ token }: { token: Coin }) => {
   const value = format.amount(amount.toString());
   const whitelist = data?.[network];
   const tokenInfo = whitelist?.[hash];
+  const iconSize = "60px";
 
   return tokenInfo ? (
-    <div>
-      <img alt="denom" src={tokenInfo?.icon} width={"60px"} height={"60px"} />
-      {`${value} ${tokenInfo?.symbol}`}
-    </div>
+    <Amount
+      amount={value}
+      denom={tokenInfo.symbol}
+      iconUrl={tokenInfo.icon}
+      iconSize={iconSize}
+    />
   ) : null;
 };
 

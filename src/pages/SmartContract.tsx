@@ -1,6 +1,7 @@
 import ContractInfo from "../components/ContractInfo";
 import Delegations from "../components/Delegations";
 import TokenBalance from "../components/TokenBalance";
+import Transactions from "../components/Transactions";
 import Undelegations from "../components/Undelegations";
 
 const SmartContract = () => {
@@ -11,6 +12,7 @@ const SmartContract = () => {
       <TokenBalance />
       <Delegations />
       <Undelegations />
+      <Transactions />
     </section>
   );
 };

@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import { AccAddress, Validator } from "@terra-money/terra.js";
 import { readPercent } from "@terra.kitchen/utils";
 import { useUptime } from "../queries/oracle";
 import { calcSelfDelegation, useVotingPowerRate } from "../queries/validator";
 import { toNow } from "../scripts/date";
 import FinderLink from "./FinderLink";
+import Card from "./Card";
 
 const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   const {
@@ -42,69 +43,55 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
     ];
   }, [votingPower, validator, uptime]);
 
-  const commissions = useMemo(
-    () => [
-      {
-        title: "Current",
-        content: readPercent(Number(rate)),
-      },
-      {
-        title: "Max",
-        content: readPercent(Number(max_rate)),
-      },
-      {
-        title: "Max daily change",
-        content: readPercent(Number(max_change_rate)),
-      },
-      {
-        title: "Last changed",
-        content: toNow(new Date(update_time)),
-      },
-    ],
-    [rate, max_rate, max_change_rate, update_time]
-  );
+  const commissions = [
+    {
+      title: "Current",
+      content: readPercent(Number(rate)),
+    },
+    {
+      title: "Max",
+      content: readPercent(Number(max_rate)),
+    },
+    {
+      title: "Max daily change",
+      content: readPercent(Number(max_change_rate)),
+    },
+    {
+      title: "Last changed",
+      content: toNow(new Date(update_time)),
+    },
+  ];
 
   const account = AccAddress.fromValAddress(operator_address);
   const address = [
     {
       title: "Account",
-      content: (
-        <FinderLink q="address" v={account}>
-          {account}
-        </FinderLink>
-      ),
+      content: <FinderLink q="address">{account}</FinderLink>,
     },
     { title: "Validator", content: <span>{operator_address}</span> },
   ];
 
   return (
-    <div>
+    <Card>
       <h2>{moniker}</h2>
       <span>{jailed ? "Jailed" : "Active"}</span>
       <p>{details}</p>
-      {contents.map(({ title, content }, key) => (
-        <div key={key}>
-          <span>
-            {title}: {content}
-          </span>
-        </div>
-      ))}
-      {commissions.map(({ title, content }, key) => (
-        <div key={key}>
-          <span>
-            {title}: {content}
-          </span>
-        </div>
-      ))}
-      {address.map(({ title, content }, key) => (
-        <div key={key}>
-          <span>
-            {title}: {content}
-          </span>
-        </div>
-      ))}
-    </div>
+      {render(contents)}
+      {render(commissions)}
+      {render(address)}
+    </Card>
   );
 };
 
 export default ValidatorInfo;
+
+type Render = {
+  title: string;
+  content: ReactNode;
+};
+const render = (data: Render[]) =>
+  data.map(({ title, content }, key) => (
+    <div key={key}>
+      {title}: {content}
+    </div>
+  ));

@@ -1,11 +1,15 @@
 import { useParams } from "react-router";
-import { useStaking, useValidators } from "../queries/validator";
+import {
+  getFindMoniker,
+  useDelegations,
+  useValidators,
+} from "../queries/validator";
 import format from "../scripts/format";
-import { getFindMoniker } from "../scripts/utility";
+import Card from "./Card";
 
 const Delegations = () => {
   const { address = "" } = useParams();
-  const { data } = useStaking(address);
+  const { data } = useDelegations(address);
   const { data: validators } = useValidators();
 
   if (!data || !validators) {
@@ -15,8 +19,7 @@ const Delegations = () => {
   const [delegations] = data;
 
   return delegations.length ? (
-    <article>
-      <h2>Delegations</h2>
+    <Card title={"Delegations"}>
       <div>
         {delegations?.map((data, key) => {
           const { validator_address } = data;
@@ -25,15 +28,16 @@ const Delegations = () => {
 
           return (
             <div key={key}>
-              <span>{moniker}</span>
-              <span>{` ${format.amount(amount.toString())} ${format.denom(
-                denom
-              )}`}</span>
+              <span>
+                {`${moniker} ${format.amount(amount.toString())} ${format.denom(
+                  denom
+                )}`}
+              </span>
             </div>
           );
         })}
       </div>
-    </article>
+    </Card>
   ) : null;
 };
 

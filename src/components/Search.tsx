@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCurrentChain } from "../contexts/ChainsContext";
+import { useCurrentChain } from "../contexts/chainsContext";
 import { getEndpointByKeyword } from "../scripts/utility";
 
 type Props = {

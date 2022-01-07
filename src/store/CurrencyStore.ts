@@ -1,8 +1,8 @@
 import { atom, useRecoilState, useRecoilValue } from "recoil";
-import { getLocalSetting, setLocalSetting } from "../scripts/utility";
+import { getLocalSetting, setLocalSetting } from "../scripts/localStorage";
 
 export const currencyState = atom({
-  key: "ContractState",
+  key: "CurrencyState",
   default: getLocalSetting<string>("currency", "uusd"),
 });
 

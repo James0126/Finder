@@ -2,8 +2,8 @@ import { Coin, Denom, OracleParams } from "@terra-money/terra.js";
 import { useCallback, useMemo } from "react";
 import { useQuery } from "react-query";
 import { toPrice } from "../scripts/num";
-import { useCurrency } from "../store/CurrencyStore";
-import { getAmount, sortCoins } from "./coin";
+import { useCurrency } from "../store/currencyStore";
+import { getAmount, sortCoins } from "../scripts/coin";
 import { useLCDClient } from "./lcdClient";
 
 /* For Currency */

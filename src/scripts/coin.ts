@@ -1,6 +1,8 @@
 import { Coins, Denom } from "@terra-money/terra.js";
 import { isDenomIBC } from "@terra.kitchen/utils";
 
+export const isIbcDenom = (string = "") => string.startsWith("ibc/");
+
 /* coin */
 export const getAmount = (coins: Coins, denom: Denom, fallback = "0") => {
   return coins.get(denom)?.amount.toString() ?? fallback;

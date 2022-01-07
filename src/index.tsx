@@ -1,10 +1,10 @@
 import ReactDOM from "react-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "./App";
+import { getChains, ChainsProvider } from "./contexts/chainsContext";
 import reportWebVitals from "./reportWebVitals";
-import { getChains, ChainsProvider } from "./contexts/ChainsContext";
+import App from "./App";
 import "./index.css";
 
 const queryClient = new QueryClient({

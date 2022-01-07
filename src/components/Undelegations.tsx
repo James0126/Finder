@@ -1,20 +1,23 @@
 import { useParams } from "react-router";
-import { useUnstaking, useValidators } from "../queries/validator";
+import {
+  getFindMoniker,
+  useUndelegations,
+  useValidators,
+} from "../queries/validator";
 import format from "../scripts/format";
-import { getFindMoniker } from "../scripts/utility";
+import Card from "./Card";
 
 const Undelegations = () => {
   const { data: validators } = useValidators();
   const { address = "" } = useParams();
-  const { data } = useUnstaking(address);
+  const { data } = useUndelegations(address);
 
   if (!data || !validators) {
     return null;
   }
 
   return data.length ? (
-    <article>
-      <h2>Undelegations</h2>
+    <Card title={"Undelegations"}>
       {data.map((validator, key) => {
         const { entries, validator_address } = validator;
         const [entry] = entries;
@@ -25,7 +28,7 @@ const Undelegations = () => {
           <div key={key}>{`${moniker} ${format.amount(amount)} Luna`}</div>
         );
       })}
-    </article>
+    </Card>
   ) : null;
 };
 

@@ -1,8 +1,6 @@
 import ErrorBoundary from "./components/ErrorBoundary";
-import Search from "./components/Search";
-import SelectCurrency from "./components/SelectCurrency";
-import SelectNetworks from "./components/SelectNetwork";
-import { useCurrentChain } from "./contexts/ChainsContext";
+import Header from "./components/Header";
+import { useCurrentChain } from "./contexts/chainsContext";
 import routes from "./routes";
 
 const App = () => {
@@ -11,9 +9,7 @@ const App = () => {
 
   return (
     <section>
-      <SelectNetworks />
-      <SelectCurrency />
-      <Search />
+      <Header />
       <ErrorBoundary>{routes}</ErrorBoundary>
     </section>
   );

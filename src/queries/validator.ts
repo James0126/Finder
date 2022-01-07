@@ -3,17 +3,17 @@ import { useQuery } from "react-query";
 import { path, uniqBy } from "ramda";
 import BigNumber from "bignumber.js";
 import {
+  AccAddress,
   DelegateValidator,
   ValAddress,
   Validator,
 } from "@terra-money/terra.js";
-/* TODO: Fix */
+/* TODO: Fix terra.js */
 import { BondStatus } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking";
 import { LAZY_LIMIT } from "../config/constants";
 import { useLCDClient } from "./lcdClient";
 
 /* For Validator page */
-
 export const useValidator = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
@@ -51,7 +51,6 @@ export const useVotingPowerRate = (address: ValAddress, pubKey: string) => {
   return { data, ...state };
 };
 
-//TODO: Fix voting power (station과 비교 했을 때 오차)
 export const getCalcVotingPowerRate = (
   validators: DelegateValidator[],
   pubKey: string
@@ -76,8 +75,6 @@ export const calcSelfDelegation = (validator?: Validator) => {
   const { min_self_delegation: self, tokens } = validator;
   return self ? Number(self) / Number(tokens) : undefined;
 };
-
-/* TODO: Uptime hook */
 
 /* For SmartContract or Account page */
 
@@ -112,7 +109,7 @@ export const useValidators = () => {
   });
 };
 
-export const useStaking = (address: string) => {
+export const useDelegations = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
     [lcd.config, "staking", address],
@@ -120,10 +117,26 @@ export const useStaking = (address: string) => {
   );
 };
 
-export const useUnstaking = (address: string) => {
+export const useUndelegations = (address: string) => {
   const lcd = useLCDClient();
   return useQuery([lcd.config, "unstaking", address], async () => {
     const [undelegations] = await lcd.staking.unbondingDelegations(address);
     return undelegations;
   });
+};
+
+/* helpers */
+export const getFindValidator = (validators: Validator[]) => {
+  return (address: AccAddress) => {
+    const validator = validators.find((v) => v.operator_address === address);
+    if (!validator) throw new Error(`${address} is not a validator`);
+    return validator;
+  };
+};
+
+export const getFindMoniker = (validators: Validator[]) => {
+  return (address: AccAddress) => {
+    const validator = getFindValidator(validators)(address);
+    return validator.description.moniker;
+  };
 };

@@ -10,7 +10,7 @@ const Address = () => {
   const contract = useContractInfo(address);
   const account = useAccountInfo(address);
 
-  if (contract.status && account.status === "loading") {
+  if (contract.status === "loading" || account.status === "loading") {
     return <Loading />;
   }
 

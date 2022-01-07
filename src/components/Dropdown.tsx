@@ -8,15 +8,14 @@ type Props = {
 const Dropdown = (props: Props) => {
   const { children } = props;
   const [isOpen, setOpen] = useState<boolean>(false);
-
-  const action = (
+  const button = (
     <button onClick={() => setOpen(!isOpen)}>{isOpen ? "Hide" : "Show"}</button>
   );
 
   return (
     <>
       {isOpen ? children : ""}
-      {action}
+      {button}
     </>
   );
 };
