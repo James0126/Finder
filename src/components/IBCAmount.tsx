@@ -14,15 +14,12 @@ const IBCAmount = ({ token }: { token: Coin }) => {
   const whitelist = data?.[network];
   const tokenInfo = whitelist?.[hash];
 
-  //임시
-  const iconSize = "60px";
-
   return tokenInfo ? (
     <Amount
       amount={value}
       denom={tokenInfo.symbol}
       iconUrl={tokenInfo.icon}
-      iconSize={iconSize}
+      iconSize={60}
     />
   ) : null;
 };

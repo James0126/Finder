@@ -18,10 +18,7 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   const { commission_rates, update_time } = commission;
   const { max_change_rate, max_rate, rate } = commission_rates;
   const { moniker, details } = description;
-  const { data: votingPower } = useVotingPowerRate(
-    operator_address,
-    consensus_pubkey.key
-  );
+  const { data: votingPower } = useVotingPowerRate(consensus_pubkey.key);
   const { data: uptime } = useUptime(operator_address);
 
   const contents = useMemo(() => {

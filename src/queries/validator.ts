@@ -35,7 +35,7 @@ export const useValidatorsVotingPower = () => {
   });
 };
 
-export const useVotingPowerRate = (address: ValAddress, pubKey: string) => {
+export const useVotingPowerRate = (pubKey: string) => {
   const { data: validators, ...state } = useValidatorsVotingPower();
 
   const calcRate = useMemo(() => {
@@ -45,8 +45,8 @@ export const useVotingPowerRate = (address: ValAddress, pubKey: string) => {
 
   const data = useMemo(() => {
     if (!calcRate) return;
-    return calcRate(address);
-  }, [address, calcRate]);
+    return calcRate();
+  }, [calcRate]);
 
   return { data, ...state };
 };
@@ -59,7 +59,7 @@ export const getCalcVotingPowerRate = (
     ...validators.map((validator) => validator.voting_power)
   ).toNumber();
 
-  return (address: ValAddress) => {
+  return () => {
     const validator = validators.find(
       (validator) => validator.pub_key.key === pubKey
     );

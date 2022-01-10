@@ -8,17 +8,14 @@ const WhitelistContract = ({ address }: { address: string }) => {
   const cw20 = cw20Contracts?.[address];
   const cw721 = cw721Contracts?.[address];
 
-  //임시
-  const iconSize = "60px";
-
   return cw20 ? (
     <div>
-      <Image url={cw20.icon} size={iconSize} />
+      <Image url={cw20.icon} />
       {cw20.protocol} | {cw20.name}
     </div>
   ) : cw721 ? (
     <div>
-      <Image url={cw721.icon} size={iconSize} />
+      <Image url={cw721.icon} />
       {cw721.name}
     </div>
   ) : null;

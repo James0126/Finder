@@ -20,17 +20,12 @@ const Delegations = ({ address }: { address: string }) => {
     <Card title={"Delegations"}>
       {/* TODO: Table */}
       {delegations?.map((data, key) => {
-        const { validator_address } = data;
+        const { validator_address, balance } = data;
         const moniker = getFindMoniker(validators)(validator_address);
-        const { denom, amount } = data.balance;
+        const amount = format.amount(balance.amount.toString());
+        const denom = format.denom(balance.denom);
 
-        return (
-          <div key={key}>
-            {`${moniker} ${format.amount(amount.toString())} ${format.denom(
-              denom
-            )}`}
-          </div>
-        );
+        return <div key={key}>{`${moniker} ${amount} ${denom}`}</div>;
       })}
     </Card>
   ) : null;

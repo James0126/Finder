@@ -1,12 +1,12 @@
 type Props = {
-  size?: string;
+  size?: number;
   url: string;
 };
 
 const Image = (props: Props) => {
-  const { url } = props;
-  //임시
-  return <img width="60px" height="60px" alt="icon" src={url} />;
+  const { url, size = 60 } = props;
+  const imgSize = { width: `${size}px`, height: `${size}px` };
+  return <img {...imgSize} alt="icon" src={url} />;
 };
 
 export default Image;

@@ -4,7 +4,7 @@ type Props = {
   iconUrl: string;
   amount: string;
   denom: string;
-  iconSize?: string;
+  iconSize?: number;
   hideIcon?: boolean;
 };
 
