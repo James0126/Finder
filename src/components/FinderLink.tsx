@@ -31,7 +31,7 @@ const FinderLink: FC<Props> = forwardRef(
     const link = [network, path, value].join("/");
 
     return (
-      <Link {...attrs} to={link} ref={ref}>
+      <Link {...attrs} to={`/${link}`} ref={ref}>
         {short && typeof children === "string" ? truncate(children) : children}
       </Link>
     );
