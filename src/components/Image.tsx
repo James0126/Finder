@@ -4,9 +4,9 @@ type Props = {
 };
 
 const Image = (props: Props) => {
-  const { size, url } = props;
+  const { url } = props;
   //임시
-  return <img sizes={size || "60px"} alt="icon" src={url} />;
+  return <img width="60px" height="60px" alt="icon" src={url} />;
 };
 
 export default Image;
