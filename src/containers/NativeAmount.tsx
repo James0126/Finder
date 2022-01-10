@@ -1,10 +1,10 @@
 import { Coin } from "@terra-money/terra.js";
+import Amount from "../components/Amount";
 import { ASSET } from "../config/constants";
+import { useCurrentChain } from "../contexts/ChainsContext";
 import format from "../scripts/format";
 import { useCurrency } from "../store/Currency";
 import { useMemoizedCalcValue } from "../queries/oracle";
-import { useCurrentChain } from "../contexts/ChainsContext";
-import Amount from "./Amount";
 
 //TODO: Sort native coins
 const NativeAmount = ({ coin }: { coin: Coin }) => {

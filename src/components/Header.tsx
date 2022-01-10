@@ -1,14 +1,5 @@
-import Search from "./Search";
-import SelectCurrency from "./SelectCurrency";
-import SelectNetworks from "./SelectNetwork";
+import { ReactNode } from "react";
 
-//TODO: Add language selector?
-const Header = () => (
-  <div>
-    <SelectNetworks />
-    <SelectCurrency />
-    <Search />
-  </div>
-);
+const Header = ({ children }: { children: ReactNode }) => <div>{children}</div>;
 
 export default Header;

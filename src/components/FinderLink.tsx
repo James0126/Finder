@@ -1,20 +1,41 @@
+// Station component
+import { FC, ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { Link } from "react-router-dom";
-import { useCurrentChain } from "../contexts/ChainsContext";
+import { truncate } from "@terra.kitchen/utils";
 
-type Props = {
-  q: string;
-  v?: string;
-  children: string;
-};
+interface Props extends HTMLAttributes<HTMLAnchorElement> {
+  network: string;
+  value?: string;
 
-const FinderLink = ({ q, v, children }: Props) => {
-  const { name } = useCurrentChain();
+  /* path (default: address) */
+  block?: boolean;
+  tx?: boolean;
+  validator?: boolean;
 
-  return (
-    <Link to={`/${name}/${q}/${v || children}`} rel="noopener noreferrer">
-      {children}
-    </Link>
-  );
-};
+  /* customize */
+  short?: boolean;
+}
+
+const FinderLink: FC<Props> = forwardRef(
+  ({ children, short, ...rest }, ref: ForwardedRef<HTMLAnchorElement>) => {
+    const { block, tx, validator, network, ...attrs } = rest;
+    const path = tx
+      ? "tx"
+      : block
+      ? "block"
+      : validator
+      ? "validator"
+      : "address";
+
+    const value = rest.value ?? children;
+    const link = [network, path, value].join("/");
+
+    return (
+      <Link {...attrs} to={link} ref={ref}>
+        {short && typeof children === "string" ? truncate(children) : children}
+      </Link>
+    );
+  }
+);
 
 export default FinderLink;

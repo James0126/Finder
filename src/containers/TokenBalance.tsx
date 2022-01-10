@@ -1,6 +1,6 @@
 import { useBankBalance } from "../queries/bank";
 import { isIbcDenom } from "../scripts/coin";
-import Card from "./Card";
+import Card from "../components/Card";
 import IBCAmount from "./IBCAmount";
 import NativeAmount from "./NativeAmount";
 

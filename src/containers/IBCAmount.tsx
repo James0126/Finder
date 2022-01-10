@@ -2,7 +2,7 @@ import { Coin } from "@terra-money/terra.js";
 import { useCurrentChain } from "../contexts/ChainsContext";
 import { useTerraAssets } from "../queries/assets";
 import format from "../scripts/format";
-import Amount from "./Amount";
+import Amount from "../components/Amount";
 
 const IBCAmount = ({ token }: { token: Coin }) => {
   const { denom, amount } = token;

@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import ValidatorInfo from "../components/ValidatorDetails";
+import ValidatorInfo from "../containers/ValidatorDetails";
 import { useValidator } from "../queries/validator";
 import NotFound from "./NotFound";
 

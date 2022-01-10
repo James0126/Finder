@@ -1,10 +1,9 @@
+import axios from "axios";
+import { FC } from "react";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import { ASSET } from "../config/constants";
 import { createContext } from "./createContext";
-
-export const getChains = () =>
-  fetch(`https://assets.terra.money/chains.json`)
-    .then((res) => res.json())
-    .then((data: Record<string, ChainOption>) => Object.values(data));
 
 export const [useChains, ChainsProvider] =
   createContext<ChainOption[]>("Chains");
@@ -29,3 +28,17 @@ export const useCurrentChain = () => {
 
   return chain;
 };
+
+const InitChains: FC = ({ children }) => {
+  const { data } = useQuery("chains.json", async () => {
+    const { data } = await axios.get("chains.json", { baseURL: ASSET });
+    return data;
+  });
+
+  if (!data) return null;
+  return (
+    <ChainsProvider value={Object.values(data)}>{children}</ChainsProvider>
+  );
+};
+
+export default InitChains;

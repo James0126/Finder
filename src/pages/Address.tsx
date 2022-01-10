@@ -3,7 +3,7 @@ import Loading from "../components/Loading";
 import { useAccountInfo, useContractInfo } from "../queries/address";
 import Account from "./Account";
 import NotFound from "./NotFound";
-import SmartContract from "./SmartContract";
+import Contract from "./Contract";
 
 const Address = () => {
   const { address = "" } = useParams();
@@ -15,7 +15,7 @@ const Address = () => {
   }
 
   return contract.data ? (
-    <SmartContract contractInfo={contract.data} address={address} />
+    <Contract contractInfo={contract.data} address={address} />
   ) : account.data ? (
     <Account address={address} />
   ) : (

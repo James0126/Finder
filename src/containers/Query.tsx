@@ -7,7 +7,7 @@ import "ace-builds/src-noconflict/theme-github";
 import AceEditor from "react-ace";
 import { isJson } from "../scripts/utility";
 import { useLCDClient } from "../queries/lcdClient";
-import Card from "./Card";
+import Card from "../components/Card";
 
 const ACE_PROPS = {
   mode: "json",

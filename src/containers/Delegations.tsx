@@ -4,7 +4,7 @@ import {
   useValidators,
 } from "../queries/validator";
 import format from "../scripts/format";
-import Card from "./Card";
+import Card from "../components/Card";
 
 const Delegations = ({ address }: { address: string }) => {
   const { data } = useDelegations(address);

@@ -1,5 +1,5 @@
 import { useCW20Contracts, useCW721Contracts } from "../queries/assets";
-import Image from "./Image";
+import Image from "../components/Image";
 
 const WhitelistContract = ({ address }: { address: string }) => {
   const cw20Contracts = useCW20Contracts();

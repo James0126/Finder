@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 
 type Props = {
   children: ReactNode;
+  classname?: string;
 };
 
 const Dropdown = (props: Props) => {

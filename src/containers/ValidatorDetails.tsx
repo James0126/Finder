@@ -4,8 +4,9 @@ import { readPercent } from "@terra.kitchen/utils";
 import { useUptime } from "../queries/oracle";
 import { calcSelfDelegation, useVotingPowerRate } from "../queries/validator";
 import { toNow } from "../scripts/date";
-import FinderLink from "./FinderLink";
-import Card from "./Card";
+import FinderLink from "../components/FinderLink";
+import Card from "../components/Card";
+import { useCurrentChain } from "../contexts/ChainsContext";
 
 const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   const {
@@ -20,6 +21,7 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   const { moniker, details } = description;
   const { data: votingPower } = useVotingPowerRate(consensus_pubkey.key);
   const { data: uptime } = useUptime(operator_address);
+  const { name } = useCurrentChain();
 
   const contents = useMemo(() => {
     if (!votingPower) return [];
@@ -63,7 +65,7 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   const address = [
     {
       title: "Account",
-      content: <FinderLink q="address">{account}</FinderLink>,
+      content: <FinderLink network={name}>{account}</FinderLink>,
     },
     { title: "Validator", content: <span>{operator_address}</span> },
   ];
