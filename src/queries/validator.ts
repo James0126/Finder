@@ -11,27 +11,33 @@ import {
 import { BondStatus } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking";
 import { LAZY_LIMIT } from "../config/constants";
 import { useLCDClient } from "./lcdClient";
+import { RefetchOptions } from "./queries";
 
 /* For Validator page */
 export const useValidator = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
     [lcd.config, "validator", address],
-    async () => await lcd.staking.validator(address)
+    async () => await lcd.staking.validator(address),
+    { ...RefetchOptions.INFINITY }
   );
 };
 
 export const useValidatorsVotingPower = () => {
   const lcd = useLCDClient();
-  return useQuery([lcd.config, "validatorsVotingPower"], async () => {
-    //TODO: Iterator
-    const [v1] = await lcd.tendermint.validatorSet();
-    const [v2] = await lcd.tendermint.validatorSet(undefined, {
-      "pagination.offset": String(v1.length),
-    });
+  return useQuery(
+    [lcd.config, "validatorsVotingPower"],
+    async () => {
+      //TODO: Iterator
+      const [v1] = await lcd.tendermint.validatorSet();
+      const [v2] = await lcd.tendermint.validatorSet(undefined, {
+        "pagination.offset": String(v1.length),
+      });
 
-    return [...v1, ...v2];
-  });
+      return [...v1, ...v2];
+    },
+    { ...RefetchOptions.INFINITY }
+  );
 };
 
 export const useVotingPowerRate = (pubKey: string) => {
@@ -85,43 +91,52 @@ export const Pagination = {
 export const useValidators = () => {
   const lcd = useLCDClient();
 
-  return useQuery([lcd.config, "vaidators"], async () => {
-    // TODO: Pagination
-    // Required when the number of results exceed LAZY_LIMIT
+  return useQuery(
+    [lcd.config, "vaidators"],
+    async () => {
+      // TODO: Pagination
+      // Required when the number of results exceed LAZY_LIMIT
 
-    const [v1] = await lcd.staking.validators({
-      status: BondStatus[BondStatus.BOND_STATUS_UNBONDED],
-      ...Pagination,
-    });
+      const [v1] = await lcd.staking.validators({
+        status: BondStatus[BondStatus.BOND_STATUS_UNBONDED],
+        ...Pagination,
+      });
 
-    const [v2] = await lcd.staking.validators({
-      status: BondStatus[BondStatus.BOND_STATUS_UNBONDING],
-      ...Pagination,
-    });
+      const [v2] = await lcd.staking.validators({
+        status: BondStatus[BondStatus.BOND_STATUS_UNBONDING],
+        ...Pagination,
+      });
 
-    const [v3] = await lcd.staking.validators({
-      status: BondStatus[BondStatus.BOND_STATUS_BONDED],
-      ...Pagination,
-    });
+      const [v3] = await lcd.staking.validators({
+        status: BondStatus[BondStatus.BOND_STATUS_BONDED],
+        ...Pagination,
+      });
 
-    return uniqBy(path(["operator_address"]), [...v1, ...v2, ...v3]);
-  });
+      return uniqBy(path(["operator_address"]), [...v1, ...v2, ...v3]);
+    },
+    { ...RefetchOptions.INFINITY }
+  );
 };
 
 export const useDelegations = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
     [lcd.config, "staking", address],
-    async () => await lcd.staking.delegations(address)
+    async () => await lcd.staking.delegations(address),
+    { ...RefetchOptions.DEFAULT }
   );
 };
 
 export const useUndelegations = (address: string) => {
   const lcd = useLCDClient();
-  return useQuery([lcd.config, "unstaking", address], async () => {
-    const [undelegations] = await lcd.staking.unbondingDelegations(address);
-    return undelegations;
-  });
+  return useQuery(
+    [lcd.config, "unstaking", address],
+    async () => {
+      const [undelegations] = await lcd.staking.unbondingDelegations(address);
+      return undelegations;
+    },
+    { ...RefetchOptions.DEFAULT }
+  );
 };
 
 /* helpers */

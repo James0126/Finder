@@ -5,13 +5,15 @@ import { toPrice } from "../scripts/num";
 import { useCurrency } from "../store/Currency";
 import { getAmount, sortCoins } from "../scripts/coin";
 import { useLCDClient } from "./lcdClient";
+import { RefetchOptions } from "./queries";
 
 /* For Currency */
 export const useActiveDenoms = () => {
   const lcd = useLCDClient();
   return useQuery(
     ["activeDenoms"],
-    async () => await lcd.oracle.activeDenoms()
+    async () => await lcd.oracle.activeDenoms(),
+    { ...RefetchOptions.INFINITY }
   );
 };
 
@@ -52,22 +54,29 @@ export const useMemoizedCalcValue = (denom?: string) => {
 
 export const useExchangeRates = () => {
   const lcd = useLCDClient();
-  return useQuery(["exchangeRates", lcd.config], () =>
-    lcd.oracle.exchangeRates()
+  return useQuery(
+    ["exchangeRates", lcd.config],
+    () => lcd.oracle.exchangeRates(),
+    { ...RefetchOptions.INFINITY }
   );
 };
 
 /* For Validator Uptime */
 export const useOracleParams = () => {
   const lcd = useLCDClient();
-  return useQuery([lcd.config, "oracleParams"], () => lcd.oracle.parameters());
+  return useQuery(
+    [lcd.config, "oracleParams"],
+    async () => await lcd.oracle.parameters(),
+    { ...RefetchOptions.INFINITY }
+  );
 };
 
 export const useMisses = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
     [lcd.config, "misses", address],
-    async () => await lcd.oracle.misses(address)
+    async () => await lcd.oracle.misses(address),
+    { ...RefetchOptions.INFINITY }
   );
 };
 

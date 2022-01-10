@@ -3,6 +3,7 @@ import { FC } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ASSET } from "../config/constants";
+import { RefetchOptions } from "../queries/queries";
 import { createContext } from "./createContext";
 
 export const [useChains, ChainsProvider] =
@@ -31,7 +32,10 @@ export const useCurrentChain = () => {
 
 const InitChains: FC = ({ children }) => {
   const { data } = useQuery("chains.json", async () => {
-    const { data } = await axios.get("chains.json", { baseURL: ASSET });
+    const { data } = await axios.get("chains.json", {
+      baseURL: ASSET,
+      ...RefetchOptions.INFINITY,
+    });
     return data;
   });
 
