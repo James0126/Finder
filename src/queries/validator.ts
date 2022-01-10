@@ -5,7 +5,6 @@ import BigNumber from "bignumber.js";
 import {
   AccAddress,
   DelegateValidator,
-  ValAddress,
   Validator,
 } from "@terra-money/terra.js";
 /* TODO: Fix terra.js */
