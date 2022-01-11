@@ -3,18 +3,18 @@ import {
   getFindMoniker,
   useDelegations,
   useValidators,
-} from "../queries/validator";
-import Card from "../components/Card";
+} from "../../queries/validator";
+import Card from "../../components/Card";
 
 const Delegations = ({ address }: { address: string }) => {
-  const { data } = useDelegations(address);
+  const { data: delegation } = useDelegations(address);
   const { data: validators } = useValidators();
 
-  if (!data || !validators) {
+  if (!delegation || !validators) {
     return null;
   }
 
-  const [delegations] = data;
+  const [delegations] = delegation;
 
   return delegations.length ? (
     <Card title={"Delegations"}>

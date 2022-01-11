@@ -1,7 +1,7 @@
 import { Coins } from "@terra-money/terra.js";
 import { useQuery } from "react-query";
 import { useLCDClient } from "./lcdClient";
-import { RefetchOptions } from "./queries";
+import { RefetchOptions } from "./query";
 
 export const useBankBalance = (address: string) => {
   const lcd = useLCDClient();

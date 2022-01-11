@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { useLCDClient } from "./lcdClient";
-import { RefetchOptions } from "./queries";
+import { RefetchOptions } from "./query";
 
 export const useContractInfo = (address: string) => {
   const lcd = useLCDClient();

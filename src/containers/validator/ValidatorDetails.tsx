@@ -1,14 +1,17 @@
-import { ReactNode, useMemo } from "react";
+import { useMemo } from "react";
 import { AccAddress, Validator } from "@terra-money/terra.js";
 import { readPercent } from "@terra.kitchen/utils";
-import { useUptime } from "../queries/oracle";
-import { calcSelfDelegation, useVotingPowerRate } from "../queries/validator";
-import { toNow } from "../scripts/date";
-import FinderLink from "../components/FinderLink";
-import Card from "../components/Card";
-import { useNetworkName } from "../contexts/ChainsContext";
+import { useUptime } from "../../queries/oracle";
+import {
+  calcSelfDelegation,
+  useVotingPowerRate,
+} from "../../queries/validator";
+import { toNow } from "../../scripts/date";
+import FinderLink from "../../components/FinderLink";
+import Card from "../../components/Card";
+import { useNetworkName } from "../../contexts/ChainsContext";
 
-const ValidatorInfo = ({ validator }: { validator: Validator }) => {
+const ValidatorDetails = ({ validator }: { validator: Validator }) => {
   const { description, commission, operator_address, consensus_pubkey } =
     validator;
   const { commission_rates, update_time } = commission;
@@ -18,8 +21,8 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   const { data: uptime } = useUptime(operator_address);
   const network = useNetworkName();
 
-  const contents = useMemo(() => {
-    return [
+  const contents = useMemo(
+    () => [
       {
         title: "Voting power",
         content: readPercent(votingPower),
@@ -32,8 +35,9 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
         title: "Uptime  Last 10k blocks",
         content: readPercent(uptime),
       },
-    ];
-  }, [votingPower, validator, uptime]);
+    ],
+    [votingPower, validator, uptime]
+  );
 
   const commissions = [
     {
@@ -66,25 +70,19 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   return (
     <Card>
       <h2>{moniker}</h2>
+      {/* TODO: Add status */}
       <span>{"status"}</span>
       <p>{details}</p>
       {/* TODO: Table */}
-      {render(contents)}
-      {render(commissions)}
-      {render(address)}
+      {[...contents, ...commissions, ...address].map(
+        ({ title, content }, key) => (
+          <div key={key}>
+            {title}: {content}
+          </div>
+        )
+      )}
     </Card>
   );
 };
 
-export default ValidatorInfo;
-
-type RenderData = {
-  title: string;
-  content: ReactNode;
-};
-const render = (data: RenderData[]) =>
-  data.map(({ title, content }, key) => (
-    <div key={key}>
-      {title}: {content}
-    </div>
-  ));
+export default ValidatorDetails;

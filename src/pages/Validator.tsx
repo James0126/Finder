@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
-import ValidatorInfo from "../containers/ValidatorDetails";
 import { useValidator } from "../queries/validator";
+import ValidatorDetails from "../containers/validator/ValidatorDetails";
 import NotFound from "./NotFound";
 
 const Validator = () => {
@@ -14,7 +14,7 @@ const Validator = () => {
   return (
     <article>
       <h1>Validator Page</h1>
-      <ValidatorInfo validator={validator} />
+      <ValidatorDetails validator={validator} />
     </article>
   );
 };

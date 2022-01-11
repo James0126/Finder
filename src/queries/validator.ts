@@ -11,7 +11,7 @@ import {
 import { BondStatus } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking";
 import { LAZY_LIMIT } from "../config/constants";
 import { useLCDClient } from "./lcdClient";
-import { RefetchOptions } from "./queries";
+import { RefetchOptions } from "./query";
 
 /* For Validator page */
 export const useValidator = (address: string) => {

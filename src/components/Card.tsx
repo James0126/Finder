@@ -7,10 +7,10 @@ type Props = {
 
 //TODO: Design
 const Card = ({ title, children }: Props) => (
-  <div>
+  <section>
     <h2>{title}</h2>
     {children}
-  </div>
+  </section>
 );
 
 export default Card;

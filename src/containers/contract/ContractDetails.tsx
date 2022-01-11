@@ -1,8 +1,8 @@
 import { ContractInfo } from "@terra-money/terra.js";
-import Dropdown from "../components/Dropdown";
-import FinderLink from "../components/FinderLink";
-import ModalWithButton from "../components/ModalWithButton";
-import { useNetworkName } from "../contexts/ChainsContext";
+import Dropdown from "../../components/Dropdown";
+import FinderLink from "../../components/FinderLink";
+import ModalWithButton from "../../components/ModalWithButton";
+import { useNetworkName } from "../../contexts/ChainsContext";
 import Query from "./Query";
 
 const ContractDetails = ({ contractInfo }: { contractInfo: ContractInfo }) => {

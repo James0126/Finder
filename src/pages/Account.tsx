@@ -1,7 +1,7 @@
-import Delegations from "../containers/Delegations";
-import TokenBalance from "../containers/TokenBalance";
-import Transactions from "../containers/Transactions";
-import Undelegations from "../containers/Undelegations";
+import Delegations from "../containers/address/Delegations";
+import TokenBalance from "../containers/address/TokenBalance";
+import Transactions from "../containers/address/Transactions";
+import Undelegations from "../containers/address/Undelegations";
 
 const Account = ({ address }: { address: string }) => (
   <section>
@@ -9,7 +9,7 @@ const Account = ({ address }: { address: string }) => (
     <TokenBalance address={address} />
     <Delegations address={address} />
     <Undelegations address={address} />
-    <Transactions />
+    <Transactions address={address} />
   </section>
 );
 

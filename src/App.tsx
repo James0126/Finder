@@ -1,5 +1,5 @@
 import ErrorBoundary from "./components/ErrorBoundary";
-import Header from "./containers/Header";
+import Header from "./containers/global/Header";
 import routes from "./routes";
 
 const App = () => (

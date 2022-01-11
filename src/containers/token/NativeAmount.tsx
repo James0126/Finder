@@ -1,7 +1,7 @@
 import { Coin } from "@terra-money/terra.js";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
-import { ASSET } from "../config/constants";
-import Amount from "../components/Amount";
+import { ASSET } from "../../config/constants";
+import Amount from "../../components/Amount";
 import Currency from "./Currency";
 
 const NativeAmount = ({ coin }: { coin: Coin }) => {

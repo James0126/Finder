@@ -1,4 +1,4 @@
-const Transactions = () => {
+const Transactions = ({ address }: { address: string }) => {
   return <h2>Transactions</h2>;
 };
 

@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useNetworkName } from "../contexts/ChainsContext";
-import { getEndpointByKeyword } from "../scripts/utility";
+import { useNetworkName } from "../../contexts/ChainsContext";
+import { getEndpointByKeyword } from "../../scripts/utility";
 
 type Props = {
   className?: string;

@@ -8,6 +8,5 @@ export const useLCDClient = () => {
     () => new LCDClient({ ...network, URL: network.lcd }),
     [network]
   );
-
   return lcdClient;
 };

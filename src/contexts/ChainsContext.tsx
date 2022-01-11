@@ -3,7 +3,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ASSET } from "../config/constants";
-import { RefetchOptions } from "../queries/queries";
+import { RefetchOptions } from "../queries/query";
 import { createContext } from "./createContext";
 
 export const [useChains, ChainsProvider] =

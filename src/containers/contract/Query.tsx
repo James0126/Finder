@@ -5,9 +5,9 @@ import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";
 import AceEditor from "react-ace";
-import { isJson } from "../scripts/utility";
-import { useLCDClient } from "../queries/lcdClient";
-import Card from "../components/Card";
+import { isJson } from "../../scripts/utility";
+import { useLCDClient } from "../../queries/lcdClient";
+import Card from "../../components/Card";
 
 const ACE_PROPS = {
   mode: "json",
@@ -66,28 +66,26 @@ const Query = () => {
       </Card>
     </>
   ) : (
-    <>
-      <Card title={"Query"}>
-        <form onSubmit={submit}>
-          <h2>Contract Address</h2>
-          <input readOnly value={address} />
-          <h2>QueryMsg JSON</h2>
+    <Card title={"Query"}>
+      <form onSubmit={submit}>
+        <h2>Contract Address</h2>
+        <input readOnly value={address} />
+        <h2>QueryMsg JSON</h2>
 
-          <AceEditor
-            {...ACE_PROPS}
-            onChange={setQuery}
-            onLoad={(editor) => {
-              editor.renderer.setPadding(15);
-              editor.renderer.setScrollMargin(15, 15, 15, 15);
-            }}
-          />
+        <AceEditor
+          {...ACE_PROPS}
+          onChange={setQuery}
+          onLoad={(editor) => {
+            editor.renderer.setPadding(15);
+            editor.renderer.setScrollMargin(15, 15, 15, 15);
+          }}
+        />
 
-          <button disabled={!isJson(query)} type="submit">
-            Next
-          </button>
-        </form>
-      </Card>
-    </>
+        <button disabled={!isJson(query)} type="submit">
+          Next
+        </button>
+      </form>
+    </Card>
   );
 };
 

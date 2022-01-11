@@ -1,4 +1,4 @@
-import { Coins, Denom } from "@terra-money/terra.js";
+import { Coin, Coins, Denom } from "@terra-money/terra.js";
 import { isDenomIBC } from "@terra.kitchen/utils";
 
 /* coin */
@@ -10,7 +10,7 @@ export const getAmount = (coins: Coins, denom: Denom, fallback = "0") => {
 export const sortCoins = (
   coins: Coins,
   currency?: string,
-  sorter?: (a: CoinData, b: CoinData) => number
+  sorter?: (a: Coin.Data, b: Coin.Data) => number
 ) => {
   return sortByDenom(coins.toData(), currency, sorter);
 };

@@ -5,7 +5,7 @@ import { toPrice } from "../scripts/num";
 import { useCurrency } from "../store/Currency";
 import { getAmount, sortCoins } from "../scripts/coin";
 import { useLCDClient } from "./lcdClient";
-import { RefetchOptions } from "./queries";
+import { RefetchOptions } from "./query";
 
 /* For Currency */
 export const useActiveDenoms = () => {

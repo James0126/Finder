@@ -1,5 +1,5 @@
-import { useCW20Contracts, useCW721Contracts } from "../queries/assets";
-import Image from "../components/Image";
+import { useCW20Contracts, useCW721Contracts } from "../../queries/assets";
+import Image from "../../components/Image";
 
 const WhitelistContract = ({ address }: { address: string }) => {
   const cw20Contracts = useCW20Contracts();
@@ -16,7 +16,7 @@ const WhitelistContract = ({ address }: { address: string }) => {
   ) : cw721 ? (
     <div>
       <Image url={cw721.icon} />
-      {cw721.name}
+      {cw721.name} | {cw721.symbol}
     </div>
   ) : null;
 };

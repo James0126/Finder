@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { useQuery } from "react-query";
 import { ASSET } from "../config/constants";
 import { useNetworkName } from "../contexts/ChainsContext";
-import { RefetchOptions } from "./queries";
+import { RefetchOptions } from "./query";
 
 const config = { baseURL: ASSET };
 

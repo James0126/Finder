@@ -3,8 +3,8 @@ import {
   getFindMoniker,
   useUndelegations,
   useValidators,
-} from "../queries/validator";
-import Card from "../components/Card";
+} from "../../queries/validator";
+import Card from "../../components/Card";
 
 const Undelegations = ({ address }: { address: string }) => {
   const { data: validators } = useValidators();
