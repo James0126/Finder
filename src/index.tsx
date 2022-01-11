@@ -7,11 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "./index.css";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { refetchOnWindowFocus: false, retry: false },
-  },
-});
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <BrowserRouter>

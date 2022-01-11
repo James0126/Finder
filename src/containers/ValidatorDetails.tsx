@@ -6,26 +6,19 @@ import { calcSelfDelegation, useVotingPowerRate } from "../queries/validator";
 import { toNow } from "../scripts/date";
 import FinderLink from "../components/FinderLink";
 import Card from "../components/Card";
-import { useCurrentChain } from "../contexts/ChainsContext";
+import { useNetworkName } from "../contexts/ChainsContext";
 
 const ValidatorInfo = ({ validator }: { validator: Validator }) => {
-  const {
-    description,
-    jailed,
-    commission,
-    operator_address,
-    consensus_pubkey,
-  } = validator;
+  const { description, commission, operator_address, consensus_pubkey } =
+    validator;
   const { commission_rates, update_time } = commission;
   const { max_change_rate, max_rate, rate } = commission_rates;
   const { moniker, details } = description;
   const { data: votingPower } = useVotingPowerRate(consensus_pubkey.key);
   const { data: uptime } = useUptime(operator_address);
-  const { name } = useCurrentChain();
+  const network = useNetworkName();
 
   const contents = useMemo(() => {
-    if (!votingPower) return [];
-
     return [
       {
         title: "Voting power",
@@ -65,7 +58,7 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   const address = [
     {
       title: "Account",
-      content: <FinderLink network={name}>{account}</FinderLink>,
+      content: <FinderLink network={network}>{account}</FinderLink>,
     },
     { title: "Validator", content: <span>{operator_address}</span> },
   ];
@@ -73,7 +66,7 @@ const ValidatorInfo = ({ validator }: { validator: Validator }) => {
   return (
     <Card>
       <h2>{moniker}</h2>
-      <span>{jailed ? "Jailed" : "Active"}</span>
+      <span>{"status"}</span>
       <p>{details}</p>
       {/* TODO: Table */}
       {render(contents)}

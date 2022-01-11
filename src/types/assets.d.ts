@@ -1,21 +1,36 @@
-interface Whitelist {
+/* tokens */
+interface CW20Token {
   protocol: string;
   symbol: string;
   token: string;
   icon?: string;
 }
 
-type CW20Whitelist = Record<string, Record<string, CW20Contracts>>;
+type CW20Tokens = Record<string, Record<string, CW20Token>>;
 
-interface CW20Contracts {
+interface IBCToken {
+  denom: string;
+  path: string;
+  base_denom: string;
+  symbol: string;
+  name: string;
+  icon?: string;
+}
+
+type IBCTokens = Record<string, Record<string, IBCToken>>;
+
+/* contracts */
+type CW20Contracts = Record<string, Record<string, CW20Contract>>;
+
+interface CW20Contract {
   protocol: string;
   name: string;
   icon: string;
 }
 
-type CW721Whitelist = Record<string, Record<string, NFTContracts>>;
+type CW721Contracts = Record<string, Record<string, NFTContract>>;
 
-interface CW721Contracts {
+interface CW721Contract {
   name: string;
   icon: string;
   contract: string;

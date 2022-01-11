@@ -1,9 +1,9 @@
+import { readAmount } from "@terra.kitchen/utils";
 import {
   getFindMoniker,
   useUndelegations,
   useValidators,
 } from "../queries/validator";
-import format from "../scripts/format";
 import Card from "../components/Card";
 
 const Undelegations = ({ address }: { address: string }) => {
@@ -24,7 +24,9 @@ const Undelegations = ({ address }: { address: string }) => {
         const moniker = getFindMoniker(validators)(validator_address);
 
         return (
-          <div key={key}>{`${moniker} ${format.amount(amount)} Luna`}</div>
+          <div key={key}>{`${moniker} ${readAmount(amount, {
+            comma: true,
+          })} Luna`}</div>
         );
       })}
     </Card>

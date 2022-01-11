@@ -1,5 +1,5 @@
-import axios from "axios";
 import { FC } from "react";
+import axios from "axios";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ASSET } from "../config/constants";
@@ -28,6 +28,11 @@ export const useCurrentChain = () => {
   }
 
   return chain;
+};
+
+export const useNetworkName = () => {
+  const { name } = useCurrentChain();
+  return name;
 };
 
 const InitChains: FC = ({ children }) => {

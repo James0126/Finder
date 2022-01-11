@@ -1,4 +1,4 @@
-export const getLocalSetting = <T>(key: string, defaultValue: string): T => {
+export const getLocalSetting = <T>(key: string, defaultValue?: any): T => {
   const localItem = localStorage.getItem(key);
 
   if (!localItem) return defaultValue as unknown as T;
