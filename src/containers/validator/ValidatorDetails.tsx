@@ -10,7 +10,9 @@ import { toNow } from "../../scripts/date";
 import FinderLink from "../../components/FinderLink";
 import Card from "../../components/Card";
 import { useNetworkName } from "../../contexts/ChainsContext";
+import { Content } from "../../types/components";
 
+//Station 병합?
 const ValidatorDetails = ({ validator }: { validator: Validator }) => {
   const { description, commission, operator_address, consensus_pubkey } =
     validator;
@@ -58,14 +60,24 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
     },
   ];
 
-  const account = AccAddress.fromValAddress(operator_address);
-  const address = [
+  const addresses = [
     {
       title: "Account",
-      content: <FinderLink network={network}>{account}</FinderLink>,
+      content: (
+        <FinderLink network={network}>
+          {AccAddress.fromValAddress(operator_address)}
+        </FinderLink>
+      ),
     },
     { title: "Validator", content: <span>{operator_address}</span> },
   ];
+
+  const render = ({ title, content }: Content) => (
+    <article key={title}>
+      <h1>{title}</h1>
+      <p>{content}</p>
+    </article>
+  );
 
   return (
     <Card>
@@ -73,14 +85,9 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
       {/* TODO: Add status */}
       <span>{"status"}</span>
       <p>{details}</p>
-      {/* TODO: Table */}
-      {[...contents, ...commissions, ...address].map(
-        ({ title, content }, key) => (
-          <div key={key}>
-            {title}: {content}
-          </div>
-        )
-      )}
+      {contents.map(render)}
+      {commissions.map(render)}
+      {addresses.map(render)}
     </Card>
   );
 };

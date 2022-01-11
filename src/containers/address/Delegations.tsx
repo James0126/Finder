@@ -19,7 +19,7 @@ const Delegations = ({ address }: { address: string }) => {
   return delegations.length ? (
     <Card title={"Delegations"}>
       {/* TODO: Table */}
-      {delegations?.map((data, key) => {
+      {delegations.map((data, key) => {
         const { validator_address, balance } = data;
         const moniker = getFindMoniker(validators)(validator_address);
         const amount = readAmount(balance.amount.toString(), { comma: true });

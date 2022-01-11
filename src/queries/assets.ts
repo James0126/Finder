@@ -23,10 +23,20 @@ export const useCW20Contracts = () => {
   return data?.[network];
 };
 
+export const useCW20ContractInfo = (address: string) => {
+  const data = useCW20Contracts();
+  return data?.[address];
+};
+
 export const useCW721Contracts = () => {
   const network = useNetworkName();
   const { data } = useTerraAssets<CW721Contracts>("/cw721/contracts.json");
   return data?.[network];
+};
+
+export const useCW721ContractInfo = (address: string) => {
+  const data = useCW721Contracts();
+  return data?.[address];
 };
 
 /* tokens */
@@ -36,8 +46,20 @@ export const useCW20Tokens = () => {
   return data?.[network];
 };
 
+export const useCW20TokenInfo = (address: string) => {
+  const data = useCW20Tokens();
+  return data?.[address];
+};
+
 export const useIBCTokens = () => {
   const network = useNetworkName();
   const { data } = useTerraAssets<IBCTokens>("/ibc/tokens.json");
-  return data?.[network];
+  if (!data) throw new Error(`ibc whitelist is not defined`);
+  return data[network];
+};
+
+export const useIBCTokenInfo = (hash: string) => {
+  const data = useIBCTokens();
+  if (!data) throw new Error(`${hash} is not defined`);
+  return data[hash];
 };

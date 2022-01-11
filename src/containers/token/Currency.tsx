@@ -1,5 +1,6 @@
 import { Coin } from "@terra-money/terra.js";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
+import Amount from "../../components/Amount";
 import { useMemoizedCalcValue } from "../../queries/oracle";
 import { useCurrency } from "../../store/Currency";
 
@@ -10,9 +11,10 @@ const Currency = ({ coin }: { coin: Coin }) => {
   const amount = calcCurrency(coin);
 
   const render = amount && denom !== currnecy && (
-    <span>
-      {readAmount(amount, { comma: true })} {readDenom(currnecy)}
-    </span>
+    <Amount
+      denom={readDenom(currnecy)}
+      amount={readAmount(amount, { comma: true })}
+    />
   );
 
   return <>{render}</>;

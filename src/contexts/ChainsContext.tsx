@@ -44,7 +44,10 @@ const InitChains: FC = ({ children }) => {
     return data;
   });
 
-  if (!data) return null;
+  if (!data) {
+    return null;
+  }
+
   return (
     <ChainsProvider value={Object.values(data)}>{children}</ChainsProvider>
   );

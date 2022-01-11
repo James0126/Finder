@@ -4,7 +4,7 @@ import TokenBalance from "../containers/address/TokenBalance";
 import Transactions from "../containers/address/Transactions";
 import Undelegations from "../containers/address/Undelegations";
 import ContractDetails from "../containers/contract/ContractDetails";
-import WhitelistContract from "../containers/contract/WhitelistContract";
+import ContractTitle from "../containers/contract/ContractTitle";
 
 interface Props {
   contractInfo: ContractInfo;
@@ -14,7 +14,7 @@ interface Props {
 const Contract = ({ contractInfo, address }: Props) => (
   <section>
     <h1>Contract</h1>
-    <WhitelistContract address={address} />
+    <ContractTitle address={address} />
     <ContractDetails contractInfo={contractInfo} />
     <TokenBalance address={address} />
     <Delegations address={address} />

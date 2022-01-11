@@ -1,24 +1,19 @@
 import { Coin } from "@terra-money/terra.js";
 import { readAmount } from "@terra.kitchen/utils";
-import { useCurrentChain } from "../../contexts/ChainsContext";
-import { useTerraAssets } from "../../queries/assets";
+import { useIBCTokenInfo } from "../../queries/assets";
 import Amount from "../../components/Amount";
 
 const IBCAmount = ({ token }: { token: Coin }) => {
   const { denom, amount } = token;
-  const { name: network } = useCurrentChain();
-  const { data } = useTerraAssets<IBCTokens>("/ibc/tokens.json");
-
   const hash = denom.replace("ibc/", "");
   const value = readAmount(amount.toString(), { comma: true });
-  const whitelist = data?.[network];
-  const tokenInfo = whitelist?.[hash];
+  const ibc = useIBCTokenInfo(hash);
 
-  return tokenInfo ? (
+  return ibc ? (
     <Amount
       amount={value}
-      denom={tokenInfo.symbol}
-      iconUrl={tokenInfo.icon}
+      denom={ibc.symbol}
+      iconUrl={ibc.icon}
       iconSize={60}
     />
   ) : null;

@@ -8,16 +8,16 @@ import Card from "../../components/Card";
 
 const Undelegations = ({ address }: { address: string }) => {
   const { data: validators } = useValidators();
-  const { data } = useUndelegations(address);
+  const { data: undelegations } = useUndelegations(address);
 
-  if (!data || !validators) {
+  if (!undelegations || !validators) {
     return null;
   }
 
-  return data.length ? (
+  return undelegations.length ? (
     <Card title={"Undelegations"}>
       {/* TODO: Table */}
-      {data.map((validator, key) => {
+      {undelegations.map((validator, key) => {
         const { entries, validator_address } = validator;
         const [entry] = entries;
         const amount = entry.balance.toString();

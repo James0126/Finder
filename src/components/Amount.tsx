@@ -1,18 +1,17 @@
 import Image from "./Image";
 
 type Props = {
-  iconUrl: string;
   amount: string;
   denom: string;
+  iconUrl?: string;
   iconSize?: number;
-  hideIcon?: boolean;
 };
 
 const Amount = (props: Props) => {
-  const { iconUrl, amount, denom, hideIcon, iconSize } = props;
+  const { iconUrl, amount, denom, iconSize } = props;
   return (
     <div>
-      {!hideIcon && <Image url={iconUrl} size={iconSize} />}
+      {iconUrl && <Image url={iconUrl} size={iconSize} />}
       {`${amount} ${denom}`}
     </div>
   );
