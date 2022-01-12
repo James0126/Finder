@@ -3,6 +3,7 @@ import Address from "./pages/Address";
 import Block from "./pages/Block";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Transaction from "./pages/Transaction";
 import Validator from "./pages/Validator";
 
 export default (
@@ -11,6 +12,7 @@ export default (
     <Route path="blocks/:height" element={<Block />} />
     <Route path="block/:height" element={<Block />} />
     <Route path="txs/:height" element={<Block />} />
+    <Route path="tx/:hash" element={<Transaction />} />
     <Route path="validator/:address" element={<Validator />} />
     <Route path="address/:address" element={<Address />} />
     <Route path="account/:address" element={<Address />} />

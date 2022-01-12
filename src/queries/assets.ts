@@ -54,12 +54,12 @@ export const useCW20TokenInfo = (address: string) => {
 export const useIBCTokens = () => {
   const network = useNetworkName();
   const { data } = useTerraAssets<IBCTokens>("/ibc/tokens.json");
-  if (!data) throw new Error(`ibc whitelist is not defined`);
-  return data[network];
+  //if (!data) throw new Error(`ibc whitelist is not defined`);
+  return data?.[network];
 };
 
 export const useIBCTokenInfo = (hash: string) => {
   const data = useIBCTokens();
-  if (!data) throw new Error(`${hash} is not defined`);
-  return data[hash];
+  //if (!data) throw new Error(`${hash} is not defined`);
+  return data?.[hash];
 };

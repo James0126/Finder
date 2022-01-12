@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.5.7",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.7",
     "@terra-money/terra.js": "^3.0.2",
