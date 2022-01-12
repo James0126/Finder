@@ -43,10 +43,10 @@ const Transactions = ({ address }: { address: string }) => {
                 <td>{renderType}</td>
                 <td>{chainId}</td>
                 <td>
-                  {compactFee.amounts.map((data) => {
+                  {compactFee.amounts.map((data, key) => {
                     const amount = readAmount(data.amount);
                     const denom = readDenom(data.denom);
-                    return <Amount amount={amount} denom={denom} />;
+                    return <Amount amount={amount} denom={denom} key={key} />;
                   })}
                 </td>
               </tr>
