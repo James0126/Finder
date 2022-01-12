@@ -9,7 +9,6 @@ import {
 import { toNow } from "../../scripts/date";
 import FinderLink from "../../components/FinderLink";
 import Card from "../../components/Card";
-import { useNetworkName } from "../../contexts/ChainsContext";
 import { Content } from "../../types/components";
 
 //Station 병합?
@@ -21,7 +20,6 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
   const { moniker, details } = description;
   const { data: votingPower } = useVotingPowerRate(consensus_pubkey.key);
   const { data: uptime } = useUptime(operator_address);
-  const network = useNetworkName();
 
   const contents = useMemo(
     () => [
@@ -64,9 +62,7 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
     {
       title: "Account",
       content: (
-        <FinderLink network={network}>
-          {AccAddress.fromValAddress(operator_address)}
-        </FinderLink>
+        <FinderLink>{AccAddress.fromValAddress(operator_address)}</FinderLink>
       ),
     },
     { title: "Validator", content: <span>{operator_address}</span> },

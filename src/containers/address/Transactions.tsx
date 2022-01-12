@@ -1,12 +1,10 @@
-import { readAmount, readDenom } from "@terra.kitchen/utils";
-import Amount from "../../components/Amount";
 import FinderLink from "../../components/FinderLink";
-import { useNetworkName } from "../../contexts/ChainsContext";
 import { useTxsByAddress } from "../../queries/graphql";
+import Fee from "../transaction/Fee";
 
 const Transactions = ({ address }: { address: string }) => {
   const data = useTxsByAddress(address);
-  const network = useNetworkName();
+
   if (!data) {
     return null;
   }
@@ -28,11 +26,12 @@ const Transactions = ({ address }: { address: string }) => {
         <tbody>
           {txInfos.map((tx, key) => {
             const { chainId, compactFee, compactMessage, txhash } = tx;
-            const type = compactMessage[0].type;
+            const { amounts } = compactFee;
+            const { type } = compactMessage[0];
             const renderType = type.slice(type.indexOf("/") + 1);
 
             const hash = (
-              <FinderLink network={network} tx short>
+              <FinderLink tx short>
                 {txhash}
               </FinderLink>
             );
@@ -43,11 +42,7 @@ const Transactions = ({ address }: { address: string }) => {
                 <td>{renderType}</td>
                 <td>{chainId}</td>
                 <td>
-                  {compactFee.amounts.map((data, key) => {
-                    const amount = readAmount(data.amount);
-                    const denom = readDenom(data.denom);
-                    return <Amount amount={amount} denom={denom} key={key} />;
-                  })}
+                  <Fee coins={amounts} />
                 </td>
               </tr>
             );

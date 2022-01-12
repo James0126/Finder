@@ -2,9 +2,9 @@
 import { FC, ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 import { truncate } from "@terra.kitchen/utils";
+import { useNetworkName } from "../contexts/ChainsContext";
 
 interface Props extends HTMLAttributes<HTMLAnchorElement> {
-  network: string;
   value?: string;
 
   /* path (default: address) */
@@ -18,7 +18,8 @@ interface Props extends HTMLAttributes<HTMLAnchorElement> {
 
 const FinderLink: FC<Props> = forwardRef(
   ({ children, short, ...rest }, ref: ForwardedRef<HTMLAnchorElement>) => {
-    const { block, tx, validator, network, ...attrs } = rest;
+    const network = useNetworkName();
+    const { block, tx, validator, ...attrs } = rest;
     const path = tx
       ? "tx"
       : block

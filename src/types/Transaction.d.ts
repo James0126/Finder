@@ -1,9 +1,15 @@
 interface TxsByAddress {
   tx: {
     byAddress: {
-      txInfos: TxInfos[];
+      txInfos: TxInfo[];
       offset: string;
     };
+  };
+}
+
+interface TxByHash {
+  tx: {
+    byHash: TxInfo;
   };
 }
 
@@ -12,24 +18,41 @@ interface CoinData {
   denom: string;
 }
 
-interface TxInfos {
+interface TxInfo {
   chainId: string;
+  code: number;
   compactFee: {
     amounts: CoinData[];
   };
   compactMessage: Message[];
+  timestamp: string;
+  raw_log: string;
+  logs: TxLog[];
   txhash: string;
 }
 
-interface Message {
-  coins: CoinData[];
-  contract: string;
-  execute_msg: executeMsg;
-  sender: string;
+interface TxLog {
+  events: EventLog[];
+  log: string;
+  msg_index: number;
+}
+
+interface EventLog {
+  attributes: Attributes[];
   type: string;
 }
 
-interface executeMsg {
+interface Attributes {
+  key: string;
+  value: string;
+}
+
+interface Message {
+  type: string;
+  message: any;
+}
+
+interface ExecuteMsg {
   send: {
     amount: string;
     contract: string;

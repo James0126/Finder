@@ -2,42 +2,75 @@ import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
 import { useQuery } from "react-query";
 import { useNetworkName } from "../contexts/ChainsContext";
 
-const test = "https://finder.test-alpac4.com/graphql";
+const TEST_URL = "https://finder.test-alpac4.com/graphql";
 
-export const query = (address: string) => gql`
-  query {
-    tx {
-      byAddress(address: "${address}") {
-        offset
-        txInfos {
-          chainId
-          compactMessage {
-            type
-            message
-          }
-          compactFee {
-            amounts {
-              denom
-              amount
-            }
-          }
-          txhash
+const queryByAddress = (address: string) => `
+    byAddress(address: "${address}") {
+      offset
+      txInfos {
+        chainId
+        compactMessage {
+          type
+          message
         }
+        compactFee {
+          amounts {
+            denom
+            amount
+          }
+        }
+        txhash
       }
     }
-  }
 `;
 
-export const useTxsByAddress = (address: string): TxsByAddress => {
-  const network = useNetworkName();
-  const queries = query(address);
+const queryByHash = (hash: string) => `
+    byHash(txHash:"${hash}") {
+        chainId
+        code
+        compactMessage {
+          type
+          message
+        }
+        compactFee {
+          amounts {
+            denom
+            amount
+          }
+        }
+        txhash
+        logs {
+         events {
+          attributes {
+            key
+            value
+          }
+          type
+        }
+        log
+      }
+      timestamp
+      raw_log
+    }
+`;
 
+const setQuery = (queries: any) => gql` 
+    query {
+        tx {
+            ${queries}
+        }
+    }
+`;
+
+const useTxsQuery = (queryMsg: string) => {
+  const queries = setQuery(queryMsg);
+  const network = useNetworkName();
   const client = new ApolloClient({
-    uri: test,
+    uri: TEST_URL,
     cache: new InMemoryCache(),
   });
 
-  const { data } = useQuery([address, "txs", network], async () => {
+  const { data } = useQuery(["txs", network, queries], async () => {
     const { data } = await client.query({
       query: queries,
       errorPolicy: "ignore",
@@ -46,5 +79,17 @@ export const useTxsByAddress = (address: string): TxsByAddress => {
     return data;
   });
 
+  return data;
+};
+
+export const useTxsByAddress = (address: string): TxsByAddress => {
+  const queryMsg = queryByAddress(address);
+  const data = useTxsQuery(queryMsg);
+  return data;
+};
+
+export const useTxByHash = (hash: string): TxByHash => {
+  const queryMsg = queryByHash(hash);
+  const data = useTxsQuery(queryMsg);
   return data;
 };
