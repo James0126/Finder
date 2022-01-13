@@ -1,5 +1,14 @@
+import { useParams } from "react-router";
+import Transactions from "../containers/block/Transactions";
+
 const Block = () => {
-  return <>Block Page</>;
+  const { height = "" } = useParams();
+  return (
+    <section>
+      <h1>Block Page</h1>
+      <Transactions height={height} />
+    </section>
+  );
 };
 
 export default Block;

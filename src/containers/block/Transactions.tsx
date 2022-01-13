@@ -1,36 +1,32 @@
 import FinderLink from "../../components/FinderLink";
 import Table from "../../components/Table";
-import { useTxsByAddress } from "../../queries/transaction";
+import { useTxsByHeight } from "../../queries/transaction";
 import Fee from "../transaction/Fee";
 
-const Transactions = ({ address }: { address: string }) => {
-  const data = useTxsByAddress(address);
+const Transactions = ({ height }: { height: string }) => {
+  const data = useTxsByHeight(height);
 
   if (!data) {
     return null;
   }
 
-  const { txInfos } = data.tx.byAddress;
+  const { txInfos } = data.tx.byHeight;
 
   const columns = [
     {
       title: "Hash",
-      dataIndex: "hash",
       key: "hash",
     },
     {
       title: "Type",
-      dataIndex: "type",
       key: "type",
     },
     {
       title: "ChainID",
-      dataIndex: "chainId",
       key: "chainId",
     },
     {
       title: "Fee",
-      dataIndex: "fee",
       key: "fee",
     },
   ];

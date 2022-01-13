@@ -7,6 +7,15 @@ interface TxsByAddress {
   };
 }
 
+interface TxsByHeight {
+  tx: {
+    byHeight: {
+      txInfos: TxInfo[];
+      offset: string;
+    };
+  };
+}
+
 interface TxByHash {
   tx: {
     byHash: TxInfo;

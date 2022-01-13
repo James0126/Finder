@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import Fee from "../containers/transaction/Fee";
 import Message from "../containers/transaction/Message";
-import { useTxByHash } from "../queries/graphql";
+import { useTxByHash } from "../queries/transaction";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
