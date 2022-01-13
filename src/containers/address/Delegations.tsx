@@ -5,6 +5,8 @@ import {
   useValidators,
 } from "../../queries/validator";
 import Card from "../../components/Card";
+import Amount from "../../components/Amount";
+import Table from "../../components/Table";
 
 const Delegations = ({ address }: { address: string }) => {
   const { data: delegation } = useDelegations(address);
@@ -16,17 +18,31 @@ const Delegations = ({ address }: { address: string }) => {
 
   const [delegations] = delegation;
 
+  const title = [
+    {
+      title: "Moniker",
+      key: "moniker",
+    },
+    {
+      title: "Amount",
+      key: "amount",
+    },
+  ];
+
+  const data = delegations.map((validator) => {
+    const { validator_address, balance } = validator;
+    const moniker = getFindMoniker(validators)(validator_address);
+    const amount = readAmount(balance.amount.toString(), { comma: true });
+    const denom = readDenom(balance.denom);
+    return {
+      moniker: moniker,
+      amount: <Amount amount={amount} denom={denom} />,
+    };
+  });
+
   return delegations.length ? (
     <Card title={"Delegations"}>
-      {/* TODO: Table */}
-      {delegations.map((data, key) => {
-        const { validator_address, balance } = data;
-        const moniker = getFindMoniker(validators)(validator_address);
-        const amount = readAmount(balance.amount.toString(), { comma: true });
-        const denom = readDenom(balance.denom);
-
-        return <div key={key}>{`${moniker} ${amount} ${denom}`}</div>;
-      })}
+      <Table columns={title} dataSource={data} />
     </Card>
   ) : null;
 };

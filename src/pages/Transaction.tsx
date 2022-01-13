@@ -2,13 +2,14 @@ import { useParams } from "react-router";
 import Fee from "../containers/transaction/Fee";
 import Message from "../containers/transaction/Message";
 import { useTxByHash } from "../queries/transaction";
+import NotFound from "./NotFound";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
   const data = useTxByHash(hash);
 
   if (!data) {
-    return null;
+    return <NotFound />;
   }
 
   const { chainId, code, compactFee, compactMessage, raw_log, logs } =

@@ -15,22 +15,18 @@ const Transactions = ({ address }: { address: string }) => {
   const columns = [
     {
       title: "Hash",
-      dataIndex: "hash",
       key: "hash",
     },
     {
       title: "Type",
-      dataIndex: "type",
       key: "type",
     },
     {
       title: "ChainID",
-      dataIndex: "chainId",
       key: "chainId",
     },
     {
       title: "Fee",
-      dataIndex: "fee",
       key: "fee",
     },
   ];

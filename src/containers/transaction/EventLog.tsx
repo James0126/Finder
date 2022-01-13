@@ -17,14 +17,11 @@ const EventLog = ({ log }: { log: TxLog }) => {
       {events.map(({ type, attributes }, key) => (
         <div key={key}>
           <h2>{type}</h2>
-          <span>
-            {attributes.map(({ key, value }, index) => (
-              <div key={index}>
-                {`${key} : `}
-                {getAddress(value)}
-              </div>
-            ))}
-          </span>
+          {attributes.map(({ key, value }, index) => (
+            <div key={index}>
+              {getAddress(key)} : {getAddress(value)}
+            </div>
+          ))}
         </div>
       ))}
     </article>

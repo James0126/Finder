@@ -5,6 +5,8 @@ import {
   useValidators,
 } from "../../queries/validator";
 import Card from "../../components/Card";
+import Table from "../../components/Table";
+import Amount from "../../components/Amount";
 
 const Undelegations = ({ address }: { address: string }) => {
   const { data: validators } = useValidators();
@@ -14,21 +16,31 @@ const Undelegations = ({ address }: { address: string }) => {
     return null;
   }
 
+  const title = [
+    {
+      title: "Moniker",
+      key: "moniker",
+    },
+    {
+      title: "Amount",
+      key: "amount",
+    },
+  ];
+
+  const data = undelegations.map((validator) => {
+    const { entries, validator_address } = validator;
+    const [entry] = entries;
+    const amount = entry.balance.toString();
+    const moniker = getFindMoniker(validators)(validator_address);
+    const render = (
+      <Amount amount={readAmount(amount, { comma: true })} denom={"Luna"} />
+    );
+    return { moniker: moniker, amount: render };
+  });
+
   return undelegations.length ? (
     <Card title={"Undelegations"}>
-      {/* TODO: Table */}
-      {undelegations.map((validator, key) => {
-        const { entries, validator_address } = validator;
-        const [entry] = entries;
-        const amount = entry.balance.toString();
-        const moniker = getFindMoniker(validators)(validator_address);
-
-        return (
-          <div key={key}>{`${moniker} ${readAmount(amount, {
-            comma: true,
-          })} Luna`}</div>
-        );
-      })}
+      <Table columns={title} dataSource={data} />
     </Card>
   ) : null;
 };
