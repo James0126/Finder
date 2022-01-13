@@ -42,7 +42,7 @@ export const useCW721ContractInfo = (address: string) => {
 /* tokens */
 export const useCW20Tokens = () => {
   const network = useNetworkName();
-  const { data } = useTerraAssets<CW20Tokens>("/cw20/tokens.json");
+  const { data } = useTerraAssets<CW20TokenResponse>("/cw20/tokens.json");
   return data?.[network];
 };
 
@@ -53,7 +53,7 @@ export const useCW20TokenInfo = (address: string) => {
 
 export const useIBCTokens = () => {
   const network = useNetworkName();
-  const { data } = useTerraAssets<IBCTokens>("/ibc/tokens.json");
+  const { data } = useTerraAssets<IBCTokenResponse>("/ibc/tokens.json");
   //if (!data) throw new Error(`ibc whitelist is not defined`);
   return data?.[network];
 };

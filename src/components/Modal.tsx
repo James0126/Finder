@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import ReactModal from "react-modal";
-import s from "./ModalWithButton.module.scss";
+import s from "./Modal.module.scss";
 
 ReactModal.setAppElement("#root");
 
@@ -9,7 +9,7 @@ type Props = {
   buttonLabel: string;
 };
 
-const ModalWithButton = ({ modalContent, buttonLabel }: Props) => {
+const Modal = ({ modalContent, buttonLabel }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
@@ -40,4 +40,4 @@ const ModalWithButton = ({ modalContent, buttonLabel }: Props) => {
   );
 };
 
-export default ModalWithButton;
+export default Modal;

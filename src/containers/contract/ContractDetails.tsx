@@ -1,7 +1,7 @@
 import { ContractInfo } from "@terra-money/terra.js";
 import Dropdown from "../../components/Dropdown";
 import FinderLink from "../../components/FinderLink";
-import ModalWithButton from "../../components/ModalWithButton";
+import Modal from "../../components/Modal";
 import Query from "./Query";
 
 const ContractDetails = ({ contractInfo }: { contractInfo: ContractInfo }) => {
@@ -10,7 +10,7 @@ const ContractDetails = ({ contractInfo }: { contractInfo: ContractInfo }) => {
 
   return (
     <article>
-      <ModalWithButton buttonLabel={"Query"} modalContent={<Query />} />
+      <Modal buttonLabel={"Query"} modalContent={<Query />} />
       {/* TODO: Table */}
       <div>code ID : {code_id}</div>
       {admin && (

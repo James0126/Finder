@@ -16,3 +16,10 @@ interface CW721Contract {
   homepage: string;
   marketplace: string[];
 }
+
+/* cw721 */
+interface CW721ContractInfoResponse {
+  name: string;
+  symbol: string;
+  decimals: number;
+}

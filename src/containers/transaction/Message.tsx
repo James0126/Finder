@@ -30,7 +30,7 @@ const Message = ({ msgs, logs, isSuccess }: Props) => (
     {msgs.map(({ type, message }, key) => {
       const keys = Object.keys(message);
       return (
-        <Card title={type}>
+        <Card title={type} key={key}>
           {keys.map((key: string, index: number) => (
             <div key={index}>
               {`${key} : `}
