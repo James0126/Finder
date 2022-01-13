@@ -36,13 +36,14 @@ export const useNetworkName = () => {
 };
 
 const InitChains: FC = ({ children }) => {
-  const { data } = useQuery("chains.json", async () => {
-    const { data } = await axios.get("chains.json", {
-      baseURL: ASSET,
-      ...RefetchOptions.INFINITY,
-    });
-    return data;
-  });
+  const { data } = useQuery(
+    "chains.json",
+    async () => {
+      const { data } = await axios.get("chains.json", { baseURL: ASSET });
+      return data;
+    },
+    { ...RefetchOptions.INFINITY }
+  );
 
   if (!data) {
     return null;

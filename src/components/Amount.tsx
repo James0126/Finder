@@ -9,10 +9,11 @@ type Props = {
 
 const Amount = (props: Props) => {
   const { iconUrl, amount, denom, iconSize } = props;
+  const render = `${amount} ${denom}`;
   return (
     <div>
       {iconUrl && <Image url={iconUrl} size={iconSize} />}
-      {`${amount} ${denom}`}
+      {render}
     </div>
   );
 };

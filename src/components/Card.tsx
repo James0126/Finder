@@ -6,11 +6,20 @@ type Props = {
 };
 
 //TODO: Design
-const Card = ({ title, children }: Props) => (
-  <section>
-    <h2>{title}</h2>
-    {children}
-  </section>
-);
+const Card = ({ title, children }: Props) => {
+  const header = title && (
+    <>
+      <h2>{title}</h2>
+      <hr />
+    </>
+  );
+
+  return (
+    <section>
+      {header}
+      {children}
+    </section>
+  );
+};
 
 export default Card;
