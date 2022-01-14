@@ -8,7 +8,7 @@ import {
 import Card from "../../components/Card";
 import Table from "../../components/Table";
 import Amount from "../../components/Amount";
-import { toNow } from "../../scripts/date";
+import { fromISOTime } from "../../scripts/date";
 
 const Undelegations = ({ address }: { address: string }) => {
   const { data: validators } = useValidators();
@@ -36,7 +36,7 @@ const Undelegations = ({ address }: { address: string }) => {
     {
       title: "Release date",
       key: "release",
-      render: (date: Date) => toNow(date),
+      render: (date: Date) => fromISOTime(date),
     },
   ];
 
