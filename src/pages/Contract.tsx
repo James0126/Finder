@@ -1,6 +1,6 @@
 import { ContractInfo } from "@terra-money/terra.js";
 import Delegations from "../containers/address/Delegations";
-import TokenBalance from "../containers/address/TokenBalance";
+import Balance from "../containers/address/Balance";
 import Transactions from "../containers/address/Transactions";
 import Undelegations from "../containers/address/Undelegations";
 import ContractDetails from "../containers/contract/ContractDetails";
@@ -16,7 +16,7 @@ const Contract = ({ contractInfo, address }: Props) => (
     <h1>Contract</h1>
     <ContractTitle address={address} />
     <ContractDetails contractInfo={contractInfo} />
-    <TokenBalance address={address} />
+    <Balance address={address} />
     <Delegations address={address} />
     <Undelegations address={address} />
     <Transactions address={address} />

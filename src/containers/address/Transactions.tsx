@@ -16,34 +16,40 @@ const Transactions = ({ address }: { address: string }) => {
     {
       title: "Hash",
       key: "hash",
+      render: (hash: string) => <FinderLink tx short children={hash} />,
     },
     {
       title: "Type",
       key: "type",
+      render: (type: string) => type.slice(type.indexOf("/") + 1),
     },
     {
       title: "ChainID",
       key: "chainId",
     },
     {
+      title: "Height",
+      key: "height",
+      render: (height: number) => <FinderLink block children={height} />,
+    },
+    {
       title: "Fee",
       key: "fee",
+      render: (amounts: CoinData[]) => <Fee coins={amounts} />,
     },
   ];
 
   const dataSource = txInfos.map((data) => {
-    const { chainId, compactFee, compactMessage, txhash } = data;
+    const { chainId, compactFee, compactMessage, txhash, height } = data;
     const { amounts } = compactFee;
     const { type } = compactMessage[0];
-    const renderType = type.slice(type.indexOf("/") + 1);
-    const fee = <Fee coins={amounts} />;
-    const hash = (
-      <FinderLink tx short>
-        {txhash}
-      </FinderLink>
-    );
-
-    return { chainId: chainId, hash: hash, type: renderType, fee: fee };
+    return {
+      chainId: chainId,
+      hash: txhash,
+      type: type,
+      height: height,
+      fee: amounts,
+    };
   });
 
   return (

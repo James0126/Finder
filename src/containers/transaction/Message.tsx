@@ -1,5 +1,6 @@
 import { AccAddress, ValAddress } from "@terra-money/terra.js";
 import FinderLink from "../../components/FinderLink";
+import List from "../../components/List";
 import Card from "../../components/Card";
 import EventLog from "./EventLog";
 import WasmMsg from "./WasmMsg";
@@ -29,14 +30,14 @@ const Message = ({ msgs, logs, isSuccess }: Props) => (
   <article>
     {msgs.map(({ type, message }, key) => {
       const keys = Object.keys(message);
+      const data = keys.map((key) => {
+        const render = getContent(message, key);
+        return { title: key, content: render };
+      });
+
       return (
         <Card title={type} key={key}>
-          {keys.map((key: string, index: number) => (
-            <div key={index}>
-              {`${key} : `}
-              {getContent(message, key)}
-            </div>
-          ))}
+          <List data={data} />
           {isSuccess && <EventLog log={logs[key]} />}
         </Card>
       );

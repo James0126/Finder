@@ -2,23 +2,21 @@ import { isDenomIBC } from "@terra.kitchen/utils";
 import { useBankBalance } from "../../queries/bank";
 import Card from "../../components/Card";
 import IBCAmount from "../token/IBCAmount";
-import NativeAmount from "../token/NativeAmount";
-import { sortByDenom } from "../../scripts/coin";
+import NativeBalance from "./NativeBalance";
 
-const TokenBalance = ({ address }: { address: string }) => {
+const Balance = ({ address }: { address: string }) => {
   const { data: balance } = useBankBalance(address);
   const native = balance?.filter((coin) => !isDenomIBC(coin.denom)).toArray();
   const ibc = balance?.filter((coin) => isDenomIBC(coin.denom)).toArray();
-  const sortNative = native && sortByDenom(native);
 
   return (
     <section>
       <Card title={"Coins"}>
-        {sortNative?.length
-          ? sortNative.map((coin, key) => (
-              <NativeAmount coin={coin} key={key} />
-            ))
-          : "This account doesn't hold any coins yet."}
+        {native ? (
+          <NativeBalance coins={native} />
+        ) : (
+          "This account doesn't hold any coins yet."
+        )}
       </Card>
 
       <Card title={"Tokens"}>
@@ -31,4 +29,4 @@ const TokenBalance = ({ address }: { address: string }) => {
   );
 };
 
-export default TokenBalance;
+export default Balance;

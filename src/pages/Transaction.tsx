@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import Fee from "../containers/transaction/Fee";
 import Message from "../containers/transaction/Message";
+import List from "../components/List";
 import { useTxByHash } from "../queries/transaction";
 import NotFound from "./NotFound";
 
@@ -18,14 +19,26 @@ const Transaction = () => {
   const { amounts } = compactFee;
   const isSuccess = !code;
 
+  const contents = [
+    {
+      title: "chain ID",
+      content: chainId,
+    },
+    {
+      title: "status",
+      content: isSuccess ? "Success" : "Failed",
+    },
+    {
+      title: "Fee",
+      content: <Fee coins={amounts} />,
+    },
+  ];
+
   return (
     <section>
       <h1>Trasaction Detail</h1>
-      <span>chain ID : {chainId}</span>
-      <br />
-      <span>status : {isSuccess ? "Success" : "Failed"}</span>
       {!isSuccess ?? raw_log}
-      <Fee coins={amounts} />
+      <List data={contents} />
       <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
     </section>
   );

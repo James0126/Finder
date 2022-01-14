@@ -20,6 +20,7 @@ const queryTxsByAddress = (address: string) => `
                   }
                 }
                 txhash
+                height
               }
             }
         }
@@ -44,6 +45,7 @@ const queryTxsByHeight = (height: string, chainId: string) => `
                   }
                 }
                 txhash
+                height
               }
             }
         }

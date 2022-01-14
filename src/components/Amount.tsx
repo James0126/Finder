@@ -1,11 +1,11 @@
 import Image from "./Image";
 
-type Props = {
+interface Props {
   amount: string;
   denom: string;
   iconUrl?: string;
   iconSize?: number;
-};
+}
 
 const Amount = (props: Props) => {
   const { iconUrl, amount, denom, iconSize } = props;

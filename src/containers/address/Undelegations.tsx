@@ -1,3 +1,4 @@
+import { Int } from "@terra-money/terra.js";
 import { readAmount } from "@terra.kitchen/utils";
 import {
   getFindMoniker,
@@ -17,7 +18,7 @@ const Undelegations = ({ address }: { address: string }) => {
     return null;
   }
 
-  const title = [
+  const cols = [
     {
       title: "Moniker",
       key: "moniker",
@@ -25,10 +26,17 @@ const Undelegations = ({ address }: { address: string }) => {
     {
       title: "Amount",
       key: "amount",
+      render: (balance: Int) => (
+        <Amount
+          amount={readAmount(balance.toString(), { comma: true })}
+          denom={"Luna"}
+        />
+      ),
     },
     {
       title: "Release date",
       key: "release",
+      render: (date: Date) => toNow(date),
     },
   ];
 
@@ -36,21 +44,13 @@ const Undelegations = ({ address }: { address: string }) => {
     const { entries, validator_address } = validator;
     const [entry] = entries;
     const { balance, completion_time } = entry;
-    const amount = balance.toString();
-
-    //TODO: Fix date
-    const release = toNow(completion_time);
     const moniker = getFindMoniker(validators)(validator_address);
-    const render = (
-      <Amount amount={readAmount(amount, { comma: true })} denom={"Luna"} />
-    );
-
-    return { moniker: moniker, amount: render, release: release };
+    return { moniker: moniker, amount: balance, release: completion_time };
   });
 
   return undelegations.length ? (
     <Card title={"Undelegations"}>
-      <Table columns={title} dataSource={data} />
+      <Table columns={cols} dataSource={data} />
     </Card>
   ) : null;
 };

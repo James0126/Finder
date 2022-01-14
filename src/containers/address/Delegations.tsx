@@ -1,3 +1,4 @@
+import { Coin } from "@terra-money/terra.js";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
 import {
   getFindMoniker,
@@ -18,7 +19,7 @@ const Delegations = ({ address }: { address: string }) => {
 
   const [delegations] = delegation;
 
-  const title = [
+  const cols = [
     {
       title: "Moniker",
       key: "moniker",
@@ -26,23 +27,27 @@ const Delegations = ({ address }: { address: string }) => {
     {
       title: "Amount",
       key: "amount",
+      render: ({ amount, denom }: Coin) => (
+        <Amount
+          amount={readAmount(amount.toString(), { comma: true })}
+          denom={readDenom(denom)}
+        />
+      ),
     },
   ];
 
   const data = delegations.map((validator) => {
     const { validator_address, balance } = validator;
     const moniker = getFindMoniker(validators)(validator_address);
-    const amount = readAmount(balance.amount.toString(), { comma: true });
-    const denom = readDenom(balance.denom);
     return {
       moniker: moniker,
-      amount: <Amount amount={amount} denom={denom} />,
+      amount: balance,
     };
   });
 
   return delegations.length ? (
     <Card title={"Delegations"}>
-      <Table columns={title} dataSource={data} />
+      <Table columns={cols} dataSource={data} />
     </Card>
   ) : null;
 };
