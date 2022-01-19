@@ -10,6 +10,7 @@ interface TxsByAddress {
 interface TxsByHeight {
   tx: {
     byHeight: {
+      header: BlockInfo;
       txInfos: TxInfo[];
       offset: string;
     };
@@ -25,6 +26,12 @@ interface TxByHash {
 interface CoinData {
   amount: number;
   denom: string;
+}
+
+interface BlockInfo {
+  proposer_address: string;
+  chain_id: string;
+  time: string;
 }
 
 interface TxInfo {

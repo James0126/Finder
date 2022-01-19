@@ -1,13 +1,17 @@
 import { useParams } from "react-router";
+import { getTxCanonicalMsgs, LogFinderActionResult } from "testing-wonjm-rules";
 import Fee from "../containers/transaction/Fee";
 import Message from "../containers/transaction/Message";
+import Action from "../containers/transaction/Action";
 import List from "../components/List";
 import { useTxByHash } from "../queries/transaction";
+import { useActionLogMatcher } from "../store/LogfinderRuleSet";
 import NotFound from "./NotFound";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
   const data = useTxByHash(hash);
+  const logMatcher = useActionLogMatcher();
 
   if (!data) {
     return <NotFound />;
@@ -18,6 +22,7 @@ const Transaction = () => {
 
   const { amounts } = compactFee;
   const isSuccess = !code;
+  const matchedMsg = getTxCanonicalMsgs(logs, compactMessage, logMatcher);
 
   const contents = [
     {
@@ -31,6 +36,21 @@ const Transaction = () => {
     {
       title: "Fee",
       content: <Fee coins={amounts} />,
+    },
+    {
+      title: "Action",
+      content: matchedMsg,
+      render: (matchedMsg: LogFinderActionResult[][]) => (
+        <>
+          {matchedMsg.map((msg) =>
+            msg.map((data) =>
+              data.transformed?.canonicalMsg.map((sentence, key) => (
+                <Action key={key}>{sentence}</Action>
+              ))
+            )
+          )}
+        </>
+      ),
     },
   ];
 

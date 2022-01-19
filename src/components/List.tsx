@@ -1,7 +1,7 @@
 interface Content {
   title?: string;
   content: any;
-  render?: (data: any) => any;
+  render?: (data: any) => JSX.Element | string;
 }
 
 //TODO: Refactor codes

@@ -19,6 +19,16 @@ const queryTxsByAddress = (address: string) => `
                     amount
                   }
                 }
+                logs {
+                  events {
+                   attributes {
+                     key
+                     value
+                   }
+                   type
+                 }
+                 log
+               }
                 txhash
                 height
               }
@@ -31,6 +41,11 @@ const queryTxsByHeight = (height: string, chainId: string) => `
     query {
         tx {
             byHeight(height: ${height}, chainId:"${chainId}") {
+              header{
+                proposer_address
+                chain_id
+                time
+              }
               offset
               txInfos {
                 chainId

@@ -1,4 +1,3 @@
-import { Coin } from "@terra-money/terra.js";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
 import {
   getFindMoniker,
@@ -8,6 +7,7 @@ import {
 import Card from "../../components/Card";
 import Amount from "../../components/Amount";
 import Table from "../../components/Table";
+import FinderLink from "../../components/FinderLink";
 
 const Delegations = ({ address }: { address: string }) => {
   const { data: delegation } = useDelegations(address);
@@ -27,21 +27,22 @@ const Delegations = ({ address }: { address: string }) => {
     {
       title: "Amount",
       key: "amount",
-      render: ({ amount, denom }: Coin) => (
-        <Amount
-          amount={readAmount(amount.toString(), { comma: true })}
-          denom={readDenom(denom)}
-        />
-      ),
     },
   ];
 
   const data = delegations.map((validator) => {
     const { validator_address, balance } = validator;
     const moniker = getFindMoniker(validators)(validator_address);
+    const amount = readAmount(balance.amount.toString(), { comma: true });
+    const denom = readDenom(balance.denom);
+
     return {
-      moniker: moniker,
-      amount: balance,
+      moniker: (
+        <FinderLink validator value={validator_address}>
+          {moniker}
+        </FinderLink>
+      ),
+      amount: <Amount amount={amount} denom={denom} />,
     };
   });
 

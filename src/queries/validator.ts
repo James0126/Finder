@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { path, uniqBy } from "ramda";
 import BigNumber from "bignumber.js";
+import { bech32 } from "bech32";
 import {
   AccAddress,
   DelegateValidator,
@@ -13,7 +14,7 @@ import { LAZY_LIMIT } from "../config/constants";
 import { useLCDClient } from "./lcdClient";
 import { RefetchOptions } from "./query";
 
-/* For Validator page */
+/* validator page */
 export const useValidator = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
@@ -23,10 +24,10 @@ export const useValidator = (address: string) => {
   );
 };
 
-export const useValidatorsVotingPower = () => {
+export const useValidatorSet = () => {
   const lcd = useLCDClient();
   return useQuery(
-    [lcd.config, "validatorsVotingPower"],
+    [lcd.config, "validatorSet"],
     async () => {
       //TODO: Iterator
       const [v1] = await lcd.tendermint.validatorSet();
@@ -41,7 +42,7 @@ export const useValidatorsVotingPower = () => {
 };
 
 export const useVotingPowerRate = (pubKey: string) => {
-  const { data: validators, ...state } = useValidatorsVotingPower();
+  const { data: validators, ...state } = useValidatorSet();
 
   const calcRate = useMemo(() => {
     if (!validators) return;
@@ -81,7 +82,7 @@ export const calcSelfDelegation = (validator?: Validator) => {
   return self ? Number(self) / Number(tokens) : undefined;
 };
 
-/* For SmartContract or Account page */
+/* contract or account page */
 
 /* params */
 export const Pagination = {
@@ -153,4 +154,30 @@ export const getFindMoniker = (validators: Validator[]) => {
     const validator = getFindValidator(validators)(address);
     return validator.description.moniker;
   };
+};
+
+export const convertAddressToHex = (address: string) =>
+  Buffer.from(bech32.fromWords(bech32.decode(address).words)).toString("hex");
+
+const validatorCache = new Map();
+
+export const getValidatorOperatorAddressByHexAddress = (
+  validators: Validator[],
+  validatorSet: DelegateValidator[],
+  hex: string
+) => {
+  if (validatorCache.has(hex)) {
+    return validatorCache.get(hex);
+  }
+
+  validatorSet.forEach((s) => {
+    const v = validators.find((v) => v.consensus_pubkey.key === s.pub_key.key);
+
+    if (v) {
+      const h = convertAddressToHex(s.address).toLowerCase();
+      validatorCache.set(h, v.operator_address);
+    }
+  });
+
+  return validatorCache.get(hex);
 };

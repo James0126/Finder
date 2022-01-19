@@ -9,7 +9,7 @@ import {
 import { toNow } from "../../scripts/date";
 import FinderLink from "../../components/FinderLink";
 import Card from "../../components/Card";
-import { Content } from "../../types/components";
+import List from "../../components/List";
 
 //Station 병합?
 const ValidatorDetails = ({ validator }: { validator: Validator }) => {
@@ -68,22 +68,13 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
     { title: "Validator", content: <span>{operator_address}</span> },
   ];
 
-  const render = ({ title, content }: Content) => (
-    <article key={title}>
-      <h1>{title}</h1>
-      <p>{content}</p>
-    </article>
-  );
-
   return (
     <Card>
       <h2>{moniker}</h2>
       {/* TODO: Add status */}
       <span>{"status"}</span>
       <p>{details}</p>
-      {contents.map(render)}
-      {commissions.map(render)}
-      {addresses.map(render)}
+      <List data={[...contents, ...commissions, ...addresses]} />
     </Card>
   );
 };

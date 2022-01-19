@@ -3,11 +3,11 @@ import SelectCurrency from "./SelectCurrency";
 import SelectNetworks from "./SelectNetwork";
 
 const Header = () => (
-  <div>
+  <section>
     <SelectNetworks />
     <SelectCurrency />
     <Search />
-  </div>
+  </section>
 );
 
 export default Header;

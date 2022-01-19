@@ -11,11 +11,11 @@ const SelectCurrency = () => {
 
   return (
     <select
-      value={currency.substr(1).toUpperCase()}
+      value={currency.substring(1).toUpperCase()}
       onChange={(e) => setCurrency(`u${e.target.value}`.toLowerCase())}
     >
       {data.map((denom, key) => {
-        const render = denom.substr(1).toUpperCase();
+        const render = denom.substring(1).toUpperCase();
         return <option key={key}>{render}</option>;
       })}
     </select>
