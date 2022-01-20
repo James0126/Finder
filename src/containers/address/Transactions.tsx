@@ -1,15 +1,17 @@
 import { Coin } from "@terra-money/terra.js";
+import { getTxAmounts } from "@terra-money/log-finder-ruleset";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
-import { getTxAmounts, LogFinderAmountResult } from "testing-wonjm-rules";
 import Amount from "../../components/Amount";
 import FinderLink from "../../components/FinderLink";
 import Table from "../../components/Table";
 import { useTxsByAddress } from "../../queries/transaction";
+import { totalAmounts } from "../../scripts/utility";
 import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
+import Action from "../transaction/Action";
 import Fee from "../transaction/Fee";
 
 const Transactions = ({ address }: { address: string }) => {
-  const data = useTxsByAddress(address);
+  const { data } = useTxsByAddress(address);
   const logMatcher = useAmountLogMatcher();
 
   if (!data) {
@@ -17,18 +19,6 @@ const Transactions = ({ address }: { address: string }) => {
   }
 
   const { txInfos } = data.tx.byAddress;
-
-  //TODO: Refactor codes
-  const coinRender = (coins: Coin[]) => (
-    <>
-      {coins.map((coin, key) => {
-        const amount = readAmount(coin.amount.toString(), { comma: true });
-        const denom = coin.denom.length > 20 ? "Tokens" : readDenom(coin.denom);
-        return <Amount key={key} amount={amount} denom={denom} />;
-      })}
-    </>
-  );
-
   const columns = [
     {
       title: "Hash",
@@ -50,14 +40,18 @@ const Transactions = ({ address }: { address: string }) => {
       render: (height: number) => <FinderLink block children={height} />,
     },
     {
+      title: "Action",
+      key: "action",
+    },
+    {
       title: "Amount In",
       key: "amountIn",
-      render: coinRender,
+      render: renderCoins,
     },
     {
       title: "Amount Out",
       key: "amountOut",
-      render: coinRender,
+      render: renderCoins,
     },
     {
       title: "Fee",
@@ -70,44 +64,34 @@ const Transactions = ({ address }: { address: string }) => {
     const { chainId, compactFee, compactMessage, txhash, height, logs } = data;
     const { amounts: fee } = compactFee;
     const { type } = compactMessage[0];
-
+    const action = <Action logs={logs} msgs={compactMessage} />;
     const matchedLogs = getTxAmounts(logs, compactMessage, logMatcher, address);
     const [amountIn, amountOut] = totalAmounts(address, matchedLogs);
 
-    return { chainId, txhash, type, height, amountIn, amountOut, fee };
+    return { chainId, txhash, type, height, action, amountIn, amountOut, fee };
   });
 
   return (
     <section>
       <h2>Transactions</h2>
-      <Table columns={columns} dataSource={dataSource} />
+      {txInfos.length ? (
+        <Table columns={columns} dataSource={dataSource} />
+      ) : (
+        "No more transaction"
+      )}
     </section>
   );
 };
 
 export default Transactions;
 
-const totalAmounts = (
-  userAddress: string,
-  matchedLogs?: LogFinderAmountResult[][]
-) => {
-  const amountIn: Coin[] = [];
-  const amountOut: Coin[] = [];
-
-  matchedLogs?.forEach((log) =>
-    log.forEach((data) => {
-      const { transformed } = data;
-      if (transformed) {
-        const { sender, recipient, amount } = transformed;
-        const coins = amount.split(",").map((coin) => Coin.fromString(coin));
-        if (sender === userAddress) {
-          amountOut.push(...coins);
-        } else if (recipient === userAddress) {
-          amountIn.push(...coins);
-        }
-      }
-    })
-  );
-
-  return [amountIn.slice(0, 3), amountOut.slice(0, 3)];
-};
+//TODO: Refactor codes
+const renderCoins = (coins: Coin[]) => (
+  <>
+    {coins.map((coin, key) => {
+      const amount = readAmount(coin.amount.toString(), { comma: true });
+      const denom = coin.denom.length > 20 ? "Tokens" : readDenom(coin.denom);
+      return <Amount key={key} amount={amount} denom={denom} />;
+    })}
+  </>
+);

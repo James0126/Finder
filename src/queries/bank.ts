@@ -6,7 +6,7 @@ import { RefetchOptions } from "./query";
 export const useBankBalance = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
-    [lcd.config, "balance", address],
+    [lcd.config, address, "balance"],
     async () => {
       if (!address) {
         return new Coins();

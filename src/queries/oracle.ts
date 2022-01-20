@@ -55,7 +55,7 @@ export const useMemoizedCalcValue = (denom?: string) => {
 export const useExchangeRates = () => {
   const lcd = useLCDClient();
   return useQuery(
-    ["exchangeRates", lcd.config],
+    [lcd.config, "exchangeRates"],
     () => lcd.oracle.exchangeRates(),
     { ...RefetchOptions.INFINITY }
   );
@@ -74,7 +74,7 @@ export const useOracleParams = () => {
 export const useMisses = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
-    [lcd.config, "misses", address],
+    [lcd.config, address, "misses"],
     async () => await lcd.oracle.misses(address),
     { ...RefetchOptions.INFINITY }
   );

@@ -1,5 +1,6 @@
-import { AccAddress, ValAddress } from "@terra-money/terra.js";
+import { AccAddress, Coin, ValAddress } from "@terra-money/terra.js";
 import isBase64 from "is-base64";
+import { LogFinderAmountResult } from "@terra-money/log-finder-ruleset";
 import { isInteger } from "./math";
 
 export const getEndpointByKeyword = (keyword: string) => {
@@ -37,4 +38,30 @@ export const decodeBase64 = (str: string) => {
   } catch {
     return str;
   }
+};
+
+//TODO: Refactor codes
+export const totalAmounts = (
+  userAddress: string,
+  matchedLogs?: LogFinderAmountResult[][]
+) => {
+  const amountIn: Coin[] = [];
+  const amountOut: Coin[] = [];
+
+  matchedLogs?.forEach((log) =>
+    log.forEach((data) => {
+      const { transformed } = data;
+      if (transformed) {
+        const { sender, recipient, amount } = transformed;
+        const coins = amount.split(",").map((coin) => Coin.fromString(coin));
+        if (sender === userAddress) {
+          amountOut.push(...coins);
+        } else if (recipient === userAddress) {
+          amountIn.push(...coins);
+        }
+      }
+    })
+  );
+
+  return [amountIn.slice(0, 3), amountOut.slice(0, 3)];
 };

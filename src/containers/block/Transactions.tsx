@@ -1,17 +1,9 @@
 import FinderLink from "../../components/FinderLink";
 import Table from "../../components/Table";
-import { useTxsByHeight } from "../../queries/transaction";
+import Action from "../transaction/Action";
 import Fee from "../transaction/Fee";
 
-const Transactions = ({ height }: { height: string }) => {
-  const data = useTxsByHeight(height);
-
-  if (!data) {
-    return null;
-  }
-
-  const { txInfos } = data.tx.byHeight;
-
+const Transactions = ({ txs }: { txs: TxInfo[] }) => {
   const columns = [
     {
       title: "Hash",
@@ -22,8 +14,12 @@ const Transactions = ({ height }: { height: string }) => {
       key: "type",
     },
     {
-      title: "ChainID",
+      title: "Chain id",
       key: "chainId",
+    },
+    {
+      title: "Action",
+      key: "action",
     },
     {
       title: "Fee",
@@ -31,11 +27,12 @@ const Transactions = ({ height }: { height: string }) => {
     },
   ];
 
-  const dataSource = txInfos.map((data) => {
-    const { chainId, compactFee, compactMessage, txhash } = data;
+  const dataSource = txs.map((tx) => {
+    const { chainId, compactFee, compactMessage, txhash, logs } = tx;
     const { amounts } = compactFee;
     const { type } = compactMessage[0];
     const renderType = type.slice(type.indexOf("/") + 1);
+    const action = <Action logs={logs} msgs={compactMessage} />;
     const fee = <Fee coins={amounts} />;
     const hash = (
       <FinderLink tx short>
@@ -43,13 +40,17 @@ const Transactions = ({ height }: { height: string }) => {
       </FinderLink>
     );
 
-    return { chainId: chainId, hash: hash, type: renderType, fee: fee };
+    return { chainId, hash, type: renderType, action, fee };
   });
 
   return (
     <section>
       <h2>Transactions</h2>
-      <Table columns={columns} dataSource={dataSource} />
+      {txs.length ? (
+        <Table columns={columns} dataSource={dataSource} />
+      ) : (
+        "No more transaction"
+      )}
     </section>
   );
 };

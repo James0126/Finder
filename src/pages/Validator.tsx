@@ -12,10 +12,10 @@ const Validator = () => {
   }
 
   return (
-    <article>
+    <section>
       <h1>Validator Page</h1>
       <ValidatorDetails validator={validator} />
-    </article>
+    </section>
   );
 };
 

@@ -1,3 +1,4 @@
+import { UseQueryResult } from "react-query";
 import { useCurrentChain } from "../contexts/ChainsContext";
 import { useGraphQL } from "./graphql";
 
@@ -59,6 +60,15 @@ const queryTxsByHeight = (height: string, chainId: string) => `
                     amount
                   }
                 }
+                logs {
+                  events {
+                   attributes {
+                     key
+                     value
+                   }
+                   type
+                 }
+                }
                 txhash
                 height
               }
@@ -67,10 +77,10 @@ const queryTxsByHeight = (height: string, chainId: string) => `
     }
 `;
 
-const queryTxByHash = (hash: string) => `
+const queryTxByHash = (hash: string, chainId: string) => `
     query {
         tx {
-            byHash(txHash:"${hash}") {
+            byHash(chainId:"${chainId}", txHash:"${hash}") {
                 chainId
                 code
                 compactMessage {
@@ -101,18 +111,21 @@ const queryTxByHash = (hash: string) => `
     }
 `;
 
-export const useTxsByAddress = (address: string): TxsByAddress => {
+export const useTxsByAddress = (
+  address: string
+): UseQueryResult<TxsByAddress> => {
   const queryMsg = queryTxsByAddress(address);
   return useGraphQL(queryMsg);
 };
 
-export const useTxsByHeight = (height: string): TxsByHeight => {
+export const useTxsByHeight = (height: string): UseQueryResult<TxsByHeight> => {
   const { chainID } = useCurrentChain();
   const queryMsg = queryTxsByHeight(height, chainID);
   return useGraphQL(queryMsg);
 };
 
-export const useTxByHash = (hash: string): TxByHash => {
-  const queryMsg = queryTxByHash(hash);
+export const useTxByHash = (hash: string): UseQueryResult<TxByHash> => {
+  const { chainID } = useCurrentChain();
+  const queryMsg = queryTxByHash(hash, chainID);
   return useGraphQL(queryMsg);
 };

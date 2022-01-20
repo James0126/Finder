@@ -16,13 +16,12 @@ export const useGraphQL = (queryMsg: string) => {
     cache: new InMemoryCache(),
   });
 
-  const { data } = useQuery(
-    ["graphql", network, queries],
+  return useQuery(
+    [network, queries, "graphql"],
     async () => {
       const { data } = await client.query({ query: queries });
       return data;
     },
     { ...RefetchOptions.INFINITY }
   );
-  return data;
 };

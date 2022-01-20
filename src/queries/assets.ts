@@ -8,7 +8,7 @@ const config = { baseURL: ASSET };
 
 export const useTerraAssets = <T>(path: string) =>
   useQuery<T, AxiosError>(
-    ["assets", path],
+    [path, "assets"],
     async () => {
       const { data } = await axios.get<T>(path, config);
       return data;

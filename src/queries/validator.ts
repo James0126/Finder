@@ -18,20 +18,20 @@ import { RefetchOptions } from "./query";
 export const useValidator = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
-    [lcd.config, "validator", address],
+    [lcd.config, address, "validator"],
     async () => await lcd.staking.validator(address),
     { ...RefetchOptions.INFINITY }
   );
 };
 
-export const useValidatorSet = () => {
+export const useValidatorSet = (height?: number) => {
   const lcd = useLCDClient();
   return useQuery(
-    [lcd.config, "validatorSet"],
+    [lcd.config, height, "validatorSet"],
     async () => {
       //TODO: Iterator
-      const [v1] = await lcd.tendermint.validatorSet();
-      const [v2] = await lcd.tendermint.validatorSet(undefined, {
+      const [v1] = await lcd.tendermint.validatorSet(height);
+      const [v2] = await lcd.tendermint.validatorSet(height, {
         "pagination.offset": String(v1.length),
       });
 
@@ -45,17 +45,23 @@ export const useVotingPowerRate = (pubKey: string) => {
   const { data: validators, ...state } = useValidatorSet();
 
   const calcRate = useMemo(() => {
-    if (!validators) return;
+    if (!validators) {
+      return undefined;
+    }
     return getCalcVotingPowerRate(validators, pubKey);
   }, [validators, pubKey]);
 
   const data = useMemo(() => {
-    if (!calcRate) return;
+    if (!calcRate) {
+      return undefined;
+    }
     return calcRate();
   }, [calcRate]);
 
   return { data, ...state };
 };
+
+export const useSelfDelegation = () => {};
 
 export const getCalcVotingPowerRate = (
   validators: DelegateValidator[],
@@ -70,16 +76,17 @@ export const getCalcVotingPowerRate = (
       (validator) => validator.pub_key.key === pubKey
     );
 
-    if (!validator) return;
+    if (!validator) {
+      return undefined;
+    }
     const { voting_power } = validator;
     return voting_power ? Number(voting_power) / total : undefined;
   };
 };
 
 export const calcSelfDelegation = (validator?: Validator) => {
-  if (!validator) return;
-  const { min_self_delegation: self, tokens } = validator;
-  return self ? Number(self) / Number(tokens) : undefined;
+  //TODO
+  return 0;
 };
 
 /* contract or account page */
@@ -122,7 +129,7 @@ export const useValidators = () => {
 export const useDelegations = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
-    [lcd.config, "staking", address],
+    [lcd.config, address, "staking"],
     async () => await lcd.staking.delegations(address),
     { ...RefetchOptions.DEFAULT }
   );
@@ -141,20 +148,20 @@ export const useUndelegations = (address: string) => {
 };
 
 /* helpers */
-export const getFindValidator = (validators: Validator[]) => {
-  return (address: AccAddress) => {
+export const getFindValidator =
+  (validators: Validator[]) => (address: AccAddress) => {
     const validator = validators.find((v) => v.operator_address === address);
-    if (!validator) throw new Error(`${address} is not a validator`);
+    if (!validator) {
+      throw new Error(`${address} is not a validator`);
+    }
     return validator;
   };
-};
 
-export const getFindMoniker = (validators: Validator[]) => {
-  return (address: AccAddress) => {
+export const getFindMoniker =
+  (validators: Validator[]) => (address: AccAddress) => {
     const validator = getFindValidator(validators)(address);
     return validator.description.moniker;
   };
-};
 
 export const convertAddressToHex = (address: string) =>
   Buffer.from(bech32.fromWords(bech32.decode(address).words)).toString("hex");

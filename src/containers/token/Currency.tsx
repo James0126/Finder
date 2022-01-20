@@ -10,14 +10,16 @@ const Currency = ({ coin }: { coin: Coin }) => {
   const calcCurrency = useMemoizedCalcValue(currnecy);
   const amount = calcCurrency(coin);
 
-  const render = amount && denom !== currnecy && (
+  if (!amount || denom === currnecy) {
+    return null;
+  }
+
+  return (
     <Amount
       denom={readDenom(currnecy)}
       amount={readAmount(amount, { comma: true })}
     />
   );
-
-  return <>{render}</>;
 };
 
 export default Currency;

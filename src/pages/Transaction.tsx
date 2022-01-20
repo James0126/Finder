@@ -1,66 +1,63 @@
 import { useParams } from "react-router";
-import { getTxCanonicalMsgs, LogFinderActionResult } from "testing-wonjm-rules";
 import Fee from "../containers/transaction/Fee";
 import Message from "../containers/transaction/Message";
 import Action from "../containers/transaction/Action";
 import List from "../components/List";
 import { useTxByHash } from "../queries/transaction";
-import { useActionLogMatcher } from "../store/LogfinderRuleSet";
-import NotFound from "./NotFound";
+import { combineState } from "../queries/query";
+import PageRenderer from "./PageRenderer";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
-  const data = useTxByHash(hash);
-  const logMatcher = useActionLogMatcher();
+  const { data, ...status } = useTxByHash(hash);
+  const state = combineState(status);
 
-  if (!data) {
-    return <NotFound />;
-  }
+  const render = () => {
+    if (!data) {
+      return null;
+    }
 
-  const { chainId, code, compactFee, compactMessage, raw_log, logs } =
-    data.tx.byHash;
+    const { chainId, code, compactFee, compactMessage, raw_log, logs } =
+      data.tx.byHash;
 
-  const { amounts } = compactFee;
-  const isSuccess = !code;
-  const matchedMsg = getTxCanonicalMsgs(logs, compactMessage, logMatcher);
+    const { amounts } = compactFee;
+    const isSuccess = !code;
 
-  const contents = [
-    {
-      title: "chain ID",
-      content: chainId,
-    },
-    {
-      title: "status",
-      content: isSuccess ? "Success" : "Failed",
-    },
-    {
-      title: "Fee",
-      content: <Fee coins={amounts} />,
-    },
-    {
-      title: "Action",
-      content: matchedMsg,
-      render: (matchedMsg: LogFinderActionResult[][]) => (
-        <>
-          {matchedMsg.map((msg) =>
-            msg.map((data) =>
-              data.transformed?.canonicalMsg.map((sentence, key) => (
-                <Action key={key}>{sentence}</Action>
-              ))
-            )
-          )}
-        </>
-      ),
-    },
-  ];
+    const contents = [
+      {
+        title: "chain ID",
+        content: chainId,
+      },
+      {
+        title: "status",
+        content: isSuccess ? "Success" : "Failed",
+      },
+      {
+        title: "Fee",
+        content: <Fee coins={amounts} />,
+      },
+      {
+        title: "Action",
+        content: <Action logs={logs} msgs={compactMessage} />,
+      },
+    ];
+
+    return (
+      <>
+        {!isSuccess ?? raw_log}
+        <List data={contents} />
+        <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
+      </>
+    );
+  };
 
   return (
-    <section>
-      <h1>Trasaction Detail</h1>
-      {!isSuccess ?? raw_log}
-      <List data={contents} />
-      <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
-    </section>
+    <PageRenderer state={state}>
+      <section>
+        <h1>Trasaction Detail</h1>
+        {render()}
+      </section>
+    </PageRenderer>
   );
 };
 

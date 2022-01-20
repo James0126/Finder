@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import FinderLink from "../components/FinderLink";
 import List from "../components/List";
 import Transactions from "../containers/block/Transactions";
+import { combineState } from "../queries/query";
 import { useTxsByHeight } from "../queries/transaction";
 import {
   getFindMoniker,
@@ -11,54 +12,75 @@ import {
   useValidatorSet,
 } from "../queries/validator";
 import { fromISOTime } from "../scripts/date";
+import PageRenderer from "./PageRenderer";
 
 const Block = () => {
   const { height = "" } = useParams();
-  const data = useTxsByHeight(height);
-  const { data: validators } = useValidators();
-  const { data: validatorSet } = useValidatorSet();
-
-  if (!data || !validators || !validatorSet) return null;
-
-  const { proposer_address, chain_id, time } = data.tx.byHeight.header;
-  const hex = Buffer.from(proposer_address, "base64").toString("hex");
-  const operatorAddress = getValidatorOperatorAddressByHexAddress(
-    validators,
-    validatorSet,
-    hex
+  const { data: blockInfo, ...blockInfoStatus } = useTxsByHeight(height);
+  const { data: validators, ...validatorsStatus } = useValidators();
+  const { data: validatorSet, ...validatorSetStatus } = useValidatorSet(
+    Number(height)
   );
-  const moniker =
-    operatorAddress && getFindMoniker(validators)(operatorAddress);
-  const contents = [
-    {
-      title: "height",
-      content: height,
-    },
-    {
-      title: "chain id",
-      content: chain_id,
-    },
-    {
-      title: "time",
-      content: fromISOTime(new Date(time)),
-    },
-    {
-      title: "proposer",
-      content: moniker && (
-        <FinderLink validator value={operatorAddress}>
-          {moniker}
-        </FinderLink>
-      ),
-    },
-  ];
+
+  const state = combineState(
+    blockInfoStatus,
+    validatorsStatus,
+    validatorSetStatus
+  );
+
+  const render = () => {
+    if (!blockInfo || !validators || !validatorSet) {
+      return null;
+    }
+
+    const { txInfos, header } = blockInfo.tx.byHeight;
+    const { proposer_address, chain_id, time } = header;
+    const hex = Buffer.from(proposer_address, "base64").toString("hex");
+    const operatorAddress = getValidatorOperatorAddressByHexAddress(
+      validators,
+      validatorSet,
+      hex
+    );
+    const moniker = getFindMoniker(validators)(operatorAddress);
+    const contents = [
+      {
+        title: "height",
+        content: height,
+      },
+      {
+        title: "chain id",
+        content: chain_id,
+      },
+      {
+        title: "time",
+        content: fromISOTime(new Date(time)),
+      },
+      {
+        title: "proposer",
+        content: (
+          <FinderLink validator value={operatorAddress}>
+            {moniker}
+          </FinderLink>
+        ),
+      },
+    ];
+
+    return (
+      <>
+        <List data={contents} />
+        {heightButton(Number(height))}
+        <Transactions txs={txInfos} />
+      </>
+    );
+  };
 
   return (
-    <section>
-      <h1>Block Page</h1>
-      <List data={contents} />
-      {heightButton(Number(height))}
-      <Transactions height={height} />
-    </section>
+    <PageRenderer state={state}>
+      <section>
+        <h1>Block Page</h1>
+        {render()}
+      </section>
+    </PageRenderer>
   );
 };
 
