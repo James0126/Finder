@@ -1,9 +1,12 @@
+import { useState } from "react";
 import FinderLink from "../../components/FinderLink";
 import Table from "../../components/Table";
-import Action from "../transaction/Action";
 import Fee from "../transaction/Fee";
+import s from "./Transactions.module.scss";
 
 const Transactions = ({ txs }: { txs: TxInfo[] }) => {
+  const [value, setValue] = useState("");
+
   const columns = [
     {
       title: "Hash",
@@ -18,21 +21,16 @@ const Transactions = ({ txs }: { txs: TxInfo[] }) => {
       key: "chainId",
     },
     {
-      title: "Action",
-      key: "action",
-    },
-    {
       title: "Fee",
       key: "fee",
     },
   ];
 
   const dataSource = txs.map((tx) => {
-    const { chainId, compactFee, compactMessage, txhash, logs } = tx;
+    const { chainId, compactFee, compactMessage, txhash, raw_log } = tx;
     const { amounts } = compactFee;
     const { type } = compactMessage[0];
     const renderType = type.slice(type.indexOf("/") + 1);
-    const action = <Action logs={logs} msgs={compactMessage} />;
     const fee = <Fee coins={amounts} />;
     const hash = (
       <FinderLink tx short>
@@ -40,12 +38,21 @@ const Transactions = ({ txs }: { txs: TxInfo[] }) => {
       </FinderLink>
     );
 
-    return { chainId, hash, type: renderType, action, fee };
+    const data = { chainId, hash, type: renderType, fee };
+    const classname = raw_log.includes(value) || !value ? undefined : s.hide;
+
+    return { data, classname };
   });
 
   return (
     <section>
       <h2>Transactions</h2>
+      <input
+        type="search"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        autoFocus
+      />
       {txs.length ? (
         <Table columns={columns} dataSource={dataSource} />
       ) : (

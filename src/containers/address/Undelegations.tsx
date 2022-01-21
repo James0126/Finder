@@ -45,7 +45,8 @@ const Undelegations = ({ address }: { address: string }) => {
     const [entry] = entries;
     const { balance, completion_time } = entry;
     const moniker = getFindMoniker(validators)(validator_address);
-    return { moniker: moniker, amount: balance, release: completion_time };
+    const data = { moniker, amount: balance, release: completion_time };
+    return { data };
   });
 
   return undelegations.length ? (

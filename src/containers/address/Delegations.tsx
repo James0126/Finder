@@ -37,12 +37,14 @@ const Delegations = ({ address }: { address: string }) => {
     const denom = readDenom(balance.denom);
 
     return {
-      moniker: (
-        <FinderLink validator value={validator_address}>
-          {moniker}
-        </FinderLink>
-      ),
-      amount: <Amount amount={amount} denom={denom} />,
+      data: {
+        moniker: (
+          <FinderLink validator value={validator_address}>
+            {moniker}
+          </FinderLink>
+        ),
+        amount: <Amount amount={amount} denom={denom} />,
+      },
     };
   });
 

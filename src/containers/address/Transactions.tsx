@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Coin } from "@terra-money/terra.js";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
@@ -7,18 +8,27 @@ import Table from "../../components/Table";
 import { useTxsByAddress } from "../../queries/transaction";
 import { totalAmounts } from "../../scripts/utility";
 import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
-import Action from "../transaction/Action";
+import Pagenation from "../../components/Pagination";
 import Fee from "../transaction/Fee";
+import s from "./Transactions.module.scss";
 
 const Transactions = ({ address }: { address: string }) => {
-  const { data } = useTxsByAddress(address);
+  const [value, setValue] = useState("");
+  const [pageOffset, setOffset] = useState<string>();
+  const [txs, setTxs] = useState<TxInfo[]>([]);
+  const { data } = useTxsByAddress(address, pageOffset);
   const logMatcher = useAmountLogMatcher();
 
-  if (!data) {
-    return null;
-  }
+  const txInfos = data?.tx.byAddress.txInfos;
+  const offset = data?.tx.byAddress.offset;
 
-  const { txInfos } = data.tx.byAddress;
+  useEffect(() => {
+    if (txInfos && !txs.length) {
+      setTxs(txInfos);
+      setOffset(offset);
+    }
+  }, [txInfos, txs, offset]);
+
   const columns = [
     {
       title: "Hash",
@@ -40,10 +50,6 @@ const Transactions = ({ address }: { address: string }) => {
       render: (height: number) => <FinderLink block children={height} />,
     },
     {
-      title: "Action",
-      key: "action",
-    },
-    {
       title: "Amount In",
       key: "amountIn",
       render: renderCoins,
@@ -60,25 +66,36 @@ const Transactions = ({ address }: { address: string }) => {
     },
   ];
 
-  const dataSource = txInfos.map((data) => {
-    const { chainId, compactFee, compactMessage, txhash, height, logs } = data;
+  const dataSource = txs?.map((tx) => {
+    const { compactFee, compactMessage, logs, raw_log } = tx;
     const { amounts: fee } = compactFee;
     const { type } = compactMessage[0];
-    const action = <Action logs={logs} msgs={compactMessage} />;
     const matchedLogs = getTxAmounts(logs, compactMessage, logMatcher, address);
     const [amountIn, amountOut] = totalAmounts(address, matchedLogs);
-
-    return { chainId, txhash, type, height, action, amountIn, amountOut, fee };
+    const classname = raw_log.includes(value) || !value ? undefined : s.hide;
+    const data = { ...tx, type, amountIn, amountOut, fee };
+    return { data, classname };
   });
+
+  const pageNation = () => {
+    setOffset(offset);
+    if (txInfos) {
+      setTxs([...txs, ...txInfos]);
+    }
+  };
 
   return (
     <section>
       <h2>Transactions</h2>
-      {txInfos.length ? (
+      <input
+        type="search"
+        value={value}
+        onChange={(e) => setValue(e.target.value.trim())}
+      />
+
+      <Pagenation action={pageNation} offset={offset}>
         <Table columns={columns} dataSource={dataSource} />
-      ) : (
-        "No more transaction"
-      )}
+      </Pagenation>
     </section>
   );
 };

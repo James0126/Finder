@@ -3,10 +3,10 @@ import { useCurrentChain } from "../contexts/ChainsContext";
 import { useGraphQL } from "./graphql";
 
 //TODO: Refactor codes
-const queryTxsByAddress = (address: string) => `
+const queryTxsByAddress = (address: string, offset?: string) => `
     query {
         tx {
-            byAddress(address: "${address}") {
+            byAddress(address:"${address}", offset:"${offset}") {
               offset
               txInfos {
                 chainId
@@ -32,6 +32,7 @@ const queryTxsByAddress = (address: string) => `
                }
                 txhash
                 height
+                raw_log
               }
             }
         }
@@ -41,7 +42,7 @@ const queryTxsByAddress = (address: string) => `
 const queryTxsByHeight = (height: string, chainId: string) => `
     query {
         tx {
-            byHeight(height: ${height}, chainId:"${chainId}") {
+            byHeight(height:${height}, chainId:"${chainId}") {
               header{
                 proposer_address
                 chain_id
@@ -71,6 +72,7 @@ const queryTxsByHeight = (height: string, chainId: string) => `
                 }
                 txhash
                 height
+                raw_log
               }
             }
         }
@@ -112,9 +114,10 @@ const queryTxByHash = (hash: string, chainId: string) => `
 `;
 
 export const useTxsByAddress = (
-  address: string
+  address: string,
+  offset?: string
 ): UseQueryResult<TxsByAddress> => {
-  const queryMsg = queryTxsByAddress(address);
+  const queryMsg = queryTxsByAddress(address, offset);
   return useGraphQL(queryMsg);
 };
 
