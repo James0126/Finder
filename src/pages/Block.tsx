@@ -33,7 +33,7 @@ const Block = () => {
       return null;
     }
 
-    const { txInfos, header } = blockInfo.tx.byHeight;
+    const { header } = blockInfo.tx.byHeight;
     const { proposer_address, chain_id, time } = header;
     const hex = Buffer.from(proposer_address, "base64").toString("hex");
     const operatorAddress = getValidatorOperatorAddressByHexAddress(
@@ -69,7 +69,7 @@ const Block = () => {
       <>
         <List data={contents} />
         {heightButton(Number(height))}
-        <Transactions txs={txInfos} />
+        <Transactions height={height} />
       </>
     );
   };

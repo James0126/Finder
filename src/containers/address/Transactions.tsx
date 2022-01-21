@@ -77,7 +77,7 @@ const Transactions = ({ address }: { address: string }) => {
     return { data, classname };
   });
 
-  const pageNation = () => {
+  const pagenation = () => {
     setOffset(offset);
     if (txInfos) {
       setTxs([...txs, ...txInfos]);
@@ -92,10 +92,13 @@ const Transactions = ({ address }: { address: string }) => {
         value={value}
         onChange={(e) => setValue(e.target.value.trim())}
       />
-
-      <Pagenation action={pageNation} offset={offset}>
-        <Table columns={columns} dataSource={dataSource} />
-      </Pagenation>
+      {dataSource.length ? (
+        <Pagenation action={pagenation} offset={offset}>
+          <Table columns={columns} dataSource={dataSource} />
+        </Pagenation>
+      ) : (
+        "No more transaction"
+      )}
     </section>
   );
 };

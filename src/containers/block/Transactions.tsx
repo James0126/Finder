@@ -1,12 +1,33 @@
-import { useState } from "react";
-import FinderLink from "../../components/FinderLink";
+import { useEffect, useState } from "react";
 import Table from "../../components/Table";
+import FinderLink from "../../components/FinderLink";
+import Pagenation from "../../components/Pagination";
 import Fee from "../transaction/Fee";
 import s from "./Transactions.module.scss";
+import { useTxsByHeight } from "../../queries/transaction";
 
-const Transactions = ({ txs }: { txs: TxInfo[] }) => {
+const Transactions = ({ height }: { height: string }) => {
+  const [pageOffset, setOffset] = useState<string>();
   const [value, setValue] = useState("");
+  const [txs, setTxs] = useState<TxInfo[]>([]);
+  const { data } = useTxsByHeight(height, pageOffset);
 
+  const txInfos = data?.tx.byHeight.txInfos;
+  const offset = data?.tx.byHeight.offset;
+
+  useEffect(() => {
+    if (txInfos && !txs.length) {
+      setTxs(txInfos);
+      setOffset(offset);
+    }
+  }, [txInfos, txs, offset]);
+
+  const pagenation = () => {
+    setOffset(offset);
+    if (txInfos) {
+      setTxs([...txs, ...txInfos]);
+    }
+  };
   const columns = [
     {
       title: "Hash",
@@ -51,10 +72,11 @@ const Transactions = ({ txs }: { txs: TxInfo[] }) => {
         type="search"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        autoFocus
       />
-      {txs.length ? (
-        <Table columns={columns} dataSource={dataSource} />
+      {dataSource.length ? (
+        <Pagenation action={pagenation} offset={offset}>
+          <Table columns={columns} dataSource={dataSource} />
+        </Pagenation>
       ) : (
         "No more transaction"
       )}

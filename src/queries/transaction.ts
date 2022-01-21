@@ -6,7 +6,9 @@ import { useGraphQL } from "./graphql";
 const queryTxsByAddress = (address: string, offset?: string) => `
     query {
         tx {
-            byAddress(address:"${address}", offset:"${offset}") {
+            byAddress(address:"${address}", ${
+  offset ? `offset:"${offset}"` : ""
+}) {
               offset
               txInfos {
                 chainId
@@ -39,10 +41,13 @@ const queryTxsByAddress = (address: string, offset?: string) => `
     }
 `;
 
-const queryTxsByHeight = (height: string, chainId: string) => `
+const queryTxsByHeight = (height: string, chainId: string, offset?: string) => `
     query {
         tx {
-            byHeight(height:${height}, chainId:"${chainId}") {
+            byHeight(height:${height} chainId:"${chainId}" ${
+  offset ? `offset:"${offset}"` : ""
+})
+             {
               header{
                 proposer_address
                 chain_id
@@ -121,9 +126,12 @@ export const useTxsByAddress = (
   return useGraphQL(queryMsg);
 };
 
-export const useTxsByHeight = (height: string): UseQueryResult<TxsByHeight> => {
+export const useTxsByHeight = (
+  height: string,
+  offset?: string
+): UseQueryResult<TxsByHeight> => {
   const { chainID } = useCurrentChain();
-  const queryMsg = queryTxsByHeight(height, chainID);
+  const queryMsg = queryTxsByHeight(height, chainID, offset);
   return useGraphQL(queryMsg);
 };
 
