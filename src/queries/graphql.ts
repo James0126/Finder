@@ -1,4 +1,4 @@
-import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache, DocumentNode } from "@apollo/client";
 import { useQuery } from "react-query";
 import { useNetworkName } from "../contexts/ChainsContext";
 import { RefetchOptions } from "./query";
@@ -6,10 +6,7 @@ import { RefetchOptions } from "./query";
 //TODO: Refactor codes
 const TEST_URL = "https://finder.test-alpac4.com/graphql";
 
-export const useGraphQL = (queryMsg: string) => {
-  const queries = gql`
-    ${queryMsg}
-  `;
+export const useGraphQL = (query: DocumentNode) => {
   const network = useNetworkName();
   const client = new ApolloClient({
     uri: TEST_URL,
@@ -17,9 +14,9 @@ export const useGraphQL = (queryMsg: string) => {
   });
 
   return useQuery(
-    [network, queries, "graphql"],
+    [network, query, "graphql"],
     async () => {
-      const { data } = await client.query({ query: queries });
+      const { data } = await client.query({ query });
       return data;
     },
     { ...RefetchOptions.INFINITY }

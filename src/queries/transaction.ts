@@ -1,14 +1,15 @@
+import { gql } from "@apollo/client";
 import { UseQueryResult } from "react-query";
 import { useCurrentChain } from "../contexts/ChainsContext";
 import { useGraphQL } from "./graphql";
 
 //TODO: Refactor codes
-const queryTxsByAddress = (address: string, offset?: string) => `
+const queryTxsByAddress = (address: string, offset?: string) => {
+  const offsetField = offset ? `offset:"${offset}"` : "";
+  return gql`
     query {
         tx {
-            byAddress(address:"${address}", ${
-  offset ? `offset:"${offset}"` : ""
-}) {
+            byAddress(address:"${address}" ${offsetField}) {
               offset
               txInfos {
                 chainId
@@ -40,13 +41,14 @@ const queryTxsByAddress = (address: string, offset?: string) => `
         }
     }
 `;
+};
 
-const queryTxsByHeight = (height: string, chainId: string, offset?: string) => `
+const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
+  const offsetField = offset ? `offset:"${offset}"` : "";
+  return gql`
     query {
         tx {
-            byHeight(height:${height} chainId:"${chainId}" ${
-  offset ? `offset:"${offset}"` : ""
-})
+            byHeight(height:${height} chainId:"${chainId}" ${offsetField})
              {
               header{
                 proposer_address
@@ -83,8 +85,9 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => `
         }
     }
 `;
+};
 
-const queryTxByHash = (hash: string, chainId: string) => `
+const queryTxByHash = (hash: string, chainId: string) => gql`
     query {
         tx {
             byHash(chainId:"${chainId}", txHash:"${hash}") {

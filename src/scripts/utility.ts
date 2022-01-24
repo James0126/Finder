@@ -45,23 +45,29 @@ export const totalAmounts = (
   userAddress: string,
   matchedLogs?: LogFinderAmountResult[][]
 ) => {
-  const amountIn: Coin[] = [];
-  const amountOut: Coin[] = [];
+  try {
+    const amountIn: Coin[] = [];
+    const amountOut: Coin[] = [];
 
-  matchedLogs?.forEach((log) =>
-    log.forEach((data) => {
-      const { transformed } = data;
-      if (transformed) {
-        const { sender, recipient, amount } = transformed;
-        const coins = amount.split(",").map((coin) => Coin.fromString(coin));
-        if (sender === userAddress) {
-          amountOut.push(...coins);
-        } else if (recipient === userAddress) {
-          amountIn.push(...coins);
+    matchedLogs?.forEach((log) =>
+      log.forEach((data) => {
+        const { transformed } = data;
+        if (transformed) {
+          const { sender, recipient, amount } = transformed;
+          const coins = amount.split(",").map((coin) => {
+            return Coin.fromString(coin);
+          });
+          if (sender === userAddress) {
+            amountOut.push(...coins);
+          } else if (recipient === userAddress) {
+            amountIn.push(...coins);
+          }
         }
-      }
-    })
-  );
+      })
+    );
 
-  return [amountIn.slice(0, 3), amountOut.slice(0, 3)];
+    return [amountIn.slice(0, 3), amountOut.slice(0, 3)];
+  } catch {
+    return [];
+  }
 };

@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { getEndpointByKeyword } from "../../scripts/utility";
 
-type Props = {
-  className?: string;
-};
-
-const Search = ({ className }: Props) => {
+const Search = ({ className }: { className?: string }) => {
   const [value, setValue] = useState("");
   const network = useNetworkName();
   const navigate = useNavigate();

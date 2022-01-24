@@ -1,20 +1,4 @@
-interface Column {
-  title: string;
-  key: string;
-  render?: (data: any) => any;
-}
-
-interface Data<T> {
-  data: T;
-  classname?: string;
-}
-
-interface Props<T> {
-  columns: Column[];
-  dataSource: Data<T>[];
-}
-
-const Table = <T extends object>({ columns, dataSource }: Props<T>) => (
+const Table = <T extends object>({ columns, dataSource }: TableSource<T>) => (
   <table>
     <thead>
       <tr>

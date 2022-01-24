@@ -1,20 +1,31 @@
 import { ReactNode } from "react";
-import PaginationButtons from "./PaginationButtons";
 
 export type PaginationProps = {
   offset?: string;
-  action?: (offset: string) => void;
   loading?: boolean;
+  action: (offset: string) => void;
   children: ReactNode;
+  status?: QueryState;
 };
 
 const Pagination = (props: PaginationProps) => {
   const { children, action, loading, offset } = props;
+  const moreButton =
+    loading || offset ? (
+      <button
+        style={{ width: "100%" }}
+        onClick={() => offset && action(offset)}
+        disabled={loading}
+      >
+        {loading ? "Loading..." : "more"}
+      </button>
+    ) : null;
 
   return (
     <>
+      {moreButton}
       {children}
-      <PaginationButtons action={action} offset={offset} loading={loading} />
+      {moreButton}
     </>
   );
 };
