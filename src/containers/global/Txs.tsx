@@ -40,11 +40,16 @@ const Txs = (props: Props) => {
 
   return (
     <>
-      <SearchInput onSearch={onSearch} />
       {txs.length ? (
-        <PaginationButton action={pagination} offset={offset} loading={loading}>
+        <>
+          <SearchInput onSearch={onSearch} />
           <Table columns={columns} dataSource={txs} />
-        </PaginationButton>
+          <PaginationButton
+            action={pagination}
+            offset={offset}
+            loading={loading}
+          />
+        </>
       ) : (
         "No more transaction"
       )}
