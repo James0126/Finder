@@ -13,7 +13,7 @@ const PaginationButton = (props: PaginationProps) => {
       onClick={() => offset && action(offset)}
       disabled={loading}
     >
-      {loading ? "Loading..." : "more"}
+      {loading ? "Loading..." : "Load more"}
     </button>
   ) : null;
 };

@@ -35,17 +35,13 @@ const Delegations = ({ address }: { address: string }) => {
     const moniker = getFindMoniker(validators)(validator_address);
     const amount = readAmount(balance.amount.toString(), { comma: true });
     const denom = readDenom(balance.denom);
-
-    return {
-      data: {
-        moniker: (
-          <FinderLink validator value={validator_address}>
-            {moniker}
-          </FinderLink>
-        ),
-        amount: <Amount amount={amount} denom={denom} />,
-      },
+    const data = {
+      moniker: (
+        <FinderLink validator value={validator_address} children={moniker} />
+      ),
+      amount: <Amount amount={amount} denom={denom} />,
     };
+    return { data };
   });
 
   return delegations.length ? (
