@@ -1,27 +1,24 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Coin } from "@terra-money/terra.js";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
 import Amount from "../../components/Amount";
 import FinderLink from "../../components/FinderLink";
-import Table from "../../components/Table";
-import PaginationButton from "../../components/PaginationButton";
-import SearchInput from "../../components/SearchInput";
 import { useTxsByAddress } from "../../queries/transaction";
 import { combineState } from "../../queries/query";
 import { totalAmounts } from "../../scripts/utility";
 import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
+import Txs from "../global/Txs";
 import Fee from "../transaction/Fee";
 import s from "./Transactions.module.scss";
 
 const Transactions = ({ address }: { address: string }) => {
   const [pageOffset, setOffset] = useState<string>();
-  const [txs, setTxs] = useState<Data<any>[]>([]);
-  const [value, setValue] = useState<string>("");
   const { data, ...status } = useTxsByAddress(address, pageOffset);
   const logMatcher = useAmountLogMatcher();
   const { isLoading } = combineState(status);
   const offset = data?.tx.byAddress.offset;
+  const txInfos = data?.tx.byAddress.txInfos;
 
   const columns = [
     {
@@ -56,7 +53,7 @@ const Transactions = ({ address }: { address: string }) => {
   ];
 
   const getTxRow = useCallback(
-    (txInfos: TxInfo[]) =>
+    (txInfos: TxInfo[], value?: string) =>
       txInfos.map((tx) => {
         const { compactFee, compactMessage, logs, height, txhash, raw_log } =
           tx;
@@ -69,7 +66,12 @@ const Transactions = ({ address }: { address: string }) => {
           address
         );
         const [amountIn, amountOut] = totalAmounts(address, matchedLogs);
-        const classname = raw_log.includes(value) ? undefined : s.hide;
+        const classname = value
+          ? raw_log.includes(value)
+            ? undefined
+            : s.hide
+          : undefined;
+
         const data = {
           ...tx,
           type,
@@ -81,45 +83,20 @@ const Transactions = ({ address }: { address: string }) => {
         };
         return { data, classname };
       }),
-    [address, logMatcher, value]
+    [address, logMatcher]
   );
-
-  useEffect(() => {
-    if (data) {
-      const { txInfos } = data.tx.byAddress;
-      const dataSource = getTxRow(txInfos);
-      setTxs((txs) => [...txs, ...dataSource]);
-    }
-  }, [data, getTxRow]);
-
-  const onSearch = (input: string) => {
-    const searchTx = txs.map((tx) => {
-      const { raw_log } = tx.data;
-      raw_log.includes(input)
-        ? (tx.classname = undefined)
-        : (tx.classname = s.hide);
-      return tx;
-    });
-
-    setValue(input);
-    setTxs(searchTx);
-  };
 
   return (
     <section>
       <h2>Transactions</h2>
-      <SearchInput onSearch={onSearch} />
-      {txs.length ? (
-        <PaginationButton
-          action={() => setOffset(offset)}
-          offset={offset}
-          loading={isLoading}
-        >
-          <Table columns={columns} dataSource={txs} />
-        </PaginationButton>
-      ) : (
-        "No more transaction"
-      )}
+      <Txs
+        txInfos={txInfos}
+        getTxRow={getTxRow}
+        pagination={() => setOffset(offset)}
+        offset={offset}
+        columns={columns}
+        loading={isLoading}
+      />
     </section>
   );
 };
