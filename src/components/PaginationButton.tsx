@@ -8,7 +8,7 @@ export type PaginationProps = {
   status?: QueryState;
 };
 
-const Pagination = (props: PaginationProps) => {
+const PaginationButton = (props: PaginationProps) => {
   const { children, action, loading, offset } = props;
   const moreButton =
     loading || offset ? (
@@ -20,7 +20,6 @@ const Pagination = (props: PaginationProps) => {
         {loading ? "Loading..." : "more"}
       </button>
     ) : null;
-
   return (
     <>
       {moreButton}
@@ -30,4 +29,4 @@ const Pagination = (props: PaginationProps) => {
   );
 };
 
-export default Pagination;
+export default PaginationButton;

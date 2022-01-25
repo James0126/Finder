@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Coin } from "@terra-money/terra.js";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
 import Amount from "../../components/Amount";
 import FinderLink from "../../components/FinderLink";
 import Table from "../../components/Table";
-import Pagenation from "../../components/Pagination";
+import PaginationButton from "../../components/PaginationButton";
 import SearchInput from "../../components/SearchInput";
 import { useTxsByAddress } from "../../queries/transaction";
 import { combineState } from "../../queries/query";
@@ -17,11 +17,10 @@ import s from "./Transactions.module.scss";
 const Transactions = ({ address }: { address: string }) => {
   const [pageOffset, setOffset] = useState<string>();
   const [txs, setTxs] = useState<Data<any>[]>([]);
+  const [value, setValue] = useState<string>("");
   const { data, ...status } = useTxsByAddress(address, pageOffset);
   const logMatcher = useAmountLogMatcher();
-  const state = combineState(status);
-
-  const txInfos = data?.tx.byAddress.txInfos;
+  const { isLoading } = combineState(status);
   const offset = data?.tx.byAddress.offset;
 
   const columns = [
@@ -56,42 +55,45 @@ const Transactions = ({ address }: { address: string }) => {
     },
   ];
 
-  const dataSource = txInfos?.map((tx) => {
-    const { compactFee, compactMessage, logs, height, txhash } = tx;
-    const { amounts } = compactFee;
-    const { type } = compactMessage[0];
-    const matchedLogs = getTxAmounts(logs, compactMessage, logMatcher, address);
-    const [amountIn, amountOut] = totalAmounts(address, matchedLogs);
-    const inCoins = renderCoins(amountIn);
-    const OutCoins = renderCoins(amountOut);
-    const fee = <Fee coins={amounts} />;
-    const block = <FinderLink block children={height} />;
-    const hash = <FinderLink tx short children={txhash} />;
-    const data = {
-      ...tx,
-      fee,
-      type,
-      hash,
-      amountIn: inCoins,
-      amountOut: OutCoins,
-      height: block,
-    };
-    return { data };
-  });
+  const getTxRow = useCallback(
+    (txInfos: TxInfo[]) =>
+      txInfos.map((tx) => {
+        const { compactFee, compactMessage, logs, height, txhash, raw_log } =
+          tx;
+        const { amounts } = compactFee;
+        const { type } = compactMessage[0];
+        const matchedLogs = getTxAmounts(
+          logs,
+          compactMessage,
+          logMatcher,
+          address
+        );
+        const [amountIn, amountOut] = totalAmounts(address, matchedLogs);
+        const classname = raw_log.includes(value) ? undefined : s.hide;
+        const data = {
+          ...tx,
+          type,
+          fee: <Fee coins={amounts} />,
+          amountIn: renderCoins(amountIn),
+          amountOut: renderCoins(amountOut),
+          height: <FinderLink block children={height} />,
+          hash: <FinderLink tx short children={txhash} />,
+        };
+        return { data, classname };
+      }),
+    [address, logMatcher, value]
+  );
 
-  if (!txs.length) {
-    dataSource && setTxs(dataSource);
-  }
-
-  const pagenation = () => {
-    setOffset(offset);
-    if (dataSource) {
+  useEffect(() => {
+    if (data) {
+      const { txInfos } = data.tx.byAddress;
+      const dataSource = getTxRow(txInfos);
       setTxs((txs) => [...txs, ...dataSource]);
     }
-  };
+  }, [data, getTxRow]);
 
   const onSearch = (input: string) => {
-    const txFilter = txs.map((tx) => {
+    const searchTx = txs.map((tx) => {
       const { raw_log } = tx.data;
       raw_log.includes(input)
         ? (tx.classname = undefined)
@@ -99,21 +101,22 @@ const Transactions = ({ address }: { address: string }) => {
       return tx;
     });
 
-    setTxs(txFilter);
+    setValue(input);
+    setTxs(searchTx);
   };
 
   return (
     <section>
       <h2>Transactions</h2>
       <SearchInput onSearch={onSearch} />
-      {txs?.length ? (
-        <Pagenation
-          action={pagenation}
+      {txs.length ? (
+        <PaginationButton
+          action={() => setOffset(offset)}
           offset={offset}
-          loading={state.isLoading}
+          loading={isLoading}
         >
           <Table columns={columns} dataSource={txs} />
-        </Pagenation>
+        </PaginationButton>
       ) : (
         "No more transaction"
       )}
