@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
 import { combineState } from "../../queries/query";
@@ -13,25 +13,22 @@ const Transactions = ({ height }: { height: string }) => {
   const offset = data?.tx.byHeight.offset;
   const txInfos = data?.tx.byHeight.txInfos;
 
-  const getTxRow = useCallback(
-    (txInfos: TxInfo[], value?: string) =>
-      txInfos.map((tx) => {
-        const { chainId, compactFee, compactMessage, txhash, raw_log } = tx;
-        const { amounts } = compactFee;
-        const { type } = compactMessage[0];
-        const fee = <Fee coins={amounts} />;
-        const hash = <FinderLink tx short children={txhash} />;
-        const data = { chainId, hash, type, fee, raw_log };
-        const classname = value
-          ? raw_log.includes(value)
-            ? undefined
-            : s.hide
-          : undefined;
+  const getTxRow = (txInfos: TxInfo[], value?: string) =>
+    txInfos.map((tx) => {
+      const { chainId, compactFee, compactMessage, txhash, raw_log } = tx;
+      const { amounts } = compactFee;
+      const { type } = compactMessage[0];
+      const fee = <Fee coins={amounts} />;
+      const hash = <FinderLink tx short children={txhash} />;
+      const data = { chainId, hash, type, fee, raw_log };
+      const classname = value
+        ? raw_log.includes(value)
+          ? undefined
+          : s.hide
+        : undefined;
 
-        return { data, classname };
-      }),
-    []
-  );
+      return { data, classname };
+    });
 
   const columns = [
     {

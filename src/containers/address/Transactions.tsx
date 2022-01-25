@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Coin } from "@terra-money/terra.js";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
@@ -52,39 +52,35 @@ const Transactions = ({ address }: { address: string }) => {
     },
   ];
 
-  const getTxRow = useCallback(
-    (txInfos: TxInfo[], value?: string) =>
-      txInfos.map((tx) => {
-        const { compactFee, compactMessage, logs, height, txhash, raw_log } =
-          tx;
-        const { amounts } = compactFee;
-        const { type } = compactMessage[0];
-        const matchedLogs = getTxAmounts(
-          logs,
-          compactMessage,
-          logMatcher,
-          address
-        );
-        const [amountIn, amountOut] = totalAmounts(address, matchedLogs);
-        const classname = value
-          ? raw_log.includes(value)
-            ? undefined
-            : s.hide
-          : undefined;
+  const getTxRow = (txInfos: TxInfo[], value?: string) =>
+    txInfos.map((tx) => {
+      const { compactFee, compactMessage, logs, height, txhash, raw_log } = tx;
+      const { amounts } = compactFee;
+      const { type } = compactMessage[0];
+      const matchedLogs = getTxAmounts(
+        logs,
+        compactMessage,
+        logMatcher,
+        address
+      );
+      const [amountIn, amountOut] = totalAmounts(address, matchedLogs);
+      const classname = value
+        ? raw_log.includes(value)
+          ? undefined
+          : s.hide
+        : undefined;
 
-        const data = {
-          ...tx,
-          type,
-          fee: <Fee coins={amounts} />,
-          amountIn: renderCoins(amountIn),
-          amountOut: renderCoins(amountOut),
-          height: <FinderLink block children={height} />,
-          hash: <FinderLink tx short children={txhash} />,
-        };
-        return { data, classname };
-      }),
-    [address, logMatcher]
-  );
+      const data = {
+        ...tx,
+        type,
+        fee: <Fee coins={amounts} />,
+        amountIn: renderCoins(amountIn),
+        amountOut: renderCoins(amountOut),
+        height: <FinderLink block children={height} />,
+        hash: <FinderLink tx short children={txhash} />,
+      };
+      return { data, classname };
+    });
 
   return (
     <section>
