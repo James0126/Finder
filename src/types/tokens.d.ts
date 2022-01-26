@@ -3,17 +3,14 @@ type CW20TokenResponse = Record<string, CW20Tokens>;
 
 interface CW20TokenInfoResponse {
   symbol: string;
-  name: string;
+  name?: string;
   decimals: number;
 }
 
-interface CW20TokenItem {
-  protocol: string;
-  symbol: string;
-  name: string;
-  token: string;
+interface CW20TokenItem extends CW20TokenInfoResponse {
+  token: TerraAddress;
+  protocol?: string;
   icon?: string;
-  decimals?: number;
 }
 
 type IBCTokens = Record<string, IBCTokenItem>;
@@ -34,6 +31,6 @@ interface IBCTokenItem extends IBCTokenInfoResponse {
 /* coin | token */
 type CoinDenom = string; // uluna | uusd
 type IBCDenom = string; // ibc/...
-type TokenAddress = TerraAddress;
+type TokenAddress = string;
 type Denom = CoinDenom | IBCDenom;
 type Token = Denom | TokenAddress;

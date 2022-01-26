@@ -3,9 +3,14 @@ import update from "immutability-helper";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { getLocalSetting, setLocalSetting } from "../../scripts/localStorage";
 
+const DefaultCustomTokens = {
+  mainnet: { ibc: [], cw20: [], cw721: [] },
+  testnet: { ibc: [], cw20: [], cw721: [] },
+};
+
 const customTokensState = atom({
   key: "customTokens",
-  default: getLocalSetting<CustomTokens>("CustomTokens"),
+  default: getLocalSetting<CustomTokens>("CustomTokens", DefaultCustomTokens),
 });
 
 interface Params<T> {

@@ -23,3 +23,15 @@ interface CW721ContractInfoResponse {
   symbol: string;
   decimals: number;
 }
+
+type CW721Whitelist = Record<TerraAddress, CW721ContractItem>;
+
+interface NFTTokenItem {
+  extension?: Extension;
+}
+
+interface Extension {
+  name?: string;
+  description?: string;
+  image?: string;
+}

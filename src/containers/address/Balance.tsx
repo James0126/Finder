@@ -3,6 +3,9 @@ import { useBankBalance } from "../../queries/bank";
 import Card from "../../components/Card";
 import IBCAmount from "../token/IBCAmount";
 import NativeBalance from "./NativeBalance";
+import ManageCustomTokens from "../custom/ManageCustomTokens";
+import Modal from "../../components/Modal";
+import AddedTokens from "../custom/AddedTokens";
 
 const Balance = ({ address }: { address: string }) => {
   const { data: balance } = useBankBalance(address);
@@ -20,10 +23,12 @@ const Balance = ({ address }: { address: string }) => {
       </Card>
 
       <Card title={"Tokens"}>
-        {/* TODO: Add tokens */}
+        <Modal modalContent={<ManageCustomTokens />} buttonLabel="Add" />
+        <AddedTokens address={address} />
+        {/* TODO: Add tokens
         {ibc?.map((token, key) => (
           <IBCAmount token={token} key={key} />
-        ))}
+        ))} */}
       </Card>
     </section>
   );
