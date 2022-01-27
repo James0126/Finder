@@ -11,12 +11,12 @@ const IBCAmount = ({ address, denom }: { address: string; denom: string }) => {
 
   if (!ibcWhitelist || !balance) return null;
 
-  const ibcBalance = balance.filter((coin) => isDenomIBC(coin.denom)).toArray();
+  const ibcBalance = balance
+    .filter((coin) => isDenomIBC(coin.denom) && coin.denom === denom)
+    .toArray();
   const whitelist = ibcWhitelist[network];
 
   const ibc = ibcBalance.map((ibc) => {
-    const isListed = ibc.denom === denom;
-    if (!isListed) return null;
     const hash = ibc.denom.replace("ibc/", "");
     const { symbol, icon } = whitelist[hash];
     const value = readAmount(ibc.amount.toString(), { comma: true });
@@ -26,18 +26,9 @@ const IBCAmount = ({ address, denom }: { address: string; denom: string }) => {
   return (
     <>
       {ibc.length
-        ? ibc.map((coin) => {
-            if (!coin) return null;
-            const { value, symbol, icon } = coin;
-            return (
-              <Amount
-                amount={value}
-                denom={symbol}
-                iconUrl={icon}
-                key={symbol}
-              />
-            );
-          })
+        ? ibc.map(({ value, symbol, icon }) => (
+            <Amount amount={value} denom={symbol} iconUrl={icon} key={symbol} />
+          ))
         : null}
     </>
   );
