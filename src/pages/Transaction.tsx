@@ -4,60 +4,47 @@ import Message from "../containers/transaction/Message";
 import Action from "../containers/transaction/Action";
 import List from "../components/List";
 import { useTxByHash } from "../queries/transaction";
-import { combineState } from "../queries/query";
-import PageRenderer from "./PageRenderer";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
-  const { data, ...status } = useTxByHash(hash);
-  const state = combineState(status);
+  const { data } = useTxByHash(hash);
 
-  const render = () => {
-    if (!data) {
-      return null;
-    }
+  if (!data) {
+    return null;
+  }
 
-    const { chainId, code, compactFee, compactMessage, raw_log, logs } =
-      data.tx.byHash;
+  const { chainId, code, compactFee, compactMessage, raw_log, logs } =
+    data.tx.byHash;
 
-    const { amounts } = compactFee;
-    const isSuccess = !code;
+  const { amounts } = compactFee;
+  const isSuccess = !code;
 
-    const contents = [
-      {
-        title: "chain ID",
-        content: chainId,
-      },
-      {
-        title: "status",
-        content: isSuccess ? "Success" : "Failed",
-      },
-      {
-        title: "Fee",
-        content: <Fee coins={amounts} />,
-      },
-      {
-        title: "Action",
-        content: <Action logs={logs} msgs={compactMessage} />,
-      },
-    ];
-
-    return (
-      <>
-        {!isSuccess ?? raw_log}
-        <List data={contents} />
-        <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
-      </>
-    );
-  };
+  const contents = [
+    {
+      title: "chain ID",
+      content: chainId,
+    },
+    {
+      title: "status",
+      content: isSuccess ? "Success" : "Failed",
+    },
+    {
+      title: "Fee",
+      content: <Fee coins={amounts} />,
+    },
+    {
+      title: "Action",
+      content: <Action logs={logs} msgs={compactMessage} />,
+    },
+  ];
 
   return (
-    <PageRenderer state={state}>
-      <section>
-        <h1>Trasaction Detail</h1>
-        {render()}
-      </section>
-    </PageRenderer>
+    <section>
+      <h1>Trasaction Detail</h1>
+      {!isSuccess ?? raw_log}
+      <List data={contents} />
+      <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
+    </section>
   );
 };
 

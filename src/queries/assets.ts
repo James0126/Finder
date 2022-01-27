@@ -5,11 +5,6 @@ import { RefetchOptions } from "./query";
 
 const config = { baseURL: ASSET };
 
-export interface Props extends CW20TokenItem, QueryState {
-  balance?: string;
-  value?: string | number;
-}
-
 export const useTerraAssets = <T>(path: string, disabled?: boolean) =>
   useQuery<T, AxiosError>(
     [path, "assets"],

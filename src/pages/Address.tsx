@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import Loading from "../components/Loading";
-import { useAccountInfo, useContractInfo } from "../queries/address";
+import { useAccountInfo } from "../queries/auth";
+import { useContractInfo } from "../queries/wasm";
 import Account from "./Account";
 import NotFound from "./NotFound";
 import Contract from "./Contract";

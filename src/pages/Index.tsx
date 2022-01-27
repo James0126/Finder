@@ -1,5 +1,4 @@
 const Index = () => {
-  //TODO: Tokens price chart ...
   return <>Landing page</>;
 };
 
