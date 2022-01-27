@@ -6,7 +6,7 @@ import FinderLink from "../../components/FinderLink";
 import Token from "./Token";
 
 export interface TokenItemProps {
-  token: Token;
+  token: string;
   title: string; // ibc:symbol | cw20:symbol | cw721:name
   icon?: string;
   contract?: string; // cw20 | cw721

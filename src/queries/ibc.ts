@@ -3,7 +3,7 @@ import { isDenomIBC } from "@terra.kitchen/utils";
 import { useLCDClient } from "./lcdClient";
 import { RefetchOptions } from "./query";
 
-export const useIBCBaseDenom = (denom: Denom, enabled: boolean) => {
+export const useIBCBaseDenom = (denom: string, enabled: boolean) => {
   const lcd = useLCDClient();
 
   return useQuery(

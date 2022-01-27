@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 interface Props extends Partial<CW20TokenItem> {
   // customizable
-  token: Token;
+  token: string;
   extra?: ReactNode;
   className?: string;
 

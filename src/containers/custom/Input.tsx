@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { WithTokenItem } from "./tokens";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  token?: Token;
+  token?: string;
   selectBefore?: ReactNode;
 }
 

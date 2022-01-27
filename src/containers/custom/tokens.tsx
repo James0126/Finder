@@ -9,7 +9,7 @@ import { useCW20Whitelist, useIBCTokens } from "../../queries/assets";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { useIBCBaseDenom } from "../../queries/ibc";
 
-export const useTokenItem = (token: Token): CW20TokenItem | undefined => {
+export const useTokenItem = (token: string): CW20TokenItem | undefined => {
   const network = useNetworkName();
 
   /* CW20 */
@@ -54,7 +54,7 @@ export const useTokenItem = (token: Token): CW20TokenItem | undefined => {
 };
 
 interface Props {
-  token: Token;
+  token: string;
   children: (token: CW20TokenItem) => ReactNode;
 }
 
@@ -67,7 +67,7 @@ export const WithTokenItem = ({ token, children }: Props) => {
 /* helpers */
 export const getIcon = (path: string) => `${ASSET}/icon/svg/${path}`;
 
-export const readNativeDenom = (denom: Denom): CW20TokenItem => {
+export const readNativeDenom = (denom: string): CW20TokenItem => {
   const symbol = readDenom(denom);
   const path = isDenomTerra(denom) ? `Terra/${symbol}.svg` : `${symbol}.svg`;
   return {
@@ -82,8 +82,8 @@ export const readNativeDenom = (denom: Denom): CW20TokenItem => {
 };
 
 export const readIBCDenom = (
-  denom: Denom,
-  base_denom?: Denom
+  denom: string,
+  base_denom?: string
 ): CW20TokenItem => {
   const symbol = base_denom && readDenom(base_denom);
   const path = symbol ? `ibc/${symbol}.svg` : "IBC.svg";

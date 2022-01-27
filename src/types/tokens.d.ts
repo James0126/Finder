@@ -27,10 +27,3 @@ interface IBCTokenItem extends IBCTokenInfoResponse {
   name: string;
   icon: string;
 }
-
-/* coin | token */
-type CoinDenom = string; // uluna | uusd
-type IBCDenom = string; // ibc/...
-type TokenAddress = string;
-type Denom = CoinDenom | IBCDenom;
-type Token = Denom | TokenAddress;
