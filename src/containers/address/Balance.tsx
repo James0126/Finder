@@ -13,11 +13,7 @@ const Balance = ({ address }: { address: string }) => {
   return (
     <section>
       <Card title={"Coins"}>
-        {native?.length ? (
-          <NativeBalance coins={native} />
-        ) : (
-          "This account doesn't hold any coins yet."
-        )}
+        <NativeBalance coins={native} />
       </Card>
 
       <Card title={"Tokens"}>

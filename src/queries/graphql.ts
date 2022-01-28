@@ -6,7 +6,7 @@ import { RefetchOptions } from "./query";
 //TODO: Refactor codes
 const TEST_URL = "https://finder.test-alpac4.com/graphql";
 
-export const useGraphQL = (query: DocumentNode) => {
+export const useGraphQL = (query: DocumentNode, queryKey?: string) => {
   const network = useNetworkName();
   const client = new ApolloClient({
     uri: TEST_URL,
@@ -14,7 +14,7 @@ export const useGraphQL = (query: DocumentNode) => {
   });
 
   return useQuery(
-    [network, query, "graphql"],
+    [network, query, "graphql", queryKey],
     async () => {
       const { data } = await client.query({ query });
       return data;

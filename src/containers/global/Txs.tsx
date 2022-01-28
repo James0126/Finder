@@ -18,23 +18,23 @@ interface Props {
 const Txs = (props: Props) => {
   const { txInfos, columns, loading, offset, getTxRow, pagination, height } =
     props;
-  const [txs, setTxs] = useState<Data<TxInfo>[]>([]);
+  const [txData, setTxData] = useState<Data<TxInfo>[]>([]);
   const [value, setValue] = useState<string>("");
 
   useEffect(() => {
-    setTxs([]);
-  }, [height]);
+    setTxData([]);
+  }, [height, value]);
 
   useEffect(() => {
     if (txInfos) {
       const dataSource = getTxRow(txInfos, value);
-      setTxs((txs) => [...txs, ...dataSource]);
+      setTxData((data) => [...data, ...dataSource]);
     }
   }, [txInfos, getTxRow, value]);
 
   //transaction search
   const onSearch = (input: string) => {
-    const searchTx = txs.map((tx) => {
+    const searchTx = txData.map((tx) => {
       const { raw_log } = tx.data;
       raw_log.includes(input)
         ? (tx.classname = undefined)
@@ -43,15 +43,15 @@ const Txs = (props: Props) => {
     });
 
     setValue(input);
-    setTxs(searchTx);
+    setTxData(searchTx);
   };
 
   return (
     <>
-      {txs.length ? (
+      {txData.length ? (
         <>
           <SearchInput onSearch={onSearch} />
-          <Table columns={columns} dataSource={txs} />
+          <Table columns={columns} dataSource={txData} />
           <PaginationButton
             action={pagination}
             offset={offset}

@@ -4,15 +4,15 @@ import TerraAddress from "../global/TerraAddress";
 
 const EventLog = ({ log }: { log: TxLog }) => {
   const { events } = log;
+
+  const getAddress = (value: string) =>
+    isTerraAddress(value) ? <TerraAddress address={value} /> : value;
+
   return (
     <article>
       {events.map(({ type, attributes }) => {
         const dataSource = attributes.map(({ key, value }) => {
-          const content = isTerraAddress(value) ? (
-            <TerraAddress address={value} />
-          ) : (
-            value
-          );
+          const content = getAddress(value);
           return { title: key, content: content };
         });
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
 import { combineState } from "../../queries/query";
@@ -12,6 +12,10 @@ const Transactions = ({ height }: { height: string }) => {
   const { isLoading } = combineState(state);
   const offset = data?.tx.byHeight.offset;
   const txInfos = data?.tx.byHeight.txInfos;
+
+  useEffect(() => {
+    setOffset(undefined);
+  }, [height]);
 
   const getTxRow = (txInfos: TxInfo[], value?: string) =>
     txInfos.map((tx) => {

@@ -136,7 +136,7 @@ export const useTxsByHeight = (
 ): UseQueryResult<TxsByHeight> => {
   const { chainID } = useCurrentChain();
   const queryMsg = queryTxsByHeight(height, chainID, offset);
-  return useGraphQL(queryMsg);
+  return useGraphQL(queryMsg, height);
 };
 
 export const useTxByHash = (hash: string): UseQueryResult<TxByHash> => {
