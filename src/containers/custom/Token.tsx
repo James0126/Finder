@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Image from "../../components/Image";
-import { DefaultCW20Icon } from "../../config/constants";
+import { DEFAULT_CW20_ICON } from "../../config/constants";
 
 //station component
 
@@ -18,7 +18,7 @@ interface Props extends Partial<CW20TokenItem> {
 // Custom token search result
 const Token = ({ token, icon, symbol, name, ...props }: Props) => {
   const { extra, title = symbol, description } = props;
-  const tokenIcon = icon ?? DefaultCW20Icon;
+  const tokenIcon = icon ?? DEFAULT_CW20_ICON;
   return (
     <>
       <header>

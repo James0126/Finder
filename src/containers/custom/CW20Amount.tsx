@@ -1,6 +1,6 @@
 import { readAmount } from "@terra.kitchen/utils";
 import Amount from "../../components/Amount";
-import { DefaultCW20Icon } from "../../config/constants";
+import { DEFAULT_CW20_ICON } from "../../config/constants";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { useCW20Tokens } from "../../queries/assets";
 import { useInitMsg, useTokenBalance } from "../../queries/wasm";
@@ -21,7 +21,7 @@ const CW20Amount = ({ address, ...item }: Props) => {
   const amount = readAmount(balance, { decimals: decimals, comma: true });
   const cw20Token = cw20[network][token];
   const symbol = cw20Token?.symbol ?? tokenInfo?.symbol;
-  const icon = cw20Token?.icon ?? DefaultCW20Icon;
+  const icon = cw20Token?.icon ?? DEFAULT_CW20_ICON;
 
   return <Amount amount={amount} denom={symbol} iconUrl={icon} />;
 };

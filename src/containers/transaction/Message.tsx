@@ -1,9 +1,9 @@
-import { AccAddress, ValAddress } from "@terra-money/terra.js";
-import FinderLink from "../../components/FinderLink";
 import List from "../../components/List";
 import Card from "../../components/Card";
+import TerraAddress from "../global/TerraAddress";
 import EventLog from "./EventLog";
 import WasmMsg from "./WasmMsg";
+import { isTerraAddress } from "../../scripts/utility";
 
 interface Props {
   msgs: Message[];
@@ -17,14 +17,8 @@ const getContent = (msg: any, key: string) => {
 
   if (typeof data === "object") {
     return <WasmMsg msg={data} />;
-  } else if (AccAddress.validate(data)) {
-    return <FinderLink short>{data}</FinderLink>;
-  } else if (ValAddress.validate(data)) {
-    return (
-      <FinderLink short validator>
-        {data}
-      </FinderLink>
-    );
+  } else if (isTerraAddress(data)) {
+    return <TerraAddress address={data} />;
   }
 
   return data;
