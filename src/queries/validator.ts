@@ -61,8 +61,6 @@ export const useVotingPowerRate = (pubKey: string) => {
   return { data, ...state };
 };
 
-export const useSelfDelegation = () => {};
-
 export const getCalcVotingPowerRate = (
   validators: DelegateValidator[],
   pubKey: string

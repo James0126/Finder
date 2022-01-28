@@ -23,13 +23,18 @@ const IBCAmount = ({ address, denom }: { address: string; denom: string }) => {
     return { value, symbol, icon };
   });
 
+  const key = denom.replace("ibc/", "");
+  const { symbol, icon } = whitelist[key];
+
   return (
     <>
-      {ibc.length
-        ? ibc.map(({ value, symbol, icon }) => (
-            <Amount amount={value} denom={symbol} iconUrl={icon} key={symbol} />
-          ))
-        : null}
+      {ibc.length ? (
+        ibc.map(({ value, symbol, icon }) => (
+          <Amount amount={value} denom={symbol} iconUrl={icon} key={symbol} />
+        ))
+      ) : (
+        <Amount amount={"0"} denom={symbol} iconUrl={icon} key={symbol} />
+      )}
     </>
   );
 };
