@@ -20,7 +20,7 @@ const Transaction = () => {
   const { amounts } = compactFee;
   const isSuccess = !code;
 
-  const contents = [
+  const dataSource = [
     {
       title: "chain ID",
       content: chainId,
@@ -47,7 +47,7 @@ const Transaction = () => {
     <section>
       <h1>Trasaction Detail</h1>
       {!isSuccess ?? raw_log}
-      <List data={contents} />
+      <List dataSource={dataSource} />
       <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
     </section>
   );

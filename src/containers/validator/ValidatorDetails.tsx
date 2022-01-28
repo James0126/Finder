@@ -74,7 +74,7 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
       {/* TODO: Add status */}
       <span>{"status"}</span>
       <p>{details}</p>
-      <List data={[...contents, ...commissions, ...addresses]} />
+      <List dataSource={[...contents, ...commissions, ...addresses]} />
     </Card>
   );
 };

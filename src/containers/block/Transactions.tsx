@@ -60,6 +60,7 @@ const Transactions = ({ height }: { height: string }) => {
         offset={offset}
         columns={columns}
         loading={isLoading}
+        height={height}
       />
     </section>
   );

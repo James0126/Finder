@@ -31,7 +31,7 @@ const Block = () => {
     hex
   );
   const moniker = getFindMoniker(validators)(operatorAddress);
-  const contents = [
+  const dataSource = [
     {
       title: "height",
       content: height,
@@ -68,7 +68,7 @@ const Block = () => {
   return (
     <section>
       <h1>Block Page</h1>
-      <List data={contents} />
+      <List dataSource={dataSource} />
       {buttons}
       <Transactions height={height} />
     </section>

@@ -1,10 +1,10 @@
 import { AccAddress } from "@terra-money/terra.js";
-import WithSearchInput from "./WithSearchInput";
-import TokenList from "./TokenList";
 import { useCustomTokensCW721 } from "../settings/CustomTokens";
 import { useCW721Contracts } from "../../queries/assets";
-import Fetching from "./Fetching";
 import { useInitMsg } from "../../queries/wasm";
+import WithSearchInput from "./WithSearchInput";
+import TokenList from "./TokenList";
+import Fetching from "./Fetching";
 
 //station component
 

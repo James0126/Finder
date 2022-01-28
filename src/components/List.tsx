@@ -2,18 +2,20 @@ interface Content {
   title?: string;
   content: any;
   render?: (data: any) => JSX.Element | string;
+  hide?: boolean;
 }
 
 //TODO: Refactor codes
-const List = ({ data }: { data: Content[] }) => (
+const List = ({ dataSource }: { dataSource: Content[] }) => (
   <article>
-    {data.map(({ title, content, render }, key) => {
+    {dataSource.map(({ title, content, render, hide }, key) => {
       const data = render && render(content);
-      return (
+
+      return !hide ? (
         <div key={key}>
           {title && <b>{title}</b>} <span>{data || content}</span>
         </div>
-      );
+      ) : null;
     })}
   </article>
 );

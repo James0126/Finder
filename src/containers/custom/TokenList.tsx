@@ -1,5 +1,5 @@
-import Fetching from "./Fetching";
 import TokenItem, { TokenItemProps } from "./TokenItem";
+import Fetching from "./Fetching";
 import styles from "./TokenList.module.scss";
 
 //station component

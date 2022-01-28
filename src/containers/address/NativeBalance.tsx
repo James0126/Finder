@@ -5,12 +5,12 @@ import { sortByDenom } from "../../scripts/coin";
 
 const NativeBalance = ({ coins }: { coins: Coin[] }) => {
   const native = sortByDenom(coins);
-  const data = native.map((coin) => ({
+  const dataSource = native.map((coin) => ({
     content: coin,
     render: (coin: Coin) => <NativeAmount coin={coin} />,
   }));
 
-  return <List data={data} />;
+  return <List dataSource={dataSource} />;
 };
 
 export default NativeBalance;

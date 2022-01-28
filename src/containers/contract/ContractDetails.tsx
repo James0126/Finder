@@ -1,6 +1,7 @@
 import { ContractInfo } from "@terra-money/terra.js";
 import Dropdown from "../../components/Dropdown";
 import FinderLink from "../../components/FinderLink";
+import List from "../../components/List";
 import Modal from "../../components/Modal";
 import Query from "./Query";
 
@@ -8,22 +9,27 @@ const ContractDetails = ({ contractInfo }: { contractInfo: ContractInfo }) => {
   const { init_msg, admin, code_id } = contractInfo;
   const msg = JSON.stringify(init_msg, undefined, 2);
 
-  return (
-    <article>
-      <Modal buttonLabel={"Query"} modalContent={<Query />} />
-      {/* TODO: Table */}
-      <div>code ID : {code_id}</div>
-      {admin && (
-        <div>
-          admin : <FinderLink>{admin}</FinderLink>
-        </div>
-      )}
-      <div>
-        init msg :
+  const dataSource = [
+    { title: "code ID", content: code_id },
+    {
+      title: "admin",
+      content: <FinderLink>{admin}</FinderLink>,
+      hide: !admin,
+    },
+    {
+      title: "init msg",
+      content: (
         <Dropdown>
           <pre>{msg}</pre>
         </Dropdown>
-      </div>
+      ),
+    },
+  ];
+
+  return (
+    <article>
+      <Modal buttonLabel={"Query"} modalContent={<Query />} />
+      <List dataSource={dataSource} />
     </article>
   );
 };

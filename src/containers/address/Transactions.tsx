@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Coin } from "@terra-money/terra.js";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
-import { readAmount, readDenom } from "@terra.kitchen/utils";
-import Amount from "../../components/Amount";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByAddress } from "../../queries/transaction";
 import { combineState } from "../../queries/query";
@@ -10,8 +8,10 @@ import { totalAmounts } from "../../scripts/utility";
 import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
 import Txs from "../global/Txs";
 import Fee from "../transaction/Fee";
+import CoinComponent from "../token/Coin";
 import s from "./Transactions.module.scss";
 
+//TODO: Refactor
 const Transactions = ({ address }: { address: string }) => {
   const [pageOffset, setOffset] = useState<string>();
   const { data, ...status } = useTxsByAddress(address, pageOffset);
@@ -52,7 +52,7 @@ const Transactions = ({ address }: { address: string }) => {
     },
   ];
 
-  const getTxRow = (txInfos: TxInfo[], value?: string) =>
+  const getTxRow = (txInfos: TxInfo[], keyword?: string) =>
     txInfos.map((tx) => {
       const { compactFee, compactMessage, logs, height, txhash, raw_log } = tx;
       const { amounts } = compactFee;
@@ -64,8 +64,8 @@ const Transactions = ({ address }: { address: string }) => {
         address
       );
       const [amountIn, amountOut] = totalAmounts(address, matchedLogs);
-      const classname = value
-        ? raw_log.includes(value)
+      const classname = keyword
+        ? raw_log.includes(keyword)
           ? undefined
           : s.hide
         : undefined;
@@ -102,10 +102,8 @@ export default Transactions;
 //TODO: Refactor codes
 const renderCoins = (coins: Coin[]) => (
   <>
-    {coins?.map((coin, key) => {
-      const amount = readAmount(coin.amount.toString(), { comma: true });
-      const denom = coin.denom.length > 20 ? "Tokens" : readDenom(coin.denom);
-      return <Amount key={key} amount={amount} denom={denom} />;
-    })}
+    {coins?.map((coin, key) => (
+      <CoinComponent coin={coin} key={key} />
+    ))}
   </>
 );

@@ -34,14 +34,14 @@ const Message = ({ msgs, logs, isSuccess }: Props) => (
   <article>
     {msgs.map(({ type, message }, key) => {
       const keys = Object.keys(message);
-      const data = keys.map((key) => {
+      const dataSource = keys.map((key) => {
         const render = getContent(message, key);
         return { title: key, content: render };
       });
 
       return (
         <Card title={type} key={key}>
-          <List data={data} />
+          <List dataSource={dataSource} />
           {isSuccess && <EventLog log={logs[key]} />}
         </Card>
       );

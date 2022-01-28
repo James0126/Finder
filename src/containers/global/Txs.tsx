@@ -8,15 +8,22 @@ interface Props {
   txInfos?: TxInfo[];
   loading?: boolean;
   offset?: string;
-  getTxRow: (txInfos: TxInfo[], value?: string) => any;
+  height?: string;
+  getTxRow: (txInfos: TxInfo[], value?: string) => any[];
   pagination: () => void;
   columns: Column[];
 }
+//TODO: Refactor
 
 const Txs = (props: Props) => {
-  const { txInfos, columns, loading, offset, getTxRow, pagination } = props;
-  const [txs, setTxs] = useState<Data<any>[]>([]);
+  const { txInfos, columns, loading, offset, getTxRow, pagination, height } =
+    props;
+  const [txs, setTxs] = useState<Data<TxInfo>[]>([]);
   const [value, setValue] = useState<string>("");
+
+  useEffect(() => {
+    setTxs([]);
+  }, [height]);
 
   useEffect(() => {
     if (txInfos) {
@@ -25,6 +32,7 @@ const Txs = (props: Props) => {
     }
   }, [txInfos, getTxRow, value]);
 
+  //transaction search
   const onSearch = (input: string) => {
     const searchTx = txs.map((tx) => {
       const { raw_log } = tx.data;

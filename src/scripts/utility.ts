@@ -71,3 +71,10 @@ export const totalAmounts = (
     return [];
   }
 };
+
+export const isTerraAddress = (value: string) => {
+  if (AccAddress.validate(value) || ValAddress.validate(value)) {
+    return true;
+  }
+  return false;
+};
