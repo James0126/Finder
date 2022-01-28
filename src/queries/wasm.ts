@@ -7,7 +7,7 @@ import { RefetchOptions } from "./query";
 export const useContractInfo = (address: string) => {
   const lcd = useLCDClient();
   return useQuery(
-    ["ContractInfo", address],
+    ["ContractInfo", lcd.config, address],
     () => lcd.wasm.contractInfo(address),
     { ...RefetchOptions.INFINITY, enabled: AccAddress.validate(address) }
   );
@@ -18,7 +18,7 @@ export const useGetContractQuery = () => {
   const lcd = useLCDClient();
 
   return <T>(contract?: AccAddress, query?: object) => ({
-    queryKey: ["ContractQuery", contract, query],
+    queryKey: ["ContractQuery", lcd.config, contract, query],
     queryFn: async () => {
       if (!(contract && query)) return;
       return await lcd.wasm.contractQuery<T>(contract, query);
@@ -30,7 +30,7 @@ export const useGetContractQuery = () => {
 export const useInitMsg = <T>(address: string) => {
   const lcd = useLCDClient();
   return useQuery<T>(
-    ["ContractQuery", "initMsg", address],
+    ["ContractQuery", "initMsg", lcd.config, address],
     async () => {
       const d = await lcd.wasm.contractInfo(address);
       return d.init_msg;

@@ -116,6 +116,7 @@ const queryTxByHash = (hash: string, chainId: string) => gql`
               }
               timestamp
               raw_log
+              height
             }
         }
     }

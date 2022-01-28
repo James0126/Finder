@@ -11,6 +11,8 @@ import { combineState } from "../../queries/query";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import Fetching from "./Fetching";
 
+//station component
+
 interface Props {
   whitelist: { ibc: IBCTokenResponse; cw20: CW20TokenResponse };
   keyword: string;

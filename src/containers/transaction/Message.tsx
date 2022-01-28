@@ -18,9 +18,13 @@ const getContent = (msg: any, key: string) => {
   if (typeof data === "object") {
     return <WasmMsg msg={data} />;
   } else if (AccAddress.validate(data)) {
-    return <FinderLink>{data}</FinderLink>;
+    return <FinderLink short>{data}</FinderLink>;
   } else if (ValAddress.validate(data)) {
-    return <FinderLink validator>{data}</FinderLink>;
+    return (
+      <FinderLink short validator>
+        {data}
+      </FinderLink>
+    );
   }
 
   return data;

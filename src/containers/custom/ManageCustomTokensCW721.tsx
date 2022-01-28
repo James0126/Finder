@@ -6,6 +6,8 @@ import { useCW721Contracts } from "../../queries/assets";
 import Fetching from "./Fetching";
 import { useInitMsg } from "../../queries/wasm";
 
+//station component
+
 interface Props {
   whitelist: CW721Whitelist;
   keyword: string;

@@ -4,6 +4,7 @@ import Message from "../containers/transaction/Message";
 import Action from "../containers/transaction/Action";
 import List from "../components/List";
 import { useTxByHash } from "../queries/transaction";
+import FinderLink from "../components/FinderLink";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
@@ -13,7 +14,7 @@ const Transaction = () => {
     return null;
   }
 
-  const { chainId, code, compactFee, compactMessage, raw_log, logs } =
+  const { chainId, code, compactFee, compactMessage, raw_log, logs, height } =
     data.tx.byHash;
 
   const { amounts } = compactFee;
@@ -29,11 +30,15 @@ const Transaction = () => {
       content: isSuccess ? "Success" : "Failed",
     },
     {
-      title: "Fee",
+      title: "height",
+      content: <FinderLink block>{height}</FinderLink>,
+    },
+    {
+      title: "fee",
       content: <Fee coins={amounts} />,
     },
     {
-      title: "Action",
+      title: "action",
       content: <Action logs={logs} msgs={compactMessage} />,
     },
   ];

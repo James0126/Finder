@@ -4,9 +4,11 @@ import List from "../../components/List";
 
 const getAddress = (value: string) =>
   AccAddress.validate(value) ? (
-    <FinderLink>{value}</FinderLink>
+    <FinderLink short>{value}</FinderLink>
   ) : ValAddress.validate(value) ? (
-    <FinderLink validator>{value}</FinderLink>
+    <FinderLink short validator>
+      {value}
+    </FinderLink>
   ) : (
     value
   );

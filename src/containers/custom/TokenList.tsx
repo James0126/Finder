@@ -2,6 +2,8 @@ import Fetching from "./Fetching";
 import TokenItem, { TokenItemProps } from "./TokenItem";
 import styles from "./TokenList.module.scss";
 
+//station component
+
 interface Props<T> extends QueryState {
   results: T[];
   renderTokenItem: (item: T) => TokenItemProps;
@@ -19,7 +21,7 @@ const TokenList = <T extends { symbol: string }>(props: Props<T>) => {
   const empty = !state.isLoading && !results.length;
 
   return state.error || empty ? (
-    <>Empty</>
+    <>{/* TODO: Empty */}Empty</>
   ) : (
     <Fetching {...state} height={2}>
       <ul className={styles.results}>

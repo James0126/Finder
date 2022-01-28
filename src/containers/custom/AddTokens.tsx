@@ -3,7 +3,9 @@ import {
   useCustomTokensIBC,
 } from "../settings/CustomTokens";
 import IBCAmount from "../token/IBCAmount";
-import CW20Asset from "./CW20Asset";
+import CW20Amount from "./CW20Amount";
+
+//station component
 
 const AddTokens = ({ address }: { address: string }) => {
   const { list: ibc } = useCustomTokensIBC();
@@ -21,7 +23,7 @@ const AddTokens = ({ address }: { address: string }) => {
       {!cw20.length
         ? null
         : cw20.map((item) => (
-            <CW20Asset address={address} {...item} key={item.token} />
+            <CW20Amount address={address} {...item} key={item.token} />
           ))}
     </>
   );

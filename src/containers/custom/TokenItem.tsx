@@ -5,6 +5,8 @@ import { truncate } from "@terra.kitchen/utils";
 import FinderLink from "../../components/FinderLink";
 import Token from "./Token";
 
+//station component
+
 export interface TokenItemProps {
   token: string;
   title: string; // ibc:symbol | cw20:symbol | cw721:name

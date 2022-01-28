@@ -4,6 +4,8 @@ import styles from "./Fetching.module.scss";
 import useTimeout from "../settings/useTimeout";
 import Card from "../../components/Card";
 
+//station component
+
 interface Props extends QueryState {
   height?: number;
 }
@@ -47,6 +49,7 @@ const Fetching: FC<Props> = ({ children, ...state }) => {
       {(progress, wrong) => (
         <>
           {progress}
+          {/* TODO Error message */}
           {wrong ? <Card>Error</Card> : children}
         </>
       )}

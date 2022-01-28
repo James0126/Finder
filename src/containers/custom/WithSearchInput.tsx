@@ -1,6 +1,8 @@
 import { ReactNode, useState } from "react";
 import { SearchInput } from "./Input";
 
+//station component
+
 interface Props {
   children: (input: string) => ReactNode;
 }

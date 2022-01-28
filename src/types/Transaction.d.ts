@@ -44,7 +44,7 @@ interface TxInfo {
   timestamp: string;
   raw_log: string;
   logs: TxLog[];
-  height: number;
+  height: string;
   txhash: string;
 }
 

@@ -9,6 +9,8 @@ import { useCW20Whitelist, useIBCTokens } from "../../queries/assets";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { useIBCBaseDenom } from "../../queries/ibc";
 
+//station component
+
 export const useTokenItem = (token: string): CW20TokenItem | undefined => {
   const network = useNetworkName();
 
