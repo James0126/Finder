@@ -5,52 +5,59 @@ import Action from "../containers/transaction/Action";
 import List from "../components/List";
 import { useTxByHash } from "../queries/transaction";
 import FinderLink from "../components/FinderLink";
+import { combineState } from "../queries/query";
+import Page from "../components/Page";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
-  const { data } = useTxByHash(hash);
+  const { data, ...state } = useTxByHash(hash);
 
-  if (!data) {
-    return null;
-  }
+  const status = combineState(state);
 
-  const { chainId, code, compactFee, compactMessage, raw_log, logs, height } =
-    data.tx.byHash;
+  const render = () => {
+    if (!data) {
+      return null;
+    }
 
-  const { amounts } = compactFee;
-  const isSuccess = !code;
+    const { chainId, code, compactFee, compactMessage, raw_log, logs, height } =
+      data.tx.byHash;
 
-  const dataSource = [
-    {
-      title: "chain ID",
-      content: chainId,
-    },
-    {
-      title: "status",
-      content: isSuccess ? "Success" : "Failed",
-    },
-    {
-      title: "height",
-      content: <FinderLink block>{height}</FinderLink>,
-    },
-    {
-      title: "fee",
-      content: <Fee coins={amounts} />,
-    },
-    {
-      title: "action",
-      content: <Action logs={logs} msgs={compactMessage} />,
-    },
-  ];
+    const { amounts } = compactFee;
+    const isSuccess = !code;
 
-  return (
-    <section>
-      <h1>Trasaction Detail</h1>
-      {!isSuccess ?? raw_log}
-      <List dataSource={dataSource} />
-      <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
-    </section>
-  );
+    const dataSource = [
+      {
+        title: "chain ID",
+        content: chainId,
+      },
+      {
+        title: "status",
+        content: isSuccess ? "Success" : "Failed",
+      },
+      {
+        title: "height",
+        content: <FinderLink block>{height}</FinderLink>,
+      },
+      {
+        title: "fee",
+        content: <Fee coins={amounts} />,
+      },
+      {
+        title: "action",
+        content: <Action logs={logs} msgs={compactMessage} />,
+      },
+    ];
+    return (
+      <>
+        <h1>Trasaction Detail</h1>
+        {!isSuccess ?? raw_log}
+        <List dataSource={dataSource} />
+        <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
+      </>
+    );
+  };
+
+  return <Page state={status}>{render()}</Page>;
 };
 
 export default Transaction;

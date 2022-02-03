@@ -1,9 +1,6 @@
 import { readAmount, readDenom } from "@terra.kitchen/utils";
-import {
-  getFindMoniker,
-  useDelegations,
-  useValidators,
-} from "../../queries/validator";
+import { getFindMoniker } from "../../queries/validator";
+import { useDelegations, useValidators } from "../../queries/staking";
 import Card from "../../components/Card";
 import Amount from "../../components/Amount";
 import Table from "../../components/Table";

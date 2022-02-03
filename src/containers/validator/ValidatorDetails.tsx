@@ -2,10 +2,7 @@ import { useMemo } from "react";
 import { AccAddress, Validator } from "@terra-money/terra.js";
 import { readPercent } from "@terra.kitchen/utils";
 import { useUptime } from "../../queries/oracle";
-import {
-  calcSelfDelegation,
-  useVotingPowerRate,
-} from "../../queries/validator";
+import { useSelfDelegation, useVotingPowerRate } from "../../queries/validator";
 import { toNow } from "../../scripts/date";
 import FinderLink from "../../components/FinderLink";
 import Card from "../../components/Card";
@@ -20,6 +17,7 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
   const { moniker, details } = description;
   const { data: votingPower } = useVotingPowerRate(consensus_pubkey.key);
   const { data: uptime } = useUptime(operator_address);
+  const selfDelegation = useSelfDelegation(validator);
 
   const contents = useMemo(
     () => [
@@ -29,14 +27,14 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
       },
       {
         title: "Self delegation",
-        content: readPercent(calcSelfDelegation(validator)),
+        content: readPercent(selfDelegation),
       },
       {
         title: "Uptime  Last 10k blocks",
         content: readPercent(uptime),
       },
     ],
-    [votingPower, validator, uptime]
+    [votingPower, uptime, selfDelegation]
   );
 
   const commissions = [

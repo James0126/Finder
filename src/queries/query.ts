@@ -1,3 +1,5 @@
+import { LAZY_LIMIT } from "../config/constants";
+
 /* refetch */
 export const RefetchOptions = {
   DEFAULT: /* onMount, onFocus */ {},
@@ -12,3 +14,8 @@ export const combineState = (...results: QueryState[]) => ({
   isSuccess: results.every((result) => result.isSuccess),
   error: results.find((result) => result.error)?.error,
 });
+
+/* params */
+export const Pagination = {
+  "pagination.limit": String(LAZY_LIMIT),
+};

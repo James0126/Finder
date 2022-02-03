@@ -4,6 +4,7 @@ import Card from "../../components/Card";
 import Modal from "../../components/Modal";
 import AddTokens from "../custom/AddTokens";
 import ManageCustomTokens from "../custom/ManageCustomTokens";
+import ManageCustomTokensCW721 from "../custom/ManageCustomTokensCW721";
 import NativeBalance from "./NativeBalance";
 
 const Balance = ({ address }: { address: string }) => {
@@ -19,6 +20,10 @@ const Balance = ({ address }: { address: string }) => {
       <Card title={"Tokens"}>
         <Modal modalContent={<ManageCustomTokens />} buttonLabel="Add" />
         <AddTokens address={address} />
+      </Card>
+
+      <Card title={"NFT"}>
+        <Modal modalContent={<ManageCustomTokensCW721 />} buttonLabel="Add" />
       </Card>
     </section>
   );

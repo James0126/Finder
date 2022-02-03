@@ -2,26 +2,26 @@ import { useParams } from "react-router";
 import Loading from "../components/Loading";
 import { useAccountInfo } from "../queries/auth";
 import { useContractInfo } from "../queries/wasm";
+import { combineState } from "../queries/query";
 import Account from "./Account";
 import NotFound from "./NotFound";
 import Contract from "./Contract";
 
 const Address = () => {
   const { address = "" } = useParams();
-  const contract = useContractInfo(address);
-  const account = useAccountInfo(address);
+  const { data: contract, ...contractState } = useContractInfo(address);
+  const { data: account, ...accountState } = useAccountInfo(address);
+  const { isLoading } = combineState(contractState, accountState);
 
-  if (contract.status === "loading" || account.status === "loading") {
-    return <Loading />;
-  }
-
-  return contract.data ? (
-    <Contract contractInfo={contract.data} address={address} />
-  ) : account.data ? (
+  const render = contract ? (
+    <Contract contractInfo={contract} address={address} />
+  ) : account ? (
     <Account address={address} />
   ) : (
     <NotFound />
   );
+
+  return isLoading ? <Loading /> : render;
 };
 
 export default Address;

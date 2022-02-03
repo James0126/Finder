@@ -9,12 +9,13 @@ const NativeBalance = ({ coins }: { coins?: Coin[] }) => {
   }
 
   const native = sortByDenom(coins);
-  const dataSource = native.map((coin) => ({
-    content: coin,
-    render: (coin: Coin) => <NativeAmount coin={coin} />,
-  }));
-
-  return <List dataSource={dataSource} />;
+  return (
+    <List
+      dataSource={native.map((coin) => ({
+        content: <NativeAmount coin={coin} />,
+      }))}
+    />
+  );
 };
 
 export default NativeBalance;

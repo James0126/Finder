@@ -1,6 +1,4 @@
 import { useMemo } from "react";
-import { useQuery } from "react-query";
-import { path, uniqBy } from "ramda";
 import BigNumber from "bignumber.js";
 import { bech32 } from "bech32";
 import {
@@ -8,38 +6,8 @@ import {
   DelegateValidator,
   Validator,
 } from "@terra-money/terra.js";
-/* TODO: Fix terra.js */
-import { BondStatus } from "@terra-money/terra.proto/cosmos/staking/v1beta1/staking";
-import { LAZY_LIMIT } from "../config/constants";
-import { useLCDClient } from "./lcdClient";
-import { RefetchOptions } from "./query";
-
-/* validator page */
-export const useValidator = (address: string) => {
-  const lcd = useLCDClient();
-  return useQuery(
-    [lcd.config, address, "validator"],
-    async () => await lcd.staking.validator(address),
-    { ...RefetchOptions.INFINITY }
-  );
-};
-
-export const useValidatorSet = (height?: number) => {
-  const lcd = useLCDClient();
-  return useQuery(
-    [lcd.config, height, "validatorSet"],
-    async () => {
-      //TODO: Iterator
-      const [v1] = await lcd.tendermint.validatorSet(height);
-      const [v2] = await lcd.tendermint.validatorSet(height, {
-        "pagination.offset": String(v1.length),
-      });
-
-      return [...v1, ...v2];
-    },
-    { ...RefetchOptions.INFINITY }
-  );
-};
+import { useDelegation } from "./staking";
+import { useValidatorSet } from "./tendermint";
 
 export const useVotingPowerRate = (pubKey: string) => {
   const { data: validators, ...state } = useValidatorSet();
@@ -82,70 +50,18 @@ export const getCalcVotingPowerRate = (
   };
 };
 
-export const calcSelfDelegation = (validator?: Validator) => {
-  //TODO
-  return 0;
+export const useSelfDelegation = (validator: Validator) => {
+  const { tokens, operator_address } = validator;
+  const account = AccAddress.fromValAddress(operator_address);
+  const { data } = useDelegation(account, operator_address);
+
+  if (!data) return;
+
+  const { balance } = data;
+  const { amount } = balance;
+  return Number(amount) / Number(tokens);
 };
 
-/* contract or account page */
-
-/* params */
-export const Pagination = {
-  "pagination.limit": String(LAZY_LIMIT),
-};
-
-export const useValidators = () => {
-  const lcd = useLCDClient();
-
-  return useQuery(
-    [lcd.config, "vaidators"],
-    async () => {
-      // TODO: Pagination
-      // Required when the number of results exceed LAZY_LIMIT
-
-      const [v1] = await lcd.staking.validators({
-        status: BondStatus[BondStatus.BOND_STATUS_UNBONDED],
-        ...Pagination,
-      });
-
-      const [v2] = await lcd.staking.validators({
-        status: BondStatus[BondStatus.BOND_STATUS_UNBONDING],
-        ...Pagination,
-      });
-
-      const [v3] = await lcd.staking.validators({
-        status: BondStatus[BondStatus.BOND_STATUS_BONDED],
-        ...Pagination,
-      });
-
-      return uniqBy(path(["operator_address"]), [...v1, ...v2, ...v3]);
-    },
-    { ...RefetchOptions.INFINITY }
-  );
-};
-
-export const useDelegations = (address: string) => {
-  const lcd = useLCDClient();
-  return useQuery(
-    [lcd.config, address, "staking"],
-    async () => await lcd.staking.delegations(address),
-    { ...RefetchOptions.DEFAULT }
-  );
-};
-
-export const useUndelegations = (address: string) => {
-  const lcd = useLCDClient();
-  return useQuery(
-    [lcd.config, "unstaking", address],
-    async () => {
-      const [undelegations] = await lcd.staking.unbondingDelegations(address);
-      return undelegations;
-    },
-    { ...RefetchOptions.DEFAULT }
-  );
-};
-
-/* helpers */
 export const getFindValidator =
   (validators: Validator[]) => (address: AccAddress) => {
     const validator = validators.find((v) => v.operator_address === address);

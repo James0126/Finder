@@ -1,14 +1,11 @@
 import { Int } from "@terra-money/terra.js";
 import { readAmount } from "@terra.kitchen/utils";
-import {
-  getFindMoniker,
-  useUndelegations,
-  useValidators,
-} from "../../queries/validator";
 import Card from "../../components/Card";
 import Table from "../../components/Table";
 import Amount from "../../components/Amount";
 import { fromISOTime } from "../../scripts/date";
+import { getFindMoniker } from "../../queries/validator";
+import { useUndelegations, useValidators } from "../../queries/staking";
 
 const Undelegations = ({ address }: { address: string }) => {
   const { data: validators } = useValidators();

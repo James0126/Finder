@@ -1,22 +1,26 @@
 import { useParams } from "react-router";
-import { useValidator } from "../queries/validator";
+import { combineState } from "../queries/query";
+import { useValidator } from "../queries/staking";
 import ValidatorDetails from "../containers/validator/ValidatorDetails";
-import NotFound from "./NotFound";
+import Page from "../components/Page";
 
 const Validator = () => {
   const { address = "" } = useParams();
-  const { data: validator } = useValidator(address);
+  const { data: validator, ...state } = useValidator(address);
+  const status = combineState(state);
 
-  if (!validator) {
-    return <NotFound />;
-  }
+  const render = () => {
+    if (!validator) return null;
 
-  return (
-    <section>
-      <h1>Validator Page</h1>
-      <ValidatorDetails validator={validator} />
-    </section>
-  );
+    return (
+      <>
+        <h1>Validator Page</h1>
+        <ValidatorDetails validator={validator} />
+      </>
+    );
+  };
+
+  return <Page state={status}>{render()}</Page>;
 };
 
 export default Validator;
