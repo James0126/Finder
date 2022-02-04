@@ -1,7 +1,7 @@
 import Delegations from "../containers/address/Delegations";
 import Balance from "../containers/address/Balance";
-import Transactions from "../containers/address/Transactions";
 import Undelegations from "../containers/address/Undelegations";
+import Txs from "../containers/address/Txs";
 
 const Account = ({ address }: { address: string }) => (
   <section>
@@ -9,7 +9,7 @@ const Account = ({ address }: { address: string }) => (
     <Balance address={address} />
     <Delegations address={address} />
     <Undelegations address={address} />
-    <Transactions address={address} />
+    <Txs address={address} />
   </section>
 );
 

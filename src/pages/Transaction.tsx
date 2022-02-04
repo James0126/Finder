@@ -2,11 +2,11 @@ import { useParams } from "react-router";
 import Fee from "../containers/transaction/Fee";
 import Message from "../containers/transaction/Message";
 import Action from "../containers/transaction/Action";
+import FinderLink from "../components/FinderLink";
+import State from "../components/State";
 import List from "../components/List";
 import { useTxByHash } from "../queries/transaction";
-import FinderLink from "../components/FinderLink";
 import { combineState } from "../queries/query";
-import Page from "../components/Page";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
@@ -57,7 +57,7 @@ const Transaction = () => {
     );
   };
 
-  return <Page state={status}>{render()}</Page>;
+  return <State state={status}>{render()}</State>;
 };
 
 export default Transaction;

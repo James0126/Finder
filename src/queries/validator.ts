@@ -65,16 +65,13 @@ export const useSelfDelegation = (validator: Validator) => {
 export const getFindValidator =
   (validators: Validator[]) => (address: AccAddress) => {
     const validator = validators.find((v) => v.operator_address === address);
-    if (!validator) {
-      throw new Error(`${address} is not a validator`);
-    }
     return validator;
   };
 
 export const getFindMoniker =
   (validators: Validator[]) => (address: AccAddress) => {
     const validator = getFindValidator(validators)(address);
-    return validator.description.moniker;
+    return validator?.description.moniker;
   };
 
 export const convertAddressToHex = (address: string) =>
@@ -87,8 +84,9 @@ export const getValidatorOperatorAddressByHexAddress = (
   validatorSet: DelegateValidator[],
   hex: string
 ) => {
-  if (validatorCache.has(hex)) {
-    return validatorCache.get(hex);
+  const key = hex.toLowerCase();
+  if (validatorCache.has(key)) {
+    return validatorCache.get(key);
   }
 
   validatorSet.forEach((s) => {
@@ -100,5 +98,5 @@ export const getValidatorOperatorAddressByHexAddress = (
     }
   });
 
-  return validatorCache.get(hex);
+  return validatorCache.get(key);
 };

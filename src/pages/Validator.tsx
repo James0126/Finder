@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { combineState } from "../queries/query";
 import { useValidator } from "../queries/staking";
 import ValidatorDetails from "../containers/validator/ValidatorDetails";
-import Page from "../components/Page";
+import State from "../components/State";
 
 const Validator = () => {
   const { address = "" } = useParams();
@@ -20,7 +20,7 @@ const Validator = () => {
     );
   };
 
-  return <Page state={status}>{render()}</Page>;
+  return <State state={status}>{render()}</State>;
 };
 
 export default Validator;

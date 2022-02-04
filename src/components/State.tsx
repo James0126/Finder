@@ -7,7 +7,7 @@ interface Props {
   state: QueryState;
 }
 
-const Page = ({ children, state }: Props) =>
+const State = ({ children, state }: Props) =>
   state.isLoading ? <Loading /> : state.error ? <NotFound /> : <>{children}</>;
 
-export default Page;
+export default State;

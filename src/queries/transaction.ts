@@ -48,43 +48,42 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
   return gql`
     query {
         tx {
-            byHeight(height:${height} chainId:"${chainId}" ${offsetField})
-             {
-              header{
-                proposer_address
-                chain_id
-                time
-              }
-              offset
-              txInfos {
-                chainId
-                compactMessage {
-                  type
-                  message
+            byHeight(height: ${height}, chainId: "${chainId}", ${offsetField}) {
+                header {
+                  proposer_address
+                  chain_id
+                  time
                 }
-                compactFee {
-                  amounts {
-                    denom
-                    amount
+                offset
+                txInfos {
+                  chainId
+                  compactMessage {
+                    type
+                    message
                   }
+                  compactFee {
+                    amounts {
+                      denom
+                      amount
+                    }
+                  }
+                  logs {
+                    events {
+                      attributes {
+                        key
+                        value
+                      }
+                      type
+                    }
+                  }
+                  txhash
+                  height
+                  raw_log
                 }
-                logs {
-                  events {
-                   attributes {
-                     key
-                     value
-                   }
-                   type
-                 }
-                }
-                txhash
-                height
-                raw_log
-              }
             }
         }
     }
-`;
+  `;
 };
 
 const queryTxByHash = (hash: string, chainId: string) => gql`
@@ -134,7 +133,8 @@ export const useTxsByHeight = (
   height: string,
   offset?: string
 ): UseQueryResult<TxsByHeight> => {
-  const { chainID } = useCurrentChain();
+  // const { chainID } = useCurrentChain();
+  const chainID = Number(height) > 1378000 ? "columbus-5" : "columbus-4";
   const queryMsg = queryTxsByHeight(height, chainID, offset);
   return useGraphQL(queryMsg, height);
 };

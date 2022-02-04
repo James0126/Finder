@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { fromISOTime } from "../scripts/date";
 import FinderLink from "../components/FinderLink";
 import List from "../components/List";
-import Page from "../components/Page";
-import Transactions from "../containers/block/Transactions";
+import State from "../components/State";
+import Txs from "../containers/block/Txs";
 import { combineState } from "../queries/query";
 import { useValidators } from "../queries/staking";
 import { useValidatorSet } from "../queries/tendermint";
@@ -18,9 +18,7 @@ const Block = () => {
   const { height = "" } = useParams();
   const { data: blockInfo, ...blockInfoState } = useTxsByHeight(height);
   const { data: validators, ...validatorsState } = useValidators();
-  const { data: validatorSet, ...validatorSetState } = useValidatorSet(
-    Number(height)
-  );
+  const { data: validatorSet, ...validatorSetState } = useValidatorSet();
 
   const status = combineState(
     blockInfoState,
@@ -35,13 +33,26 @@ const Block = () => {
 
     const { header } = blockInfo.tx.byHeight;
     const { proposer_address, chain_id, time } = header;
-    const hex = Buffer.from(proposer_address, "base64").toString("hex");
+    const hex =
+      chain_id === "columbus-5"
+        ? Buffer.from(proposer_address, "base64").toString("hex")
+        : proposer_address;
+
     const operatorAddress = getValidatorOperatorAddressByHexAddress(
       validators,
       validatorSet,
       hex
     );
     const moniker = getFindMoniker(validators)(operatorAddress);
+
+    const proposer = moniker ? (
+      <FinderLink validator value={operatorAddress}>
+        {moniker}
+      </FinderLink>
+    ) : (
+      hex
+    );
+
     const dataSource = [
       {
         title: "height",
@@ -57,11 +68,7 @@ const Block = () => {
       },
       {
         title: "proposer",
-        content: (
-          <FinderLink validator value={operatorAddress}>
-            {moniker}
-          </FinderLink>
-        ),
+        content: proposer,
       },
     ];
 
@@ -81,12 +88,12 @@ const Block = () => {
         <h1>Block Page</h1>
         <List dataSource={dataSource} />
         {buttons}
-        <Transactions height={height} />
+        <Txs height={height} />
       </>
     );
   };
 
-  return <Page state={status}>{render()}</Page>;
+  return <State state={status}>{render()}</State>;
 };
 
 export default Block;
