@@ -7,6 +7,8 @@ import Fee from "../transaction/Fee";
 const Txs = ({ height }: { height: string }) => {
   const [pageOffset, setOffset] = useState<string>();
   const { data, ...state } = useTxsByHeight(height, pageOffset);
+
+  const { isSuccess } = state;
   const offset = data?.tx.byHeight.offset;
   const txInfos = data?.tx.byHeight.txInfos;
 
@@ -28,13 +30,20 @@ const Txs = ({ height }: { height: string }) => {
   };
 
   return (
-    <Table
-      columns={columns}
-      dataSource={txInfos?.map(getTxRow)}
-      pagination={() => setOffset(offset)}
-      offset={offset}
-      state={state}
-    />
+    <>
+      {isSuccess && !txInfos?.length ? (
+        <p>No more transaction</p>
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={txInfos?.map(getTxRow)}
+          pagination={() => setOffset(offset)}
+          offset={offset}
+          state={state}
+          height={height}
+        />
+      )}
+    </>
   );
 };
 

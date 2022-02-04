@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Card from "../../components/Card";
 import FinderLink from "../../components/FinderLink";
 import Table from "../../components/Table";
 import { useTxsByAddress } from "../../queries/transaction";
@@ -7,6 +8,7 @@ import Fee from "../transaction/Fee";
 const Txs = ({ address }: { address: string }) => {
   const [pageOffset, setOffset] = useState<string>();
   const { data, ...state } = useTxsByAddress(address, pageOffset);
+  const { isSuccess } = state;
   const offset = data?.tx.byAddress.offset;
   const txInfos = data?.tx.byAddress.txInfos;
 
@@ -28,13 +30,19 @@ const Txs = ({ address }: { address: string }) => {
   };
 
   return (
-    <Table
-      columns={columns}
-      dataSource={txInfos?.map(getTxRow)}
-      pagination={() => setOffset(offset)}
-      offset={offset}
-      state={state}
-    />
+    <Card title="Transactions">
+      {isSuccess && !txInfos ? (
+        <p>No more transaction</p>
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={txInfos?.map(getTxRow)}
+          pagination={() => setOffset(offset)}
+          offset={offset}
+          state={state}
+        />
+      )}
+    </Card>
   );
 };
 

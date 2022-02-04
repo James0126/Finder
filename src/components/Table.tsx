@@ -3,14 +3,20 @@ import PaginationButton from "./PaginationButton";
 
 interface Props<T> extends TableSource<T> {
   state: QueryState;
+  height?: string;
   offset?: string;
   pagination?: () => void;
 }
 
 function Table<T>(props: Props<T>) {
-  const { columns, dataSource, offset, state, pagination } = props;
+  const { columns, dataSource, offset, state, height, pagination } = props;
   const [data, setData] = useState<T[]>([]);
   const { isLoading } = state;
+  const hidePaginationButton = (!isLoading && !offset) || !pagination;
+
+  useEffect(() => {
+    setData([]);
+  }, [height]);
 
   useEffect(() => {
     if (dataSource) {
@@ -21,8 +27,6 @@ function Table<T>(props: Props<T>) {
       }
     }
   }, [dataSource, pagination]);
-
-  const hidePaginationButton = (!isLoading && !offset) || !pagination;
 
   return (
     <>
