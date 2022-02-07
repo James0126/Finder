@@ -6,10 +6,10 @@ interface PaginationProps {
 
 const PaginationButton = (props: PaginationProps) => {
   const { action, loading, offset } = props;
-  return offset ? (
+  return offset || loading ? (
     <button
       style={{ width: "100%" }}
-      onClick={() => action(offset)}
+      onClick={() => offset && action(offset)}
       disabled={loading}
     >
       {loading ? "Loading..." : "Load more"}
