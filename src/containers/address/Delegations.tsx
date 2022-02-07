@@ -39,7 +39,7 @@ const Delegations = ({ address }: { address: string }) => {
 
   return delegations.length ? (
     <Card title={"Delegations"}>
-      <Table columns={cols} dataSource={data} state={status} />
+      <Table columns={cols} dataSource={data} queryState={status} />
     </Card>
   ) : null;
 };

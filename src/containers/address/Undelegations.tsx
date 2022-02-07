@@ -41,7 +41,7 @@ const Undelegations = ({ address }: { address: string }) => {
 
   return undelegations.length ? (
     <Card title={"Undelegations"}>
-      <Table columns={cols} dataSource={data} state={status} />
+      <Table columns={cols} dataSource={data} queryState={status} />
     </Card>
   ) : null;
 };

@@ -39,7 +39,7 @@ const Txs = ({ address }: { address: string }) => {
           dataSource={txInfos?.map(getTxRow)}
           pagination={() => setOffset(offset)}
           offset={offset}
-          state={state}
+          queryState={state}
         />
       )}
     </Card>

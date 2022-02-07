@@ -2,21 +2,21 @@ import { useEffect, useState } from "react";
 import PaginationButton from "./PaginationButton";
 
 interface Props<T> extends TableSource<T> {
-  state: QueryState;
-  height?: string;
+  queryState: QueryState;
+  deps?: any[];
   offset?: string;
   pagination?: () => void;
 }
 
 function Table<T>(props: Props<T>) {
-  const { columns, dataSource, offset, state, height, pagination } = props;
+  const { columns, dataSource, offset, queryState, deps, pagination } = props;
   const [data, setData] = useState<T[]>([]);
-  const { isLoading } = state;
+  const { isLoading } = queryState;
   const hidePaginationButton = (!isLoading && !offset) || !pagination;
 
   useEffect(() => {
     setData([]);
-  }, [height]);
+  }, [deps]);
 
   useEffect(() => {
     if (dataSource) {
@@ -57,7 +57,7 @@ function Table<T>(props: Props<T>) {
         <PaginationButton
           action={pagination}
           offset={offset}
-          loading={state.isLoading}
+          loading={isLoading}
         />
       )}
     </>

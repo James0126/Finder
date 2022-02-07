@@ -39,8 +39,8 @@ const Txs = ({ height }: { height: string }) => {
           dataSource={txInfos?.map(getTxRow)}
           pagination={() => setOffset(offset)}
           offset={offset}
-          state={state}
-          height={height}
+          queryState={state}
+          deps={[height]}
         />
       )}
     </>
