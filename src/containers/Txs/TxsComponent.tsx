@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import PaginationButton from "../PaginationButton";
-import SearchInput from "../SearchInput";
-import Table from "../Table";
+import PaginationButton from "../../components/PaginationButton";
+import SearchInput from "../../components/SearchInput";
+import Table from "../../components/Table";
 import s from "./Txs.module.scss";
 
 type Row = {

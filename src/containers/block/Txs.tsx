@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
-import TxsComponent from "../../components/Txs/TxsComponent";
+import TxsComponent from "../Txs/TxsComponent";
 import Fee from "../transaction/Fee";
 
 interface Data {

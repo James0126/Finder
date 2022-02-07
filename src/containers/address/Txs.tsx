@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import Card from "../../components/Card";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByAddress } from "../../queries/transaction";
-import TxsComponent from "../../components/Txs/TxsComponent";
+import TxsComponent from "../Txs/TxsComponent";
 import Fee from "../transaction/Fee";
 
 interface Data {
