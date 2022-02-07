@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import FinderLink from "../../components/FinderLink";
-import Table from "../../components/Table";
 import { useTxsByHeight } from "../../queries/transaction";
+import TxsComponent from "../global/TxsComponent";
 import Fee from "../transaction/Fee";
+import s from "./Txs.module.scss";
 
+interface Data {
+  hash: ReactNode;
+  msgType: string;
+  chainId: string;
+  fee: ReactNode;
+}
+
+//query
 const Txs = ({ height }: { height: string }) => {
   const [pageOffset, setOffset] = useState<string>();
   const { data, ...state } = useTxsByHeight(height, pageOffset);
 
-  const { isSuccess } = state;
   const offset = data?.tx.byHeight.offset;
   const txInfos = data?.tx.byHeight.txInfos;
 
@@ -19,7 +27,7 @@ const Txs = ({ height }: { height: string }) => {
     { title: "fee", key: "fee" },
   ];
 
-  const getTxRow = (tx: TxInfo) => {
+  const getTxRow = (tx: TxInfo): Data => {
     const { chainId, compactFee, txhash, compactMessage } = tx;
     const { type } = compactMessage[0];
     const { amounts } = compactFee;
@@ -30,20 +38,14 @@ const Txs = ({ height }: { height: string }) => {
   };
 
   return (
-    <>
-      {isSuccess && !txInfos?.length ? (
-        <p>No more transaction</p>
-      ) : (
-        <Table
-          columns={columns}
-          dataSource={txInfos?.map(getTxRow)}
-          pagination={() => setOffset(offset)}
-          offset={offset}
-          queryState={state}
-          deps={[height]}
-        />
-      )}
-    </>
+    <TxsComponent
+      columns={columns}
+      getTxRow={getTxRow}
+      pagination={() => setOffset(offset)}
+      dataSource={txInfos}
+      offset={offset}
+      state={state}
+    />
   );
 };
 

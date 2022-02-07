@@ -5,13 +5,10 @@ import Card from "../../components/Card";
 import Amount from "../../components/Amount";
 import Table from "../../components/Table";
 import FinderLink from "../../components/FinderLink";
-import { combineState } from "../../queries/query";
 
 const Delegations = ({ address }: { address: string }) => {
-  const { data: delegation, ...delegationState } = useDelegations(address);
-  const { data: validators, ...validatorsState } = useValidators();
-
-  const status = combineState(delegationState, validatorsState);
+  const { data: delegation } = useDelegations(address);
+  const { data: validators } = useValidators();
 
   if (!delegation || !validators) {
     return null;
@@ -39,7 +36,7 @@ const Delegations = ({ address }: { address: string }) => {
 
   return delegations.length ? (
     <Card title={"Delegations"}>
-      <Table columns={cols} dataSource={data} queryState={status} />
+      <Table columns={cols} dataSource={data} />
     </Card>
   ) : null;
 };

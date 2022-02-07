@@ -19,6 +19,6 @@ export const useGraphQL = (query: DocumentNode, queryKey?: string) => {
       const { data } = await client.query({ query });
       return data;
     },
-    { ...RefetchOptions.INFINITY }
+    { ...RefetchOptions.INFINITY, cacheTime: 0 }
   );
 };

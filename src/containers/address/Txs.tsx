@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import Card from "../../components/Card";
 import FinderLink from "../../components/FinderLink";
-import Table from "../../components/Table";
 import { useTxsByAddress } from "../../queries/transaction";
+import TxsComponent from "../global/TxsComponent";
 import Fee from "../transaction/Fee";
+
+interface Data {
+  hash: ReactNode;
+  msgType: string;
+  chainId: string;
+  fee: ReactNode;
+}
 
 const Txs = ({ address }: { address: string }) => {
   const [pageOffset, setOffset] = useState<string>();
   const { data, ...state } = useTxsByAddress(address, pageOffset);
-  const { isSuccess } = state;
+
   const offset = data?.tx.byAddress.offset;
   const txInfos = data?.tx.byAddress.txInfos;
 
@@ -19,7 +26,7 @@ const Txs = ({ address }: { address: string }) => {
     { title: "fee", key: "fee" },
   ];
 
-  const getTxRow = (tx: TxInfo) => {
+  const getTxRow = (tx: TxInfo): Data => {
     const { chainId, compactFee, txhash, compactMessage } = tx;
     const { type } = compactMessage[0];
     const { amounts } = compactFee;
@@ -31,17 +38,14 @@ const Txs = ({ address }: { address: string }) => {
 
   return (
     <Card title="Transactions">
-      {isSuccess && !txInfos ? (
-        <p>No more transaction</p>
-      ) : (
-        <Table
-          columns={columns}
-          dataSource={txInfos?.map(getTxRow)}
-          pagination={() => setOffset(offset)}
-          offset={offset}
-          queryState={state}
-        />
-      )}
+      <TxsComponent
+        columns={columns}
+        getTxRow={getTxRow}
+        pagination={() => setOffset(offset)}
+        dataSource={txInfos}
+        offset={offset}
+        state={state}
+      />
     </Card>
   );
 };

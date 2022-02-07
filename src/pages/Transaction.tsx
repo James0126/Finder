@@ -35,6 +35,10 @@ const Transaction = () => {
         content: isSuccess ? "Success" : "Failed",
       },
       {
+        content: raw_log,
+        hide: isSuccess,
+      },
+      {
         title: "height",
         content: <FinderLink block>{height}</FinderLink>,
       },
@@ -50,7 +54,6 @@ const Transaction = () => {
     return (
       <>
         <h1>Trasaction Detail</h1>
-        {!isSuccess ?? raw_log}
         <List dataSource={dataSource} />
         <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
       </>

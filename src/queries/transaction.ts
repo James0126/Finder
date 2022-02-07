@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 import { UseQueryResult } from "react-query";
-import { useCurrentChain } from "../contexts/ChainsContext";
 import { useGraphQL } from "./graphql";
 
 //TODO: Refactor codes
@@ -86,10 +85,10 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
   `;
 };
 
-const queryTxByHash = (hash: string, chainId: string) => gql`
+const queryTxByHash = (hash: string) => gql`
     query {
         tx {
-            byHash(chainId:"${chainId}", txHash:"${hash}") {
+            byHash(txHash:"${hash}") {
                 chainId
                 code
                 compactMessage {
@@ -133,14 +132,12 @@ export const useTxsByHeight = (
   height: string,
   offset?: string
 ): UseQueryResult<TxsByHeight> => {
-  // const { chainID } = useCurrentChain();
   const chainID = Number(height) > 1378000 ? "columbus-5" : "columbus-4";
   const queryMsg = queryTxsByHeight(height, chainID, offset);
   return useGraphQL(queryMsg, height);
 };
 
 export const useTxByHash = (hash: string): UseQueryResult<TxByHash> => {
-  const { chainID } = useCurrentChain();
-  const queryMsg = queryTxByHash(hash, chainID);
+  const queryMsg = queryTxByHash(hash);
   return useGraphQL(queryMsg);
 };

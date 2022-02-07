@@ -5,14 +5,10 @@ import Amount from "../../components/Amount";
 import { fromISOTime } from "../../scripts/date";
 import { getFindMoniker } from "../../queries/validator";
 import { useUndelegations, useValidators } from "../../queries/staking";
-import { combineState } from "../../queries/query";
 
 const Undelegations = ({ address }: { address: string }) => {
-  const { data: validators, ...validatorsState } = useValidators();
-  const { data: undelegations, ...undelegationsState } =
-    useUndelegations(address);
-
-  const status = combineState(validatorsState, undelegationsState);
+  const { data: validators } = useValidators();
+  const { data: undelegations } = useUndelegations(address);
 
   if (!undelegations || !validators) {
     return null;
@@ -41,7 +37,7 @@ const Undelegations = ({ address }: { address: string }) => {
 
   return undelegations.length ? (
     <Card title={"Undelegations"}>
-      <Table columns={cols} dataSource={data} queryState={status} />
+      <Table columns={cols} dataSource={data} />
     </Card>
   ) : null;
 };
