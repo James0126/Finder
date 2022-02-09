@@ -2,6 +2,8 @@ import { useQueries, useQuery } from "react-query";
 import { AccAddress } from "@terra-money/terra.js";
 import { useLCDClient } from "./lcdClient";
 import { RefetchOptions } from "./query";
+import { getIpfsGateway } from "../scripts/utility";
+import axios from "axios";
 
 /* contract info */
 export const useContractInfo = (address: string) => {
@@ -55,13 +57,29 @@ export const useTokenInfoCW20 = (token: string, disabled = false) => {
 };
 
 export const useTokenInfoCW721 = (contract: AccAddress, token_id: string) => {
-  const getQuery = useGetContractQuery();
-  return useQuery({
-    ...getQuery<NFTTokenItem>(contract, { nft_info: { token_id } }),
-    ...RefetchOptions.INFINITY,
-  });
-};
+  const lcd = useLCDClient();
 
+  return useQuery(
+    ["CW721ContractQuery", contract, token_id],
+    async () => {
+      const data = await lcd.wasm.contractQuery<NFTTokenItem>(contract, {
+        nft_info: { token_id },
+      });
+
+      const { token_uri } = data;
+      if (!token_uri) return data;
+
+      try {
+        const uri = getIpfsGateway(token_uri);
+        const { data: extension } = await axios.get(uri);
+        return { ...data, extension: { ...data.extension, ...extension } };
+      } catch {
+        return data;
+      }
+    },
+    { ...RefetchOptions.INFINITY }
+  );
+};
 /* token balance */
 const useGetTokenBalanceQuery = () => {
   const lcd = useLCDClient();

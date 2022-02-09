@@ -5,6 +5,7 @@ import { useInitMsg } from "../../queries/wasm";
 import WithSearchInput from "./WithSearchInput";
 import TokenList from "./TokenList";
 import Fetching from "./Fetching";
+import { useNetworkName } from "../../contexts/ChainsContext";
 
 //station component
 
@@ -67,13 +68,16 @@ const Component = ({ whitelist, keyword }: Props) => {
 };
 
 const ManageCustomTokensCW721 = () => {
+  const network = useNetworkName();
   const { data: whitelist, ...state } = useCW721Contracts();
 
+  if (!whitelist) return null;
+  const cw721 = whitelist[network];
   return (
     <Fetching {...state} height={2}>
       {whitelist && (
         <WithSearchInput>
-          {(input) => <Component whitelist={whitelist} keyword={input} />}
+          {(input) => <Component whitelist={cw721} keyword={input} />}
         </WithSearchInput>
       )}
     </Fetching>

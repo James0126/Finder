@@ -1,7 +1,5 @@
-import { Pre } from "components/general"
-
 const NFTDetails = ({ data }: { data: object }) => {
-  return <Pre height={120}>{data}</Pre>
-}
+  return <pre>{data}</pre>;
+};
 
-export default NFTDetails
+export default NFTDetails;

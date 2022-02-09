@@ -8,13 +8,12 @@ interface CW20Contract {
 
 type CW721Contracts = Record<string, Record<string, CW721Contract>>;
 
-interface CW721Contract {
-  contract: string;
-  name: string;
-  symbol: string;
-  icon: string;
-  homepage: string;
-  marketplace: string[];
+interface CW721ContractItem extends CW721ContractInfoResponse {
+  contract: TerraAddress;
+  protocol?: string;
+  icon?: string;
+  homepage?: string;
+  marketplace?: string[];
 }
 
 /* cw721 */
@@ -27,6 +26,7 @@ interface CW721ContractInfoResponse {
 type CW721Whitelist = Record<TerraAddress, CW721ContractItem>;
 
 interface NFTTokenItem {
+  token_uri?: string;
   extension?: Extension;
 }
 

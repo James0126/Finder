@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { truncate } from "@terra.kitchen/utils";
 import { getIpfsGateway } from "../../../scripts/utility";
-import { useTokenInfoCW721 } from "data/queries/wasm";
+import { useTokenInfoCW721 } from "../../../queries/wasm";
 import { InternalButton } from "../Internal";
 import { WithFetching } from "../Fetching";
 import NFTDetails from "./NFTDetails";
@@ -41,7 +41,7 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
 
     return (
       <article className={className}>
-        {image && (
+        {/* {image && (
           <ModalButton
             title={name}
             renderButton={(open) => (
@@ -52,13 +52,13 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
           >
             <img src={getIpfsGateway(image)} alt="" className={styles.large} />
           </ModalButton>
-        )}
+        )} */}
 
         <h1 className={styles.name}>{name}</h1>
 
         {compact && (
           <>
-            <ModalButton
+            {/* <ModalButton
               title={name}
               renderButton={(open) => (
                 <InternalButton onClick={open} disabled={!extension}>
@@ -78,7 +78,7 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
 
                 {extension && <NFTDetails data={extension} />}
               </>
-            </ModalButton>
+            </ModalButton> */}
           </>
         )}
       </article>

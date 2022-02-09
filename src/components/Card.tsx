@@ -2,21 +2,24 @@ import { ReactNode } from "react";
 
 type Props = {
   title?: string;
+  header?: ReactNode;
   children: ReactNode;
 };
 
 //TODO: Design
-const Card = ({ title, children }: Props) => {
-  const header = title && (
-    <>
-      <h2>{title}</h2>
-      <hr />
-    </>
-  );
+const Card = ({ title, header, children }: Props) => {
+  const head =
+    header ||
+    (title && (
+      <>
+        <h2>{title}</h2>
+        <hr />
+      </>
+    ));
 
   return (
     <section>
-      {header}
+      {head}
       {children}
     </section>
   );
