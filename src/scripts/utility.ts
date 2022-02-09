@@ -78,3 +78,8 @@ export const isTerraAddress = (value: string) => {
   }
   return false;
 };
+
+export const getIpfsGateway = (src: string) =>
+  src.startsWith("ipfs://")
+    ? src.replace("ipfs://", "https://cloudflare-ipfs.com/ipfs/")
+    : src;

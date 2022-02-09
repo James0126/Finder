@@ -12,7 +12,6 @@ interface Data {
   height: string;
   fee: CoinData[];
   raw_log: string;
-  classname?: string;
 }
 
 const Txs = ({ address }: { address: string }) => {

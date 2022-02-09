@@ -1,5 +1,5 @@
 import { HTMLAttributes, ReactNode } from "react";
-import { LinkProps } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 //station component
@@ -19,7 +19,13 @@ export const InternalButton = (props: InternalButtonProps) => {
 };
 
 interface InternalLinkProps extends Props, LinkProps {}
-
+export const InternalLink = (props: InternalLinkProps) => {
+  return props.disabled ? (
+    <span {...render(props)} />
+  ) : (
+    <Link {...render(props)} />
+  );
+};
 /* helpers */
 const render = <T extends InternalLinkProps | InternalButtonProps>(
   props: T
