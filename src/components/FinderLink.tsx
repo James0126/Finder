@@ -1,5 +1,5 @@
 // Station component
-import { FC, ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import { FC, ForwardedRef, forwardRef, HTMLAttributes, memo } from "react";
 import { Link } from "react-router-dom";
 import { truncate } from "@terra.kitchen/utils";
 import { useNetworkName } from "../contexts/ChainsContext";
@@ -39,4 +39,4 @@ const FinderLink: FC<Props> = forwardRef(
   }
 );
 
-export default FinderLink;
+export default memo(FinderLink);

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
 import Amount from "../../components/Amount";
 import { sortByDenom } from "../../scripts/coin";
@@ -15,4 +16,4 @@ const Fee = ({ coins, slice }: { coins: CoinData[]; slice?: number }) => {
   );
 };
 
-export default Fee;
+export default memo(Fee);

@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import Card from "../../components/Card";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByAddress } from "../../queries/transaction";
@@ -6,12 +6,13 @@ import TxsComponent from "../Txs/TxsComponent";
 import Fee from "../transaction/Fee";
 
 interface Data {
-  hash: ReactNode;
+  txhash: string;
   msgType: string;
   chainId: string;
+  height: string;
+  fee: CoinData[];
   raw_log: string;
-  blockHeight: ReactNode;
-  fee: ReactNode;
+  classname?: string;
 }
 
 const Txs = ({ address }: { address: string }) => {
@@ -22,11 +23,29 @@ const Txs = ({ address }: { address: string }) => {
   const txInfos = data?.tx.byAddress.txInfos;
 
   const columns = [
-    { title: "hash", key: "hash" },
-    { title: "type", key: "msgType" },
-    { title: "chian ID", key: "chainId" },
-    { title: "height", key: "blockHeight" },
-    { title: "fee", key: "fee" },
+    {
+      title: "hash",
+      key: "txhash",
+      render: (txhash: string) => <FinderLink tx short children={txhash} />,
+    },
+    {
+      title: "type",
+      key: "msgType",
+    },
+    {
+      title: "chian ID",
+      key: "chainId",
+    },
+    {
+      title: "height",
+      key: "height",
+      render: (height: string) => <FinderLink block children={height} />,
+    },
+    {
+      title: "fee",
+      key: "fee",
+      render: (fee: CoinData[]) => <Fee coins={fee} slice={3} />,
+    },
   ];
 
   const getTxRow = (tx: TxInfo): Data => {
@@ -34,10 +53,7 @@ const Txs = ({ address }: { address: string }) => {
     const { type } = compactMessage[0];
     const { amounts } = compactFee;
     const msgType = type.slice(type.indexOf("/") + 1);
-    const hash = <FinderLink tx short children={txhash} />;
-    const fee = <Fee coins={amounts} slice={3} />;
-    const blockHeight = <FinderLink block children={height} />;
-    return { hash, msgType, chainId, blockHeight, fee, raw_log };
+    return { txhash, msgType, chainId, height, fee: amounts, raw_log };
   };
 
   return (
@@ -53,5 +69,4 @@ const Txs = ({ address }: { address: string }) => {
     </Card>
   );
 };
-
 export default Txs;

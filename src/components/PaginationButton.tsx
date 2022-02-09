@@ -1,18 +1,19 @@
 interface PaginationProps {
   offset?: string;
-  loading?: boolean;
+  isLoading?: boolean;
   action: (offset: string) => void;
 }
 
 const PaginationButton = (props: PaginationProps) => {
-  const { action, loading, offset } = props;
-  return offset || loading ? (
+  const { action, isLoading, offset } = props;
+
+  return offset || isLoading ? (
     <button
       style={{ width: "100%" }}
       onClick={() => offset && action(offset)}
-      disabled={loading}
+      disabled={isLoading}
     >
-      {loading ? "Loading..." : "Load more"}
+      {isLoading ? "Loading..." : "Load more"}
     </button>
   ) : null;
 };

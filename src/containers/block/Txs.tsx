@@ -1,15 +1,15 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
 import TxsComponent from "../Txs/TxsComponent";
 import Fee from "../transaction/Fee";
 
 interface Data {
-  hash: ReactNode;
+  txhash: string;
   msgType: string;
   chainId: string;
   raw_log: string;
-  fee: ReactNode;
+  fee: CoinData[];
 }
 
 const Txs = ({ height }: { height: string }) => {
@@ -20,10 +20,24 @@ const Txs = ({ height }: { height: string }) => {
   const txInfos = data?.tx.byHeight.txInfos;
 
   const columns = [
-    { title: "hash", key: "hash" },
-    { title: "type", key: "msgType" },
-    { title: "chian ID", key: "chainId" },
-    { title: "fee", key: "fee" },
+    {
+      title: "hash",
+      key: "txhash",
+      render: (hash: string) => <FinderLink tx short children={hash} />,
+    },
+    {
+      title: "type",
+      key: "msgType",
+    },
+    {
+      title: "chian ID",
+      key: "chainId",
+    },
+    {
+      title: "fee",
+      key: "fee",
+      render: (fee: CoinData[]) => <Fee coins={fee} slice={3} />,
+    },
   ];
 
   const getTxRow = (tx: TxInfo): Data => {
@@ -31,9 +45,7 @@ const Txs = ({ height }: { height: string }) => {
     const { type } = compactMessage[0];
     const { amounts } = compactFee;
     const msgType = type.slice(type.indexOf("/") + 1);
-    const hash = <FinderLink tx short children={txhash} />;
-    const fee = <Fee coins={amounts} slice={3} />;
-    return { hash, msgType, chainId, fee, raw_log };
+    return { txhash, msgType, chainId, raw_log, fee: amounts };
   };
 
   return (
