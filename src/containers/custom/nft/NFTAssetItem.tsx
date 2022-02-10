@@ -1,13 +1,10 @@
-import classNames from "classnames/bind";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { truncate } from "@terra.kitchen/utils";
 import { getIpfsGateway } from "../../../scripts/utility";
 import { useTokenInfoCW721 } from "../../../queries/wasm";
 import Image from "../../../components/Image";
-import { InternalButton } from "../Internal";
+import Modal from "../../../components/Modal";
 import { WithFetching } from "../Fetching";
 import NFTDetails from "./NFTDetails";
-import Modal from "../../../components/Modal";
 
 interface Props {
   contract: string;
@@ -15,9 +12,6 @@ interface Props {
   compact?: boolean;
 }
 
-// Where to use
-// 1. NFT asset list
-// 2. Transfer tx form
 const NFTAssetItem = ({ contract, id, compact }: Props) => {
   const { data, ...state } = useTokenInfoCW721(contract, id);
   const SIZE = compact
@@ -40,51 +34,17 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
     return (
       <article>
         <Image url={getIpfsGateway(image)} size={100} />
-        {/* {image && (
-          <ModalButton
-            title={name}
-            renderButton={(open) => (
-              <button type="button" onClick={open} className={styles.image}>
-                <img src={getIpfsGateway(image)} alt="" {...SIZE} />
-              </button>
-            )}
-          >
-            
-          </ModalButton>
-        )} */}
-
         <span>{name}</span>
-
-        {compact && (
-          <>
-            {extension && (
-              <Modal
-                modalContent={<NFTDetails data={extension} />}
-                buttonLabel="View"
-              />
-            )}
-
-            {/* <ModalButton
-              title={name}
-              renderButton={(open) => (
-                <InternalButton onClick={open} disabled={!extension}>
-                  <InfoOutlinedIcon style={{ fontSize: 18 }} />
-                  {"View"}
-                </InternalButton>
-              )}
-            >
+        {compact && extension && (
+          <Modal
+            modalContent={
               <>
-                {image && (
-                  <img
-                    src={getIpfsGateway(image)}
-                    alt="logo"
-                    className={styles.large}
-                  />
-                )}
-
+                <Image url={getIpfsGateway(image)} size={100} />
+                <NFTDetails data={extension} />
               </>
-            </ModalButton> */}
-          </>
+            }
+            buttonLabel="View"
+          />
         )}
       </article>
     );
