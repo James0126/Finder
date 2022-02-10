@@ -13,7 +13,7 @@ const NFTAssetGroup = (props: Props) => {
 
   const title = (
     <>
-      {icon && <Image url={icon} size={20} />}
+      {icon && <Image url={icon} size={100} />}
       {name}
     </>
   );
@@ -39,7 +39,7 @@ const NFTAssetGroup = (props: Props) => {
 
   return (
     <Card
-      header={title}
+      title={title}
       // extra={renderExtra()}
     >
       {render()}

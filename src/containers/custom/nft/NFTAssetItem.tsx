@@ -3,12 +3,11 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { truncate } from "@terra.kitchen/utils";
 import { getIpfsGateway } from "../../../scripts/utility";
 import { useTokenInfoCW721 } from "../../../queries/wasm";
+import Image from "../../../components/Image";
 import { InternalButton } from "../Internal";
 import { WithFetching } from "../Fetching";
 import NFTDetails from "./NFTDetails";
-import styles from "./NFTAssetItem.module.scss";
-
-const cx = classNames.bind(styles);
+import Modal from "../../../components/Modal";
 
 interface Props {
   contract: string;
@@ -24,12 +23,11 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
   const SIZE = compact
     ? { width: 50, height: 50 }
     : { width: 100, height: 100 };
-  const className = cx(styles.item, { compact });
 
   const renderPlaceholder = () => (
-    <article className={className}>
-      <div style={SIZE} className={cx(styles.image, styles.placeholder)} />
-      <h1 className={styles.name}>{truncate(id)}</h1>
+    <article>
+      <div style={SIZE} />
+      <h1>{truncate(id)}</h1>
     </article>
   );
 
@@ -40,7 +38,8 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
     const image = extension?.image;
 
     return (
-      <article className={className}>
+      <article>
+        <Image url={getIpfsGateway(image)} size={100} />
         {/* {image && (
           <ModalButton
             title={name}
@@ -50,14 +49,21 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
               </button>
             )}
           >
-            <img src={getIpfsGateway(image)} alt="" className={styles.large} />
+            
           </ModalButton>
         )} */}
 
-        <h1 className={styles.name}>{name}</h1>
+        <span>{name}</span>
 
         {compact && (
           <>
+            {extension && (
+              <Modal
+                modalContent={<NFTDetails data={extension} />}
+                buttonLabel="View"
+              />
+            )}
+
             {/* <ModalButton
               title={name}
               renderButton={(open) => (
@@ -76,7 +82,6 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
                   />
                 )}
 
-                {extension && <NFTDetails data={extension} />}
               </>
             </ModalButton> */}
           </>

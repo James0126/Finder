@@ -6,6 +6,7 @@ import AddTokens from "../custom/AddTokens";
 import ManageCustomTokens from "../custom/ManageCustomTokens";
 import ManageCustomTokensCW721 from "../custom/ManageCustomTokensCW721";
 import NativeBalance from "./NativeBalance";
+import NFTAssets from "../custom/nft/NFTAssets";
 
 const Balance = ({ address }: { address: string }) => {
   const { data: balance } = useBankBalance(address);
@@ -24,6 +25,7 @@ const Balance = ({ address }: { address: string }) => {
 
       <Card title={"NFT"}>
         <Modal modalContent={<ManageCustomTokensCW721 />} buttonLabel="Add" />
+        <NFTAssets address={address} />
       </Card>
     </section>
   );

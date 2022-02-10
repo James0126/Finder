@@ -1,6 +1,5 @@
 import NFTAssetGroup from "./NFTAssetGroup";
 import { useCustomTokensCW721 } from "../../settings/CustomTokens";
-import ManageCustomTokensCW721 from "../ManageCustomTokensCW721";
 
 const NFTAssets = ({ address }: { address: string }) => {
   const { list } = useCustomTokensCW721();
