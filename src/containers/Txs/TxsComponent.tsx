@@ -6,8 +6,6 @@ import Table from "../../components/Table";
 import txSearch from "../../worker/txSearch";
 import s from "./Txs.module.scss";
 
-/* eslint-disable react-hooks/exhaustive-deps */
-
 interface Props<T> {
   dataSource?: TxInfo[];
   offset?: string;
@@ -30,6 +28,7 @@ function TxsComponent<T>(props: Props<T>) {
       const rows = dataSource.map((tx) => getTxRow(tx));
       input ? onSearch(input, rows) : setRow((stack) => [...stack, ...rows]);
     }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [dataSource, isSuccess]);
 
   const onSearch = (input: string, txs: T[], replace?: boolean) => {

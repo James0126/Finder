@@ -10,7 +10,10 @@ export default () =>
           ? undefined
           : style
         : undefined;
-      return { ...tx, classname };
+
+      const data = { ...tx, classname };
+
+      return data;
     });
     postMessage(result);
   });
