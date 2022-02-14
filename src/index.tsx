@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import InitChains from "./contexts/ChainsContext";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import "./index.css";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false } },

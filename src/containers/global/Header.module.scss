@@ -1,0 +1,20 @@
+@import "../../styles/mixins";
+
+.wrapper {
+  position: sticky;
+  top: 0;
+  background-color: #0045a7;
+  padding: 21px 24px;
+}
+
+.flex {
+  justify-content: space-between;
+}
+
+.search {
+  @include flex();
+}
+
+.logo {
+  margin-right: 135px;
+}

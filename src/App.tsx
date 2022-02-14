@@ -12,6 +12,7 @@ import {
   LogfinderAmountRuleSet,
 } from "./store/LogfinderRuleSet";
 import routes from "./routes";
+import s from "./App.module.scss";
 
 const App = () => {
   const network = useNetworkName();
@@ -26,7 +27,7 @@ const App = () => {
   }, [setActionRules, setAmountRules, network]);
 
   return (
-    <section>
+    <section className={s.app}>
       <Header />
       <ErrorBoundary>{routes}</ErrorBoundary>
     </section>

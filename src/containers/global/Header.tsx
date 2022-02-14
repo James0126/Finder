@@ -1,12 +1,22 @@
-import Search from "./Search";
+import { ReactComponent as Logo } from "../../styles/Images/logo.svg";
+import Flex from "../../components/Flex";
 import SelectCurrency from "./SelectCurrency";
 import SelectNetworks from "./SelectNetwork";
+import Search from "./Search";
+import s from "./Header.module.scss";
 
 const Header = () => (
-  <section>
-    <SelectNetworks />
-    <SelectCurrency />
-    <Search />
+  <section className={s.wrapper}>
+    <Flex className={s.flex}>
+      <Flex>
+        <Logo className={s.logo} />
+        <Search className={s.search} />
+      </Flex>
+      <Flex>
+        <SelectNetworks />
+        <SelectCurrency />
+      </Flex>
+    </Flex>
   </section>
 );
 
