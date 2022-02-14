@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import WorkerBuilder from "../worker/workerBuilder";
 
 const useWorker = (worker: Function) => {
-  const instance = new WorkerBuilder(worker);
+  const code = worker.toString();
+  const blob = new Blob([`(${code})()`]);
+  const instance = new Worker(URL.createObjectURL(blob));
   useEffect(() => {
     return () => instance.terminate();
     //eslint-disable-next-line
