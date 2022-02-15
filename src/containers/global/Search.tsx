@@ -73,8 +73,8 @@ const Component = (props: Props) => {
 
     const result = Object.entries(whitelist)
       .map(([key, value]) => {
-        const values = Object.values(value).join();
-        if (!values.includes(keyword)) return null;
+        const values = Object.values(value).join().toLowerCase();
+        if (!values.includes(keyword.toLowerCase())) return null;
         return { ...value, address: key };
       })
       .flat()
