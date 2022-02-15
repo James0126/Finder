@@ -16,6 +16,7 @@ export const useTerraAssets = <T>(path: string, disabled?: boolean) =>
     { ...RefetchOptions.INFINITY, enabled: !disabled }
   );
 
+//TODO: Fix types
 export const useCW20Whitelist = (disabled = false) => {
   return useTerraAssets<CW20Tokens>("cw20/tokens.json", disabled);
 };

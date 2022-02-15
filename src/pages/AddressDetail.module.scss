@@ -1,0 +1,27 @@
+.buttons {
+  margin-bottom: 10px;
+}
+
+.tap {
+  background: #f3f5fd;
+  border: 1px solid #ebeff8;
+  color: #2043b5;
+  padding: 20px 40px;
+}
+
+.tap:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.tap:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.tap:hover {
+  background: white;
+}
+
+.active {
+  background: white;
+}

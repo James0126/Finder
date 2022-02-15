@@ -73,3 +73,8 @@ export const useValidators = () => {
     { ...RefetchOptions.INFINITY }
   );
 };
+
+export const useIsValidator = (address?: string) => {
+  const validators = useValidators();
+  console.log(validators);
+};

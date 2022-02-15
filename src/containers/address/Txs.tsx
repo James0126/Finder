@@ -4,6 +4,7 @@ import FinderLink from "../../components/FinderLink";
 import { useTxsByAddress } from "../../queries/transaction";
 import TxsComponent from "../Txs/TxsComponent";
 import Fee from "../transaction/Fee";
+import s from "./Txs.module.scss";
 
 interface Data {
   txhash: string;
@@ -56,7 +57,7 @@ const Txs = ({ address }: { address: string }) => {
   };
 
   return (
-    <Card title="Transactions">
+    <Card bordered className={s.card}>
       <TxsComponent
         columns={columns}
         getTxRow={getTxRow}

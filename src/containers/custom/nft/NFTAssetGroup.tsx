@@ -15,7 +15,7 @@ const NFTAssetGroup = (props: Props) => {
   const renderExtra = () => {
     if (!marketplace?.length) return null;
     const [link] = marketplace;
-    return <ExternalLink href={link}>{"Collection"}</ExternalLink>;
+    return <ExternalLink href={link}>Collection</ExternalLink>;
   };
 
   const title = (
@@ -34,7 +34,7 @@ const NFTAssetGroup = (props: Props) => {
     ));
   };
 
-  return <Card title={title}>{render()}</Card>;
+  return <Card header={title}>{render()}</Card>;
 };
 
 export default NFTAssetGroup;

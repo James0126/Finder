@@ -34,7 +34,7 @@ const Message = ({ msgs, logs, isSuccess }: Props) => (
       });
 
       return (
-        <Card title={type} key={key}>
+        <Card header={type} key={key}>
           <List dataSource={dataSource} />
           {isSuccess && <EventLog log={logs[key]} />}
         </Card>

@@ -1,0 +1,9 @@
+@import "../styles/mixins";
+
+.header {
+  @include flex(start, center);
+}
+
+.amount {
+  display: block;
+}

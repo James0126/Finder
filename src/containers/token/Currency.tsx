@@ -3,6 +3,7 @@ import { readAmount, readDenom } from "@terra.kitchen/utils";
 import Amount from "../../components/Amount";
 import { useMemoizedCalcValue } from "../../queries/oracle";
 import { useCurrency } from "../../store/Currency";
+import s from "./Currency.module.scss";
 
 const Currency = ({ coin }: { coin: Coin }) => {
   const { denom } = coin;
@@ -17,7 +18,8 @@ const Currency = ({ coin }: { coin: Coin }) => {
   return (
     <Amount
       denom={readDenom(currnecy)}
-      amount={readAmount(amount, { comma: true })}
+      amount={`= ${readAmount(amount, { comma: true })}`}
+      className={s.amount}
     />
   );
 };

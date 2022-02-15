@@ -1,0 +1,15 @@
+@import "../../styles/mixins";
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.item {
+  white-space: nowrap;
+  margin: 10px;
+}
+
+.card {
+  padding: 10px;
+}

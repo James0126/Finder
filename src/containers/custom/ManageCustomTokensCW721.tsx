@@ -1,11 +1,11 @@
 import { AccAddress } from "@terra-money/terra.js";
+import { useNetworkName } from "../../contexts/ChainsContext";
 import { useCustomTokensCW721 } from "../settings/CustomTokens";
 import { useCW721Contracts } from "../../queries/assets";
 import { useInitMsg } from "../../queries/wasm";
 import WithSearchInput from "./WithSearchInput";
 import TokenList from "./TokenList";
 import Fetching from "./Fetching";
-import { useNetworkName } from "../../contexts/ChainsContext";
 
 //station component
 

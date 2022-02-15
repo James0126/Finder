@@ -5,15 +5,20 @@ interface Content {
   hide?: boolean;
 }
 
-//TODO: Refactor codes
-const List = ({ dataSource }: { dataSource: Content[] }) => (
-  <article>
-    {dataSource.map(({ title, content, render, hide }, key) => {
-      const data = render && render(content);
+interface Props {
+  itemClassName?: string;
+  mainClassName?: string;
+  dataSource: Content[];
+}
 
+//TODO: Refactor codes
+const List = ({ dataSource, itemClassName, mainClassName }: Props) => (
+  <article className={mainClassName}>
+    {dataSource.map(({ title, content, render, hide }, key) => {
+      const data = render ? render(content) : content;
       return !hide ? (
-        <div key={key}>
-          {title && <b>{title}</b>} <span>{data || content}</span>
+        <div key={key} className={itemClassName}>
+          {title && <b>{title}</b>} <span>{data}</span>
         </div>
       ) : null;
     })}

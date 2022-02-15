@@ -1,25 +1,26 @@
 import { ReactNode } from "react";
+import classnames from "classnames/bind";
+import s from "./Card.module.scss";
 
 type Props = {
-  title?: ReactNode;
   header?: ReactNode;
+  className?: string;
+  bordered?: boolean;
+  headerUnderline?: boolean;
+  onClick?: () => void;
   children: ReactNode;
 };
 
-//TODO: Design
-const Card = ({ title, children }: Props) => {
-  const head = title && (
-    <>
-      <h2>{title}</h2>
-      <hr />
-    </>
-  );
+const cx = classnames.bind(s);
 
+//TODO: Design
+const Card = (props: Props) => {
+  const { header, children, className, bordered, onClick } = props;
   return (
-    <section>
-      {head}
+    <div className={cx(className, { bordered: bordered })} onClick={onClick}>
+      {header}
       {children}
-    </section>
+    </div>
   );
 };
 

@@ -13,7 +13,7 @@ const Header = () => (
         <Search className={s.search} />
       </Flex>
       <Flex>
-        <SelectNetworks />
+        <SelectNetworks className={s.network} />
         <SelectCurrency />
       </Flex>
     </Flex>
