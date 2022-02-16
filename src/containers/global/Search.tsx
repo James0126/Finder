@@ -1,9 +1,8 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import classnames from "classnames/bind";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import FinderLink from "../../components/FinderLink";
-import Flex from "../../components/Flex";
-import Card from "../../components/Card";
 import { getEndpointByKeyword } from "../../scripts/utility";
 import {
   useCW20Contracts,
@@ -12,8 +11,11 @@ import {
 } from "../../queries/assets";
 import s from "./Search.module.scss";
 
+const cx = classnames.bind(s);
+
 const Search = ({ className }: { className?: string }) => {
   const [keyword, setKeyword] = useState("");
+  const [isFocus, setFocus] = useState(false);
   const network = useNetworkName();
   const navigate = useNavigate();
 
@@ -34,14 +36,13 @@ const Search = ({ className }: { className?: string }) => {
           onChange={(e) => setKeyword(e.target.value)}
           placeholder={"Search Block / Tx / Account"}
           autoFocus
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+          className={s.input}
         />
         <button type="submit">Search</button>
       </form>
-      <Component
-        network={network}
-        keyword={keyword}
-        onClick={() => setKeyword("")}
-      />
+      <Component network={network} keyword={keyword} hide={!isFocus} />
     </div>
   );
 };
@@ -51,11 +52,11 @@ export default Search;
 interface Props {
   network: string;
   keyword: string;
-  onClick: () => void;
+  hide: boolean;
 }
 
 const Component = (props: Props) => {
-  const { network, keyword, onClick } = props;
+  const { network, keyword, hide } = props;
   const { data: cw20Contract } = useCW20Contracts();
   const { data: cw20Tokens } = useCW20Tokens();
   const { data: cw721Contract } = useCW721Contracts();
@@ -81,22 +82,18 @@ const Component = (props: Props) => {
       .filter(Boolean);
 
     return (
-      <div className={s.list}>
+      <ul className={cx(s.list, { hide })}>
         {result.map((contract, key) => {
           const { protocol, name, symbol, address } = contract;
           return (
-            <Card bordered key={key}>
-              <FinderLink value={address} onClick={onClick}>
-                <Flex start>
-                  <span>
-                    {protocol} {name} {symbol && `(${symbol})`}
-                  </span>
-                </Flex>
-              </FinderLink>
-            </Card>
+            <FinderLink value={address}>
+              <li key={key} className={s.item}>
+                {protocol} {name} {symbol && `(${symbol})`}
+              </li>
+            </FinderLink>
           );
         })}
-      </div>
+      </ul>
     );
   };
   return render();

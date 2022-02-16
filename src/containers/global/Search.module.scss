@@ -1,11 +1,18 @@
 .list {
   position: absolute;
   background-color: white;
-  height: 300px;
-  width: 400px;
-  overflow: scroll;
+  max-height: 400px;
+  overflow: auto;
+  margin: 0px;
+  padding: 0px;
 }
 
-.search {
-  position: relative;
+.item {
+  padding: 10px;
+  list-style: none;
+  border: 1px solid gray;
+}
+
+.hide {
+  display: none;
 }
