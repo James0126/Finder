@@ -12,6 +12,7 @@ interface Props {
 
 const Amount = (props: Props) => {
   const { iconUrl, amount, denom, iconSize, className } = props;
+
   const render = `${amount} ${denom}`;
   const header = iconUrl && (
     <div className={s.header}>

@@ -1,18 +1,40 @@
 import { useState } from "react";
-import Card from "../../components/Card";
+import classnames from "classnames";
+import { getTxAmounts } from "@terra-money/log-finder-ruleset";
+import { Coin } from "@terra-money/terra.js";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByAddress } from "../../queries/transaction";
+import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
+import { totalAmounts } from "../../scripts/utility";
 import TxsComponent from "../Txs/TxsComponent";
-import Fee from "../transaction/Fee";
+import Action from "../transaction/Action";
 import s from "./Txs.module.scss";
+import Coins from "../transaction/Coins";
+import { fromISOTime } from "../../scripts/date";
+
+type Msg = {
+  msgType: string;
+  msgNum: number;
+};
+
+type LogData = {
+  log: TxLog[];
+  msg: Message[];
+};
+
+type HashData = {
+  txhash: string;
+  timestamp: string;
+};
 
 interface Data {
-  txhash: string;
-  msgType: string;
-  chainId: string;
+  hashData: HashData;
+  msgInfo: Msg;
   height: string;
-  fee: CoinData[];
   raw_log: string;
+  action: LogData;
+  amountOut: Coin[];
+  amountIn: Coin[];
 }
 
 const Txs = ({ address }: { address: string }) => {
@@ -24,49 +46,91 @@ const Txs = ({ address }: { address: string }) => {
 
   const columns = [
     {
-      title: "hash",
-      key: "txhash",
-      render: (txhash: string) => <FinderLink tx short children={txhash} />,
-    },
-    {
-      title: "type",
-      key: "msgType",
-    },
-    {
-      title: "chian ID",
-      key: "chainId",
-    },
-    {
-      title: "height",
+      title: "Block",
       key: "height",
       render: (height: string) => <FinderLink block children={height} />,
     },
     {
-      title: "fee",
-      key: "fee",
-      render: (fee: CoinData[]) => <Fee coins={fee} slice={3} />,
+      title: "TxHash",
+      key: "hashData",
+      render: ({ txhash, timestamp }: HashData) => (
+        <>
+          <FinderLink tx short children={txhash} />
+          <br />
+          <span className={s.time}>{fromISOTime(new Date(timestamp))}</span>
+        </>
+      ),
+    },
+    {
+      title: "Type",
+      key: "msgInfo",
+      render: ({ msgType, msgNum }: Msg) => (
+        <span className={s.typeWrapper}>
+          <span className={s.type}>{msgType}</span>
+          {msgNum ? (
+            <span className={classnames(s.msgNum, s.type)}>+{msgNum}</span>
+          ) : null}
+        </span>
+      ),
+    },
+    {
+      title: "Description",
+      key: "action",
+      render: ({ log, msg }: LogData) => (
+        <Action logs={log} msgs={msg} showNum={1} />
+      ),
+    },
+    {
+      title: "Amount (Out)",
+      key: "amountOut",
+      render: (coins: Coin[]) => (
+        <Coins coins={coins} sign="-" className={s.out} />
+      ),
+    },
+    {
+      title: "Amount (In)",
+      key: "amountIn",
+      render: (coins: Coin[]) => (
+        <Coins coins={coins} sign="+" className={s.in} />
+      ),
     },
   ];
 
+  const logMatcher = useAmountLogMatcher();
+
   const getTxRow = (tx: TxInfo): Data => {
-    const { chainId, compactFee, txhash, compactMessage, height, raw_log } = tx;
+    const { txhash, compactMessage, height, logs, raw_log, code, timestamp } =
+      tx;
     const { type } = compactMessage[0];
-    const { amounts } = compactFee;
+    const hashData = { txhash, timestamp };
     const msgType = type.slice(type.indexOf("/") + 1);
-    return { txhash, msgType, chainId, height, fee: amounts, raw_log };
+    const msgInfo = { msgType, msgNum: compactMessage.length - 1 };
+    const matched = getTxAmounts(logs, compactMessage, logMatcher, address);
+    const [amountIn, amountOut] = totalAmounts(address, matched);
+    const action = {
+      log: logs,
+      msg: code ? [compactMessage[0]] : compactMessage,
+    };
+    return {
+      hashData,
+      msgInfo,
+      height,
+      raw_log,
+      action,
+      amountIn,
+      amountOut,
+    };
   };
 
   return (
-    <Card bordered className={s.card}>
-      <TxsComponent
-        columns={columns}
-        getTxRow={getTxRow}
-        pagination={() => setOffset(offset)}
-        dataSource={txInfos}
-        offset={offset}
-        state={state}
-      />
-    </Card>
+    <TxsComponent
+      columns={columns}
+      getTxRow={getTxRow}
+      pagination={() => setOffset(offset)}
+      dataSource={txInfos}
+      offset={offset}
+      state={state}
+    />
   );
 };
 export default Txs;

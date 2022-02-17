@@ -7,7 +7,6 @@ import Fee from "../transaction/Fee";
 interface Data {
   txhash: string;
   msgType: string;
-  chainId: string;
   raw_log: string;
   fee: CoinData[];
 }
@@ -30,10 +29,6 @@ const Txs = ({ height }: { height: string }) => {
       key: "msgType",
     },
     {
-      title: "chian ID",
-      key: "chainId",
-    },
-    {
       title: "fee",
       key: "fee",
       render: (fee: CoinData[]) => <Fee coins={fee} slice={3} />,
@@ -41,11 +36,11 @@ const Txs = ({ height }: { height: string }) => {
   ];
 
   const getTxRow = (tx: TxInfo): Data => {
-    const { chainId, compactFee, txhash, compactMessage, raw_log } = tx;
+    const { compactFee, txhash, compactMessage, raw_log } = tx;
     const { type } = compactMessage[0];
     const { amounts } = compactFee;
     const msgType = type.slice(type.indexOf("/") + 1);
-    return { txhash, msgType, chainId, raw_log, fee: amounts };
+    return { txhash, msgType, raw_log, fee: amounts };
   };
 
   return (

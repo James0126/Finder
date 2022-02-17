@@ -1,25 +1,31 @@
 .buttons {
   margin-bottom: 10px;
+  background: #f3f5fd;
+  border-radius: 8px;
+  overflow: auto;
+  font-size: 14px;
+  border: 1px solid #ebeff8;
 }
 
 .tap {
-  background: #f3f5fd;
-  border: 1px solid #ebeff8;
   color: #2043b5;
   padding: 20px 40px;
-}
+  background: #f3f5fd;
 
-.tap:first-child {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-}
-.tap:last-child {
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
+  &:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
 
-.tap:hover {
-  background: white;
+  &:nth-child(2) {
+    border: none;
+    border-left: 1px solid #ebeff8;
+    border-right: 1px solid #ebeff8;
+  }
+
+  &:hover {
+    background: white;
+  }
 }
 
 .active {

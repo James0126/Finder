@@ -1,16 +1,22 @@
 import { TxDescription } from "@terra-money/react-base-components";
 import { getTxCanonicalMsgs } from "@terra-money/log-finder-ruleset";
+import { useActionLogMatcher } from "../../store/LogfinderRuleSet";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { useLCDClient } from "../../queries/lcdClient";
-import { useActionLogMatcher } from "../../store/LogfinderRuleSet";
 
-const Action = ({ logs, msgs }: { logs: TxLog[]; msgs: Message[] }) => {
+interface Props {
+  logs: TxLog[];
+  msgs: Message[];
+  showNum?: number;
+}
+
+const Action = ({ logs, msgs, showNum }: Props) => {
   const chain = useNetworkName();
   const lcd = useLCDClient();
   const logMatcher = useActionLogMatcher();
-  const txAction = getTxCanonicalMsgs(logs, msgs, logMatcher, true);
+  const canonicalMsgs = getTxCanonicalMsgs(logs, msgs, logMatcher, true);
+  const txAction = canonicalMsgs.slice(0, showNum);
 
-  /* TODO: Remove div tag */
   return (
     <>
       {txAction.map((msg) =>

@@ -5,10 +5,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import InitChains from "./contexts/ChainsContext";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import "./index.css";
+import "./index.scss";
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { retry: false } },
+  defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } },
 });
 
 ReactDOM.render(

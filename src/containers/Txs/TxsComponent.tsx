@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import useWorker from "../../hooks/useWorker";
 import PaginationButton from "../../components/PaginationButton";
 import SearchInput from "../../components/SearchInput";
+import Card from "../../components/Card";
 import Table from "../../components/Table";
 import txSearch from "../../worker/txSearch";
-import s from "./Txs.module.scss";
+import s from "./TxsComponent.module.scss";
 
 interface Props<T> {
   dataSource?: TxInfo[];
@@ -46,14 +47,21 @@ function TxsComponent<T>(props: Props<T>) {
     <p>No more transaction.</p>
   ) : (
     <>
-      <SearchInput onSearch={(input) => onSearch(input, row, true)} />
-      {isSearch && "Searching..."}
-      <Table columns={columns} dataSource={row} />
-      <PaginationButton
-        action={pagination}
-        offset={offset}
-        isLoading={isLoading}
+      <SearchInput
+        onSearch={(input) => onSearch(input, row, true)}
+        placeholder="Search"
       />
+      <Card bordered className={s.card}>
+        <section className={s.tableWrapper}>
+          <Table columns={columns} dataSource={row} tableClassname={s.table} />
+          <PaginationButton
+            action={pagination}
+            offset={offset}
+            isLoading={isLoading}
+          />
+          {isSearch && "Searching..."}
+        </section>
+      </Card>
     </>
   );
 }

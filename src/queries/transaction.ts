@@ -35,6 +35,7 @@ const queryTxsByAddress = (address: string, offset?: string) => {
                 txhash
                 height
                 raw_log
+                timestamp
               }
             }
         }

@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import classnames from "classnames/bind";
+import { SearchOutlined } from "@mui/icons-material";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import FinderLink from "../../components/FinderLink";
 import { getEndpointByKeyword } from "../../scripts/utility";
@@ -19,44 +20,6 @@ const Search = ({ className }: { className?: string }) => {
   const network = useNetworkName();
   const navigate = useNavigate();
 
-  const handleSubmit: (e: FormEvent<HTMLFormElement>) => void = async (e) => {
-    e.preventDefault();
-
-    if (keyword) {
-      navigate(`/${network}${getEndpointByKeyword(keyword.trim())}`);
-    }
-  };
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit} className={className}>
-        <input
-          type="search"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          placeholder={"Search Block / Tx / Account"}
-          autoFocus
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
-          className={s.input}
-        />
-        <button type="submit">Search</button>
-      </form>
-      <Component network={network} keyword={keyword} hide={!isFocus} />
-    </div>
-  );
-};
-
-export default Search;
-
-interface Props {
-  network: string;
-  keyword: string;
-  hide: boolean;
-}
-
-const Component = (props: Props) => {
-  const { network, keyword, hide } = props;
   const { data: cw20Contract } = useCW20Contracts();
   const { data: cw20Tokens } = useCW20Tokens();
   const { data: cw721Contract } = useCW721Contracts();
@@ -82,12 +45,12 @@ const Component = (props: Props) => {
       .filter(Boolean);
 
     return (
-      <ul className={cx(s.list, { hide })}>
+      <ul className={cx(s.list, { hide: !isFocus })}>
         {result.map((contract, key) => {
           const { protocol, name, symbol, address } = contract;
           return (
             <FinderLink value={address}>
-              <li key={key} className={s.item}>
+              <li key={key} className={cx(s.item)}>
                 {protocol} {name} {symbol && `(${symbol})`}
               </li>
             </FinderLink>
@@ -96,5 +59,35 @@ const Component = (props: Props) => {
       </ul>
     );
   };
-  return render();
+
+  const handleSubmit: (e: FormEvent<HTMLFormElement>) => void = async (e) => {
+    e.preventDefault();
+
+    if (keyword) {
+      navigate(`/${network}${getEndpointByKeyword(keyword.trim())}`);
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit} className={s.form}>
+        <button type="submit" className={s.button}>
+          <SearchOutlined />
+        </button>
+        <input
+          type="search"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          placeholder={"Search Block / Tx / Account"}
+          autoFocus
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+          className={s.input}
+        />
+      </form>
+      {render()}
+    </div>
+  );
 };
+
+export default Search;

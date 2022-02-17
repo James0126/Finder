@@ -1,3 +1,29 @@
-.card {
-  background-color: white;
+.typeWrapper {
+  white-space: nowrap;
+}
+
+.type {
+  background-color: #ebeff8;
+  border-radius: 30px;
+  padding: 5px 8px;
+  font-size: 10px;
+  display: inline-flex;
+}
+
+.msgNum {
+  margin-left: 4px;
+}
+
+.in {
+  color: #1daa8e;
+  white-space: nowrap;
+}
+
+.out {
+  color: #ff5561;
+  white-space: nowrap;
+}
+
+.time {
+  white-space: nowrap;
 }

@@ -1,8 +1,14 @@
-function Table<T>(props: TableSource<T>) {
-  const { columns, dataSource } = props;
+import classnames from "classnames";
+
+interface Props<T> extends TableSource<T> {
+  tableClassname?: string;
+}
+
+function Table<T>(props: Props<T>) {
+  const { columns, dataSource, tableClassname } = props;
   return (
     <>
-      <table>
+      <table className={tableClassname}>
         <thead>
           <tr>
             {columns.map(({ title, key }) => (
@@ -14,7 +20,7 @@ function Table<T>(props: TableSource<T>) {
           {dataSource?.map((data, index) => {
             const classname = data["classname" as keyof T];
             return (
-              <tr className={String(classname)} key={index}>
+              <tr className={classnames(String(classname))} key={index}>
                 {columns.map(({ key, render }) => {
                   const source = data[key as keyof T];
                   const renderFn = render && render(source);
