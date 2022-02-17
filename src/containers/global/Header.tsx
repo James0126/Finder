@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../styles/Images/logo.svg";
 import Flex from "../../components/Flex";
 import SelectCurrency from "./SelectCurrency";
@@ -9,8 +10,10 @@ const Header = () => (
   <section className={s.wrapper}>
     <Flex className={s.flex}>
       <Flex>
-        <Logo className={s.logo} />
-        <Search className={s.search} />
+        <Link to="/">
+          <Logo className={s.logo} />
+        </Link>
+        <Search />
       </Flex>
       <Flex>
         <SelectNetworks className={s.network} />

@@ -14,7 +14,7 @@ import s from "./Search.module.scss";
 
 const cx = classnames.bind(s);
 
-const Search = ({ className }: { className?: string }) => {
+const Search = () => {
   const [keyword, setKeyword] = useState("");
   const [isFocus, setFocus] = useState(false);
   const network = useNetworkName();
@@ -23,6 +23,8 @@ const Search = ({ className }: { className?: string }) => {
   const { data: cw20Contract } = useCW20Contracts();
   const { data: cw20Tokens } = useCW20Tokens();
   const { data: cw721Contract } = useCW721Contracts();
+
+  const handleMouseDown = (e: any) => e.preventDefault();
 
   const render = () => {
     if (!cw20Contract || !cw20Tokens || !cw721Contract || !keyword) {
@@ -45,15 +47,15 @@ const Search = ({ className }: { className?: string }) => {
       .filter(Boolean);
 
     return (
-      <ul className={cx(s.list, { hide: !isFocus })}>
+      <ul className={s.list} onMouseDown={handleMouseDown}>
         {result.map((contract, key) => {
           const { protocol, name, symbol, address } = contract;
           return (
-            <FinderLink value={address}>
-              <li key={key} className={cx(s.item)}>
+            <li key={key} className={cx(s.item)}>
+              <FinderLink value={address} onClick={() => setKeyword("")}>
                 {protocol} {name} {symbol && `(${symbol})`}
-              </li>
-            </FinderLink>
+              </FinderLink>
+            </li>
           );
         })}
       </ul>
@@ -74,18 +76,20 @@ const Search = ({ className }: { className?: string }) => {
         <button type="submit" className={s.button}>
           <SearchOutlined />
         </button>
-        <input
-          type="search"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          placeholder={"Search Block / Tx / Account"}
-          autoFocus
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
-          className={s.input}
-        />
+        <div>
+          <input
+            type="search"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder={"Search Block / Tx / Account"}
+            autoFocus
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            className={s.input}
+          />
+          {isFocus && render()}
+        </div>
       </form>
-      {render()}
     </div>
   );
 };
