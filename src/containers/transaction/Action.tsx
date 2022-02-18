@@ -1,38 +1,30 @@
-import { TxDescription } from "@terra-money/react-base-components";
 import { getTxCanonicalMsgs } from "@terra-money/log-finder-ruleset";
 import { useActionLogMatcher } from "../../store/LogfinderRuleSet";
-import { useNetworkName } from "../../contexts/ChainsContext";
-import { useLCDClient } from "../../queries/lcdClient";
+import TxMessage from "./TxMessage";
 
 interface Props {
   logs: TxLog[];
   msgs: Message[];
-  showNum?: number;
+  limit?: number;
 }
 
-const Action = ({ logs, msgs, showNum }: Props) => {
-  const chain = useNetworkName();
-  const lcd = useLCDClient();
+const Action = ({ logs, msgs, limit }: Props) => {
   const logMatcher = useActionLogMatcher();
   const canonicalMsgs = getTxCanonicalMsgs(logs, msgs, logMatcher, true);
-  const txAction = canonicalMsgs.slice(0, showNum);
+  const txAction = canonicalMsgs.slice(0, limit);
 
   return (
     <>
-      {txAction.map((msg) =>
-        msg.map((data) =>
+      {txAction.map((msg) => {
+        const limitMsgs = msg.slice(0, limit);
+        return limitMsgs.map((data) =>
           data.transformed?.canonicalMsg.map((sentence, key) => (
             <div key={key}>
-              <TxDescription
-                network={{ ...lcd.config, name: chain }}
-                config={{ printCoins: 3 }}
-              >
-                {sentence}
-              </TxDescription>
+              <TxMessage>{sentence}</TxMessage>
             </div>
           ))
-        )
-      )}
+        );
+      })}
     </>
   );
 };

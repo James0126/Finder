@@ -24,8 +24,6 @@ const Search = () => {
   const { data: cw20Tokens } = useCW20Tokens();
   const { data: cw721Contract } = useCW721Contracts();
 
-  const handleMouseDown = (e: any) => e.preventDefault();
-
   const render = () => {
     if (!cw20Contract || !cw20Tokens || !cw721Contract || !keyword) {
       return null;
@@ -47,7 +45,7 @@ const Search = () => {
       .filter(Boolean);
 
     return (
-      <ul className={s.list} onMouseDown={handleMouseDown}>
+      <ul className={s.list} onMouseDown={(e: any) => e.preventDefault()}>
         {result.map((contract, key) => {
           const { protocol, name, symbol, address } = contract;
           return (

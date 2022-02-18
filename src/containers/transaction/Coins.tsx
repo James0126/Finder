@@ -35,8 +35,8 @@ const Coins = (props: Props) => {
     <>
       {coins.map(({ amount, denom }) => {
         return (
-          <Flex start>
-            <span className={className}>{sign}</span>
+          <Flex className={className}>
+            <span>{sign}</span>
             <Amount
               amount={readAmount(amount.toString(), { comma: true })}
               denom={render(denom)}

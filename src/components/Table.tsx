@@ -1,6 +1,15 @@
 import classnames from "classnames";
+import { ReactNode } from "react";
 
-interface Props<T> extends TableSource<T> {
+export interface Column {
+  title: ReactNode;
+  key: string;
+  render?: (data: any) => any;
+}
+
+interface Props<T> {
+  columns: Column[];
+  dataSource?: T[];
   tableClassname?: string;
 }
 

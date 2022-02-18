@@ -36,7 +36,10 @@ export const useTokenItem = (token: string): CW20TokenItem | undefined => {
   /* IBC */
   // 1. Whitelist
   const { data: ibcWhitelist = {}, ...ibcWhitelistState } = useIBCTokens();
-  const listedIBCTokenItem = ibcWhitelist[token.replace("ibc/", "")];
+  const ibc = ibcWhitelist[network];
+  const listedIBCTokenItem = isDenomIBC(token)
+    ? ibc[token.replace("ibc/", "")]
+    : null;
 
   // 2. Query denom trace
   const shouldQueryIBC = ibcWhitelistState.isSuccess && !listedIBCTokenItem;
@@ -46,10 +49,8 @@ export const useTokenItem = (token: string): CW20TokenItem | undefined => {
     return customTokenItem ?? listedCW20TokenItem ?? tokenInfoItem;
   }
 
-  const ibc = listedIBCTokenItem[network];
-
   if (isDenomIBC(token)) {
-    return readIBCDenom(token, ibc?.base_denom ?? base_denom);
+    return readIBCDenom(token, listedIBCTokenItem?.base_denom ?? base_denom);
   }
 
   return readNativeDenom(token);

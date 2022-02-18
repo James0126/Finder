@@ -1,3 +1,5 @@
+@import "../../styles/mixins";
+
 .typeWrapper {
   white-space: nowrap;
 }
@@ -14,14 +16,21 @@
   margin-left: 4px;
 }
 
+.amountTitle {
+  @include flex(end);
+}
+
+.amount {
+  white-space: nowrap;
+  justify-content: flex-end;
+}
+
 .in {
   color: #1daa8e;
-  white-space: nowrap;
 }
 
 .out {
   color: #ff5561;
-  white-space: nowrap;
 }
 
 .time {

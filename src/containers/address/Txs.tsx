@@ -77,21 +77,21 @@ const Txs = ({ address }: { address: string }) => {
       title: "Description",
       key: "action",
       render: ({ log, msg }: LogData) => (
-        <Action logs={log} msgs={msg} showNum={1} />
+        <Action logs={log} msgs={msg} limit={1} />
       ),
     },
     {
-      title: "Amount (Out)",
+      title: <span className={s.amountTitle}>Amount (Out)</span>,
       key: "amountOut",
       render: (coins: Coin[]) => (
-        <Coins coins={coins} sign="-" className={s.out} />
+        <Coins coins={coins} sign="-" className={classnames(s.out, s.amount)} />
       ),
     },
     {
-      title: "Amount (In)",
+      title: <span className={s.amountTitle}>Amount (In)</span>,
       key: "amountIn",
       render: (coins: Coin[]) => (
-        <Coins coins={coins} sign="+" className={s.in} />
+        <Coins coins={coins} sign="+" className={classnames(s.in, s.amount)} />
       ),
     },
   ];

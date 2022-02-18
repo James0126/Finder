@@ -3,7 +3,7 @@ import useWorker from "../../hooks/useWorker";
 import PaginationButton from "../../components/PaginationButton";
 import SearchInput from "../../components/SearchInput";
 import Card from "../../components/Card";
-import Table from "../../components/Table";
+import Table, { Column } from "../../components/Table";
 import txSearch from "../../worker/txSearch";
 import s from "./TxsComponent.module.scss";
 
