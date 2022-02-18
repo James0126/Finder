@@ -2,9 +2,10 @@
   margin-bottom: 10px;
   background: #f3f5fd;
   border-radius: 8px;
+  border: 1px solid #ebeff8;
   overflow: auto;
   font-size: 14px;
-  border: 1px solid #ebeff8;
+  font-weight: 500;
 }
 
 .tap {
@@ -20,6 +21,10 @@
   &:nth-child(2) {
     border: none;
     border-left: 1px solid #ebeff8;
+    border-right: 1px solid #ebeff8;
+  }
+
+  &:last-child {
     border-right: 1px solid #ebeff8;
   }
 
