@@ -14,39 +14,31 @@ import s from "./Balance.module.scss";
 
 const cx = classnames.bind(s);
 
+type Page = "Coins" | "CW20" | "NFT";
+
 const Balance = ({ address }: { address: string }) => {
+  const [state, setState] = useState<Page>("Coins");
   const { data: balance } = useBankBalance(address);
   const native = balance?.filter((coin) => !isDenomIBC(coin.denom)).toArray();
-  const [isTokens, setTokens] = useState(false);
-  const [isNFT, setNFT] = useState(false);
-
-  const coins = () => {
-    setTokens(false);
-    setNFT(false);
-  };
-
-  const tokens = () => {
-    setTokens(true);
-    setNFT(false);
-  };
-
-  const nft = () => {
-    setTokens(false);
-    setNFT(true);
-  };
 
   const header = (
     <Flex start className={s.buttons}>
       <button
-        onClick={coins}
-        className={cx(s.tap, { active: !isTokens && !isNFT })}
+        onClick={() => setState("Coins")}
+        className={cx(s.tap, { active: state === "Coins" })}
       >
         Coins
       </button>
-      <button onClick={tokens} className={cx(s.tap, { active: isTokens })}>
+      <button
+        onClick={() => setState("CW20")}
+        className={cx(s.tap, { active: state === "CW20" })}
+      >
         Tokens
       </button>
-      <button onClick={nft} className={cx(s.tap, { active: isNFT })}>
+      <button
+        onClick={() => setState("NFT")}
+        className={cx(s.tap, { active: state === "NFT" })}
+      >
         NFT
       </button>
     </Flex>
@@ -55,12 +47,12 @@ const Balance = ({ address }: { address: string }) => {
   return (
     <section>
       <Card header={header} className={s.coins}>
-        {isTokens ? (
+        {state === "CW20" ? (
           <>
             <Modal modalContent={<ManageCustomTokens />} buttonLabel="Add" />
             <AddTokens address={address} />
           </>
-        ) : isNFT ? (
+        ) : state === "NFT" ? (
           <>
             <Modal
               modalContent={<ManageCustomTokensCW721 />}

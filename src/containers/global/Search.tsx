@@ -74,19 +74,17 @@ const Search = () => {
         <button type="submit" className={s.button}>
           <SearchOutlined />
         </button>
-        <div>
-          <input
-            type="search"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            placeholder={"Search Block / Tx / Account"}
-            autoFocus
-            onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
-            className={s.input}
-          />
-          {isFocus && render()}
-        </div>
+        <input
+          type="search"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          placeholder={"Search Block / Tx / Account"}
+          autoFocus
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+          className={s.input}
+        />
+        {isFocus && render()}
       </form>
     </div>
   );
