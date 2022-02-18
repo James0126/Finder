@@ -19,9 +19,7 @@ const Action = ({ logs, msgs, limit }: Props) => {
         const limitMsgs = msg.slice(0, limit);
         return limitMsgs.map((data) =>
           data.transformed?.canonicalMsg.map((sentence, key) => (
-            <div key={key}>
-              <TxMessage>{sentence}</TxMessage>
-            </div>
+            <TxMessage key={key}>{sentence}</TxMessage>
           ))
         );
       })}

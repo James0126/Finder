@@ -45,7 +45,7 @@ const Search = () => {
       .filter(Boolean);
 
     return (
-      <ul className={s.list} onMouseDown={(e: any) => e.preventDefault()}>
+      <ul className={s.list} onMouseDown={(e) => e.preventDefault()}>
         {result.map((contract, key) => {
           const { protocol, name, symbol, address } = contract;
           return (

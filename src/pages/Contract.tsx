@@ -11,7 +11,7 @@ interface Props {
 
 const Contract = ({ contractInfo, address }: Props) => (
   <section>
-    <h1>Contract</h1>
+    <h1 className={s.title}>Contract</h1>
     <Card bordered className={s.info}>
       <ContractDetails contractInfo={contractInfo} />
     </Card>

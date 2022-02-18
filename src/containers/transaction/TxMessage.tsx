@@ -32,8 +32,8 @@ const TerraAddress = ({ children: address }: { children: string }) => {
     const cw20Contract = contracts[network];
     const contract = cw20Token[address] ?? cw20Contract[address];
     if (!contract) return;
-    const { protocol, name } = contract;
-    return [protocol, name].join(" ");
+    const { protocol, name, symbol } = contract;
+    return symbol ?? [protocol, name].join(" ");
   }, [address, contracts, tokens, network]);
 
   return <FinderLink value={address}>{name ?? truncate(address)}</FinderLink>;

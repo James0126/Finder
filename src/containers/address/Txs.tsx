@@ -90,7 +90,11 @@ const Txs = ({ address }: { address: string }) => {
       ),
     },
     {
-      title: <Flex end>Amount (Out)</Flex>,
+      title: (
+        <Flex end className={s.nowrap}>
+          Amount (Out)
+        </Flex>
+      ),
       key: "amountOut",
       render: (coins: CoinData[]) => (
         <Coins
@@ -102,7 +106,11 @@ const Txs = ({ address }: { address: string }) => {
       ),
     },
     {
-      title: <Flex end>Amount (In)</Flex>,
+      title: (
+        <Flex end className={s.nowrap}>
+          Amount (In)
+        </Flex>
+      ),
       key: "amountIn",
       render: (coins: CoinData[]) => (
         <Coins
