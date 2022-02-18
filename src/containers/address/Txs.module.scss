@@ -1,6 +1,6 @@
 @import "../../styles/mixins";
 
-.typeWrapper {
+.nowrap {
   white-space: nowrap;
 }
 
@@ -21,7 +21,6 @@
 }
 
 .amount {
-  white-space: nowrap;
   justify-content: flex-end;
 }
 
@@ -33,6 +32,6 @@
   color: #ff5561;
 }
 
-.time {
-  white-space: nowrap;
+.fee {
+  text-align: end;
 }

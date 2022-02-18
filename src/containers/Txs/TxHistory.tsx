@@ -5,7 +5,7 @@ import SearchInput from "../../components/SearchInput";
 import Card from "../../components/Card";
 import Table, { Column } from "../../components/Table";
 import txSearch from "../../worker/txSearch";
-import s from "./TxsComponent.module.scss";
+import s from "./TxHistory.module.scss";
 
 interface Props<T> {
   dataSource?: TxInfo[];
@@ -16,7 +16,7 @@ interface Props<T> {
   columns: Column[];
 }
 
-function TxsComponent<T>(props: Props<T>) {
+function TxHistory<T>(props: Props<T>) {
   const { dataSource, offset, state, pagination, getTxRow, columns } = props;
   const [row, setRow] = useState<T[]>([]);
   const [input, setInput] = useState<string>();
@@ -66,4 +66,4 @@ function TxsComponent<T>(props: Props<T>) {
   );
 }
 
-export default TxsComponent;
+export default TxHistory;

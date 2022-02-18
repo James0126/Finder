@@ -12,11 +12,12 @@ import Flex from "../../components/Flex";
 interface Props {
   coins: Coin[];
   sign: string;
-  className: string;
+  className?: string;
+  limit?: number;
 }
 
 const Coins = (props: Props) => {
-  const { coins, sign, className } = props;
+  const { coins, sign, className, limit } = props;
   const network = useNetworkName();
   const { data } = useCW20Tokens();
 
@@ -33,7 +34,7 @@ const Coins = (props: Props) => {
 
   return (
     <>
-      {coins.map(({ amount, denom }) => {
+      {coins.slice(0, limit).map(({ amount, denom }) => {
         return (
           <Flex className={className}>
             <span>{sign}</span>

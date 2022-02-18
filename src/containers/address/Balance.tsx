@@ -6,10 +6,10 @@ import Card from "../../components/Card";
 import Modal from "../../components/Modal";
 import Flex from "../../components/Flex";
 import AddTokens from "../custom/AddTokens";
+import NFTAssets from "../custom/nft/NFTAssets";
 import ManageCustomTokens from "../custom/ManageCustomTokens";
 import ManageCustomTokensCW721 from "../custom/ManageCustomTokensCW721";
 import NativeBalance from "./NativeBalance";
-import NFTAssets from "../custom/nft/NFTAssets";
 import s from "./Balance.module.scss";
 
 const cx = classnames.bind(s);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
-import TxsComponent from "../Txs/TxsComponent";
+import TxHistory from "../Txs/TxHistory";
 import Fee from "../transaction/Fee";
 
 interface Data {
@@ -44,7 +44,7 @@ const Txs = ({ height }: { height: string }) => {
   };
 
   return (
-    <TxsComponent
+    <TxHistory
       columns={columns}
       getTxRow={getTxRow}
       pagination={() => setOffset(offset)}

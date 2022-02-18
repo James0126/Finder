@@ -2,15 +2,17 @@ import { useState } from "react";
 import classnames from "classnames";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
 import { Coin } from "@terra-money/terra.js";
+import Flex from "../../components/Flex";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByAddress } from "../../queries/transaction";
 import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
-import { totalAmounts } from "../../scripts/utility";
-import TxsComponent from "../Txs/TxsComponent";
-import Action from "../transaction/Action";
-import s from "./Txs.module.scss";
-import Coins from "../transaction/Coins";
 import { fromISOTime } from "../../scripts/date";
+import { totalAmounts } from "../../scripts/utility";
+import TxHistory from "../Txs/TxHistory";
+import Action from "../transaction/Action";
+import Coins from "../transaction/Coins";
+import Fee from "../transaction/Fee";
+import s from "./Txs.module.scss";
 
 type Msg = {
   msgType: string;
@@ -35,6 +37,7 @@ interface Data {
   action: LogData;
   amountOut: Coin[];
   amountIn: Coin[];
+  fee: CoinData[];
 }
 
 const Txs = ({ address }: { address: string }) => {
@@ -57,7 +60,7 @@ const Txs = ({ address }: { address: string }) => {
         <>
           <FinderLink tx short children={txhash} />
           <br />
-          <span className={s.time}>{fromISOTime(new Date(timestamp))}</span>
+          <span className={s.nowrap}>{fromISOTime(new Date(timestamp))}</span>
         </>
       ),
     },
@@ -65,7 +68,7 @@ const Txs = ({ address }: { address: string }) => {
       title: "Type",
       key: "msgInfo",
       render: ({ msgType, msgNum }: Msg) => (
-        <span className={s.typeWrapper}>
+        <span className={s.nowrap}>
           <span className={s.type}>{msgType}</span>
           {msgNum ? (
             <span className={classnames(s.msgNum, s.type)}>+{msgNum}</span>
@@ -81,17 +84,34 @@ const Txs = ({ address }: { address: string }) => {
       ),
     },
     {
-      title: <span className={s.amountTitle}>Amount (Out)</span>,
-      key: "amountOut",
-      render: (coins: Coin[]) => (
-        <Coins coins={coins} sign="-" className={classnames(s.out, s.amount)} />
+      title: <Flex end>Fee</Flex>,
+      key: "fee",
+      render: (fee: CoinData[]) => (
+        <Fee coins={fee} className={classnames(s.nowrap, s.fee)} />
       ),
     },
     {
-      title: <span className={s.amountTitle}>Amount (In)</span>,
+      title: <Flex end>Amount (Out)</Flex>,
+      key: "amountOut",
+      render: (coins: Coin[]) => (
+        <Coins
+          sign="-"
+          limit={2}
+          coins={coins}
+          className={classnames(s.out, s.amount, s.nowrap)}
+        />
+      ),
+    },
+    {
+      title: <Flex end>Amount (In)</Flex>,
       key: "amountIn",
       render: (coins: Coin[]) => (
-        <Coins coins={coins} sign="+" className={classnames(s.in, s.amount)} />
+        <Coins
+          sign="+"
+          limit={2}
+          coins={coins}
+          className={classnames(s.in, s.amount, s.nowrap)}
+        />
       ),
     },
   ];
@@ -99,14 +119,23 @@ const Txs = ({ address }: { address: string }) => {
   const logMatcher = useAmountLogMatcher();
 
   const getTxRow = (tx: TxInfo): Data => {
-    const { txhash, compactMessage, height, logs, raw_log, code, timestamp } =
-      tx;
+    const {
+      txhash,
+      compactMessage,
+      height,
+      logs,
+      raw_log,
+      code,
+      timestamp,
+      compactFee,
+    } = tx;
     const { type } = compactMessage[0];
     const hashData = { txhash, timestamp };
     const msgType = type.slice(type.indexOf("/") + 1);
     const msgInfo = { msgType, msgNum: compactMessage.length - 1 };
     const matched = getTxAmounts(logs, compactMessage, logMatcher, address);
     const [amountIn, amountOut] = totalAmounts(address, matched);
+    const { amounts: fee } = compactFee;
     const action = {
       log: logs,
       msg: code ? [compactMessage[0]] : compactMessage,
@@ -117,13 +146,14 @@ const Txs = ({ address }: { address: string }) => {
       height,
       raw_log,
       action,
+      fee,
       amountIn,
       amountOut,
     };
   };
 
   return (
-    <TxsComponent
+    <TxHistory
       columns={columns}
       getTxRow={getTxRow}
       pagination={() => setOffset(offset)}
