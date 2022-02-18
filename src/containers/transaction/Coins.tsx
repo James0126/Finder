@@ -3,14 +3,13 @@ import {
   readAmount,
   readDenom,
 } from "@terra.kitchen/utils";
-import { Coin } from "@terra-money/terra.js";
 import { useCW20Tokens } from "../../queries/assets";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import Amount from "../../components/Amount";
 import Flex from "../../components/Flex";
 
 interface Props {
-  coins: Coin[];
+  coins: CoinData[];
   sign: string;
   className?: string;
   limit?: number;
@@ -34,9 +33,9 @@ const Coins = (props: Props) => {
 
   return (
     <>
-      {coins.slice(0, limit).map(({ amount, denom }) => {
+      {coins.slice(0, limit).map(({ amount, denom }, key) => {
         return (
-          <Flex className={className}>
+          <Flex className={className} key={key}>
             <span>{sign}</span>
             <Amount
               amount={readAmount(amount.toString(), { comma: true })}

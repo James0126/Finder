@@ -1,7 +1,6 @@
 import { useState } from "react";
 import classnames from "classnames";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
-import { Coin } from "@terra-money/terra.js";
 import Flex from "../../components/Flex";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByAddress } from "../../queries/transaction";
@@ -35,8 +34,8 @@ interface Data {
   height: string;
   raw_log: string;
   action: LogData;
-  amountOut: Coin[];
-  amountIn: Coin[];
+  amountOut: CoinData[];
+  amountIn: CoinData[];
   fee: CoinData[];
 }
 
@@ -93,7 +92,7 @@ const Txs = ({ address }: { address: string }) => {
     {
       title: <Flex end>Amount (Out)</Flex>,
       key: "amountOut",
-      render: (coins: Coin[]) => (
+      render: (coins: CoinData[]) => (
         <Coins
           sign="-"
           limit={2}
@@ -105,7 +104,7 @@ const Txs = ({ address }: { address: string }) => {
     {
       title: <Flex end>Amount (In)</Flex>,
       key: "amountIn",
-      render: (coins: Coin[]) => (
+      render: (coins: CoinData[]) => (
         <Coins
           sign="+"
           limit={2}
@@ -140,6 +139,7 @@ const Txs = ({ address }: { address: string }) => {
       log: logs,
       msg: code ? [compactMessage[0]] : compactMessage,
     };
+
     return {
       hashData,
       msgInfo,

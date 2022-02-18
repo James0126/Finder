@@ -46,8 +46,8 @@ export const totalAmounts = (
   matchedLogs?: LogFinderAmountResult[][]
 ) => {
   try {
-    const amountIn: Coin[] = [];
-    const amountOut: Coin[] = [];
+    const amountIn: CoinData[] = [];
+    const amountOut: CoinData[] = [];
 
     matchedLogs?.forEach((log) =>
       log.forEach((data) => {
@@ -55,7 +55,8 @@ export const totalAmounts = (
         if (transformed) {
           const { sender, recipient, amount } = transformed;
           const coins = amount.split(",").map((coin) => {
-            return Coin.fromString(coin);
+            const { amount, denom } = Coin.fromString(coin);
+            return { amount: amount.toNumber(), denom: denom };
           });
           if (sender === userAddress) {
             amountOut.push(...coins);
