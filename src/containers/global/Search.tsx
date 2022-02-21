@@ -7,8 +7,8 @@ import FinderLink from "../../components/FinderLink";
 import { getEndpointByKeyword } from "../../scripts/utility";
 import {
   useCW20Contracts,
-  useCW20Tokens,
-  useCW721Contracts,
+  useCW20Whitelist,
+  useCW721Whitelist,
 } from "../../queries/assets";
 import s from "./Search.module.scss";
 
@@ -21,15 +21,15 @@ const Search = () => {
   const navigate = useNavigate();
 
   const { data: cw20Contract } = useCW20Contracts();
-  const { data: cw20Tokens } = useCW20Tokens();
-  const { data: cw721Contract } = useCW721Contracts();
+  const { data: cw20Tokens } = useCW20Whitelist();
+  const { data: cw721Contract } = useCW721Whitelist();
 
   const render = () => {
     if (!cw20Contract || !cw20Tokens || !cw721Contract || !keyword) {
       return null;
     }
 
-    const whitelist = {
+    const whitelist: CW20Tokens | CW20Contracts | CW721Contracts = {
       ...cw20Tokens[network],
       ...cw20Contract[network],
       ...cw721Contract[network],

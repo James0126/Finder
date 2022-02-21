@@ -1,7 +1,9 @@
+import { ReactNode } from "react";
+
 interface Content {
   title?: string;
-  content: any;
-  render?: (data: any) => JSX.Element | string;
+  content: ReactNode;
+  render?: (data: ReactNode) => ReactNode;
   hide?: boolean;
 }
 

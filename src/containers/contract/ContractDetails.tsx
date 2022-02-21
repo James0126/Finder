@@ -28,7 +28,9 @@ const ContractDetails = ({ contractInfo }: { contractInfo: ContractInfo }) => {
 
   return (
     <article>
-      <Modal buttonLabel={"Query"} modalContent={<Query />} />
+      <Modal buttonLabel={"Query"}>
+        <Query />
+      </Modal>
       <List dataSource={dataSource} />
     </article>
   );

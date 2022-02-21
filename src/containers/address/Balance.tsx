@@ -49,15 +49,16 @@ const Balance = ({ address }: { address: string }) => {
       <Card header={header} className={s.coins}>
         {state === "CW20" ? (
           <>
-            <Modal modalContent={<ManageCustomTokens />} buttonLabel="Add" />
+            <Modal buttonLabel="Add">
+              <ManageCustomTokens />
+            </Modal>
             <AddTokens address={address} />
           </>
         ) : state === "NFT" ? (
           <>
-            <Modal
-              modalContent={<ManageCustomTokensCW721 />}
-              buttonLabel="Add"
-            />
+            <Modal buttonLabel="Add">
+              <ManageCustomTokensCW721 />
+            </Modal>
             <NFTAssets address={address} />
           </>
         ) : (

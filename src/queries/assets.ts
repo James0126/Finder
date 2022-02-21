@@ -18,23 +18,16 @@ export const useTerraAssets = <T>(path: string, disabled?: boolean) =>
 
 //TODO: Fix types
 export const useCW20Whitelist = (disabled = false) => {
-  return useTerraAssets<CW20Tokens>("cw20/tokens.json", disabled);
+  return useTerraAssets<CW20TokenResponse>("cw20/tokens.json", disabled);
 };
 
 export const useCW721Whitelist = () => {
-  return useTerraAssets<CW721Whitelist>("cw721/contracts.json");
+  return useTerraAssets<CW721ContractsResponse>("cw721/contracts.json");
 };
 
 /* contracts */
 export const useCW20Contracts = () =>
-  useTerraAssets<CW20Contracts>("/cw20/contracts.json");
-
-export const useCW721Contracts = () =>
-  useTerraAssets<CW721Contracts>("/cw721/contracts.json");
-
-/* tokens */
-export const useCW20Tokens = () =>
-  useTerraAssets<CW20TokenResponse>("/cw20/tokens.json");
+  useTerraAssets<CW20ContractsResponse>("/cw20/contracts.json");
 
 export const useIBCTokens = () =>
   useTerraAssets<IBCTokenResponse>("/ibc/tokens.json");

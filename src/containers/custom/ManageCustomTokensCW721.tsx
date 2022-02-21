@@ -1,7 +1,7 @@
 import { AccAddress } from "@terra-money/terra.js";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { useCustomTokensCW721 } from "../settings/CustomTokens";
-import { useCW721Contracts } from "../../queries/assets";
+import { useCW721Whitelist } from "../../queries/assets";
 import { useInitMsg } from "../../queries/wasm";
 import WithSearchInput from "./WithSearchInput";
 import TokenList from "./TokenList";
@@ -10,7 +10,7 @@ import Fetching from "./Fetching";
 //station component
 
 interface Props {
-  whitelist: CW721Whitelist;
+  whitelist: CW721Contracts;
   keyword: string;
 }
 
@@ -69,7 +69,7 @@ const Component = ({ whitelist, keyword }: Props) => {
 
 const ManageCustomTokensCW721 = () => {
   const network = useNetworkName();
-  const { data: whitelist, ...state } = useCW721Contracts();
+  const { data: whitelist, ...state } = useCW721Whitelist();
 
   if (!whitelist) return null;
   const cw721 = whitelist[network];

@@ -1,5 +1,5 @@
-type CW20Tokens = Record<string, CW20TokenItem>;
 type CW20TokenResponse = Record<string, CW20Tokens>;
+type CW20Tokens = Record<string, CW20TokenItem>;
 
 interface CW20TokenInfoResponse {
   symbol: string;
@@ -13,8 +13,8 @@ interface CW20TokenItem extends CW20TokenInfoResponse {
   icon?: string;
 }
 
-type IBCTokens = Record<string, IBCTokenItem>;
 type IBCTokenResponse = Record<string, IBCTokens>;
+type IBCTokens = Record<string, IBCTokenItem>;
 
 interface IBCTokenInfoResponse {
   path: string;

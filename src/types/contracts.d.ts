@@ -1,12 +1,11 @@
-type CW20Contracts = Record<string, Record<string, CW20Contract>>;
+type CW20ContractsResponse = Record<string, CW20Contracts>;
+type CW20Contracts = Record<string, CW20Contract>;
 
 interface CW20Contract {
   protocol: string;
   name: string;
   icon: string;
 }
-
-type CW721Contracts = Record<string, Record<string, CW721Contract>>;
 
 interface CW721ContractItem extends CW721ContractInfoResponse {
   contract: TerraAddress;
@@ -23,7 +22,8 @@ interface CW721ContractInfoResponse {
   decimals: number;
 }
 
-type CW721Whitelist = Record<TerraAddress, CW721ContractItem>;
+type CW721ContractsResponse = Record<string, CW721Whitelist>;
+type CW721Contracts = Record<string, CW721ContractItem>;
 
 interface NFTTokenItem {
   token_uri?: string;

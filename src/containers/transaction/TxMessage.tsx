@@ -7,7 +7,7 @@ import { useValidators } from "../../queries/staking";
 import Read from "../../components/Read";
 import { WithTokenItem } from "../custom/tokens";
 import { useNetworkName } from "../../contexts/ChainsContext";
-import { useCW20Contracts, useCW20Tokens } from "../../queries/assets";
+import { useCW20Contracts, useCW20Whitelist } from "../../queries/assets";
 
 const ValidatorAddress = ({ children: address }: { children: string }) => {
   const { data: validators } = useValidators();
@@ -24,7 +24,7 @@ const ValidatorAddress = ({ children: address }: { children: string }) => {
 
 const TerraAddress = ({ children: address }: { children: string }) => {
   const { data: contracts } = useCW20Contracts();
-  const { data: tokens } = useCW20Tokens();
+  const { data: tokens } = useCW20Whitelist();
   const network = useNetworkName();
   const name = useMemo(() => {
     if (!(contracts && tokens)) return;

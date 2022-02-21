@@ -1,11 +1,11 @@
 import { ValAddress } from "@terra-money/terra.js";
 import FinderLink from "../../components/FinderLink";
 import { useNetworkName } from "../../contexts/ChainsContext";
-import { useCW20Contracts, useCW20Tokens } from "../../queries/assets";
+import { useCW20Contracts, useCW20Whitelist } from "../../queries/assets";
 
 const TerraAddress = ({ address }: { address: string }) => {
   const network = useNetworkName();
-  const { data: cw20Tokens } = useCW20Tokens();
+  const { data: cw20Tokens } = useCW20Whitelist();
   const { data: cw20Contracts } = useCW20Contracts();
 
   if (!cw20Tokens || !cw20Contracts) {

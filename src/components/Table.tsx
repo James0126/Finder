@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import { ReactNode } from "react";
 
 export interface Column {
@@ -29,7 +28,7 @@ function Table<T>(props: Props<T>) {
           {dataSource?.map((data, index) => {
             const classname = data["classname" as keyof T];
             return (
-              <tr className={classnames(String(classname))} key={index}>
+              <tr className={String(classname)} key={index}>
                 {columns.map(({ key, render }) => {
                   const source = data[key as keyof T];
                   const renderFn = render && render(source);

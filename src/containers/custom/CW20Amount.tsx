@@ -2,7 +2,7 @@ import { readAmount } from "@terra.kitchen/utils";
 import Amount from "../../components/Amount";
 import { DEFAULT_CW20_ICON } from "../../config/constants";
 import { useNetworkName } from "../../contexts/ChainsContext";
-import { useCW20Tokens } from "../../queries/assets";
+import { useCW20Whitelist } from "../../queries/assets";
 import { useInitMsg, useTokenBalance } from "../../queries/wasm";
 
 interface Props extends CustomTokenCW20 {
@@ -13,7 +13,7 @@ const CW20Amount = ({ address, ...item }: Props) => {
   const { token, decimals } = item;
   const { data: balance } = useTokenBalance(token, address);
   const { data: tokenInfo } = useInitMsg<{ symbol: string }>(token);
-  const { data: cw20 } = useCW20Tokens();
+  const { data: cw20 } = useCW20Whitelist();
   const network = useNetworkName();
 
   if (!cw20 || !balance) return null;

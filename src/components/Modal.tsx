@@ -1,15 +1,14 @@
-import { ReactNode, useState } from "react";
+import { FC, useState } from "react";
 import ReactModal from "react-modal";
 import s from "./Modal.module.scss";
 
 ReactModal.setAppElement("#root");
 
-type Props = {
-  modalContent: ReactNode;
+interface Prop {
   buttonLabel: string;
-};
+}
 
-const Modal = ({ modalContent, buttonLabel }: Props) => {
+const Modal: FC<Prop> = ({ children, buttonLabel }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
@@ -34,7 +33,7 @@ const Modal = ({ modalContent, buttonLabel }: Props) => {
           Close
         </button>
 
-        {modalContent}
+        {children}
       </ReactModal>
     </article>
   );

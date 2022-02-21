@@ -1,13 +1,12 @@
-import { ReactNode } from "react";
+import { FC } from "react";
 import NotFound from "../pages/NotFound";
 import Loading from "./Loading";
 
-interface Props {
-  children: ReactNode;
+interface Prop {
   state: QueryState;
 }
 
-const State = ({ children, state }: Props) =>
+const State: FC<Prop> = ({ children, state }) =>
   state.isLoading ? <Loading /> : state.error ? <NotFound /> : <>{children}</>;
 
 export default State;

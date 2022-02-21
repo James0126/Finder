@@ -6,11 +6,11 @@ import {
 } from "@terra.kitchen/utils";
 import Amount from "../../components/Amount";
 import { useNetworkName } from "../../contexts/ChainsContext";
-import { useCW20Contracts, useCW20Tokens } from "../../queries/assets";
+import { useCW20Contracts, useCW20Whitelist } from "../../queries/assets";
 
 const CoinComponent = ({ coin }: { coin: Coin }) => {
   const { amount, denom } = coin;
-  const { data: cw20Tokens } = useCW20Tokens();
+  const { data: cw20Tokens } = useCW20Whitelist();
   const { data: cw20Contracts } = useCW20Contracts();
   const network = useNetworkName();
   const balance = readAmount(amount.toString(), { comma: true });

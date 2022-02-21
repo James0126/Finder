@@ -3,7 +3,7 @@ import {
   readAmount,
   readDenom,
 } from "@terra.kitchen/utils";
-import { useCW20Tokens } from "../../queries/assets";
+import { useCW20Whitelist } from "../../queries/assets";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import Amount from "../../components/Amount";
 import Flex from "../../components/Flex";
@@ -18,7 +18,7 @@ interface Props {
 const Coins = (props: Props) => {
   const { coins, sign, className, limit } = props;
   const network = useNetworkName();
-  const { data } = useCW20Tokens();
+  const { data } = useCW20Whitelist();
 
   const render = (denom: string) => {
     if (!data) return "Tokens";

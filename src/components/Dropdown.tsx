@@ -1,11 +1,6 @@
-import { ReactNode, useState } from "react";
+import { FC, useState } from "react";
 
-type Props = {
-  children: ReactNode;
-  classname?: string;
-};
-
-const Dropdown = (props: Props) => {
+const Dropdown: FC = (props) => {
   const { children } = props;
   const [isOpen, setOpen] = useState<boolean>(false);
   const button = (

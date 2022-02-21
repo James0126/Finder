@@ -36,15 +36,12 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
         <Image url={getIpfsGateway(image)} size={100} />
         <span>{name}</span>
         {compact && extension && (
-          <Modal
-            modalContent={
-              <>
-                <Image url={getIpfsGateway(image)} size={100} />
-                <NFTDetails data={extension} />
-              </>
-            }
-            buttonLabel="View"
-          />
+          <Modal buttonLabel="View">
+            <>
+              <Image url={getIpfsGateway(image)} size={100} />
+              <NFTDetails data={extension} />
+            </>
+          </Modal>
         )}
       </article>
     );
