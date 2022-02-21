@@ -23,7 +23,8 @@ const Fee = ({ coins, slice, className }: Props) => {
     <div className={className}>
       {fee.map(({ amount, denom }, key) => {
         const coinDenom = readDenom(denom);
-        const ibc = isDenomIBC(denom) && ibcWhitelist[coinDenom].symbol;
+        const ibc =
+          isDenomIBC(denom) && (ibcWhitelist[coinDenom]?.symbol || "Tokens");
         return (
           <Amount
             amount={readAmount(amount, { comma: true })}
