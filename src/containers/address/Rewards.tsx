@@ -1,11 +1,11 @@
 import { Coins } from "@terra-money/terra.js";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
+import { sortByDenom } from "../../scripts/coin";
 import s from "./Rewards.module.scss";
 
 const Rewards = ({ rewards, limit }: { rewards: Coins; limit: number }) => {
   const rewardLength = rewards.toArray().length;
-  const coins = rewards.toArray().slice(0, limit);
-
+  const coins = sortByDenom(rewards.toArray()).slice(0, limit);
   return (
     <>
       {coins.map((coin, key) => {
