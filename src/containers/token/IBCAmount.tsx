@@ -3,6 +3,7 @@ import { useIBCWhitelist } from "../../queries/assets";
 import { useBankBalance } from "../../queries/bank";
 import Amount from "../../components/Amount";
 import { useNetworkName } from "../../contexts/ChainsContext";
+import { formatIBCDenom } from "../../scripts/coin";
 
 const IBCAmount = ({ address, denom }: { address: string; denom: string }) => {
   const network = useNetworkName();
@@ -12,7 +13,7 @@ const IBCAmount = ({ address, denom }: { address: string; denom: string }) => {
   if (!ibcWhitelist) return null;
 
   const whitelist = ibcWhitelist[network];
-  const key = denom.replace("ibc/", "");
+  const key = formatIBCDenom(denom);
   const { symbol, icon } = whitelist[key];
   const ibc = balance?.get(denom);
   const amount = readAmount(ibc?.amount.toString(), { comma: true });

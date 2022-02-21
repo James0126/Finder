@@ -10,6 +10,7 @@ import { useCW20Whitelist, useIBCWhitelist } from "../../queries/assets";
 import { combineState } from "../../queries/query";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import Fetching from "./Fetching";
+import { formatIBCDenom } from "../../scripts/coin";
 
 //station component
 
@@ -27,7 +28,7 @@ const Component = ({ whitelist, keyword }: Props) => {
   type AddedCW20 = Record<string, CustomTokenCW20>;
   const added = {
     ibc: ibc.list.reduce<AddedIBC>(
-      (acc, item) => ({ ...acc, [item.denom.replace("ibc/", "")]: item }),
+      (acc, item) => ({ ...acc, [formatIBCDenom(item.denom)]: item }),
       {}
     ),
     cw20: cw20.list.reduce<AddedCW20>(

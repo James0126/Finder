@@ -43,3 +43,5 @@ export const compareIsDenomIBC = (a: string, b: string) =>
 
 export const compareIs = (k: string) => (a: string, b: string) =>
   Number(b === k) - Number(a === k);
+
+export const formatIBCDenom = (ibc: string) => ibc.replace("ibc/", "");

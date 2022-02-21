@@ -7,6 +7,7 @@ import { useCW20Whitelist, useIBCWhitelist } from "../../queries/assets";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import Amount from "../../components/Amount";
 import Flex from "../../components/Flex";
+import { formatIBCDenom } from "../../scripts/coin";
 
 interface Props {
   coins: CoinData[];
@@ -25,10 +26,8 @@ const Coins = (props: Props) => {
     if (!cw20Response || !ibcResponse) return "Tokens";
     const ibc = ibcResponse[network];
     const cw20 = cw20Response[network];
-
-    const symbol =
-      cw20[denom]?.symbol || ibc[denom.replace("ibc/", "")]?.symbol;
-
+    const ibcHash = formatIBCDenom(denom);
+    const symbol = cw20[denom]?.symbol || ibc[ibcHash]?.symbol;
     return symbol
       ? symbol
       : isDenomTerraNative(denom)

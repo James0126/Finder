@@ -3,6 +3,7 @@ import { ReactComponent as Logo } from "../../styles/Images/logo.svg";
 import Flex from "../../components/Flex";
 import SelectCurrency from "./SelectCurrency";
 import SelectNetworks from "./SelectNetwork";
+import Breadcrumb from "./Breadcrumb";
 import Search from "./Search";
 import s from "./Header.module.scss";
 
@@ -20,6 +21,7 @@ const Header = () => (
         <SelectCurrency />
       </Flex>
     </Flex>
+    <Breadcrumb />
   </section>
 );
 
