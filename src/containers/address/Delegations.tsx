@@ -5,6 +5,7 @@ import Card from "../../components/Card";
 import Amount from "../../components/Amount";
 import Table from "../../components/Table";
 import FinderLink from "../../components/FinderLink";
+import s from "./Delegations.module.scss";
 
 const Delegations = ({ address }: { address: string }) => {
   const { data: delegation } = useDelegations(address);
@@ -17,8 +18,9 @@ const Delegations = ({ address }: { address: string }) => {
   const [delegations] = delegation;
 
   const cols = [
-    { title: "Moniker", key: "moniker" },
+    { title: "Validator", key: "moniker" },
     { title: "Amount", key: "amount" },
+    { title: "Rewards", key: "rewards" },
   ];
 
   const data = delegations.map((validator) => {
@@ -35,8 +37,8 @@ const Delegations = ({ address }: { address: string }) => {
   });
 
   return delegations.length ? (
-    <Card header={"Delegations"}>
-      <Table columns={cols} dataSource={data} />
+    <Card bordered className={s.card}>
+      <Table columns={cols} dataSource={data} tableClassname={s.table} />
     </Card>
   ) : null;
 };

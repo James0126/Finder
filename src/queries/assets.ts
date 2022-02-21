@@ -29,5 +29,5 @@ export const useCW721Whitelist = () => {
 export const useCW20Contracts = () =>
   useTerraAssets<CW20ContractsResponse>("/cw20/contracts.json");
 
-export const useIBCTokens = () =>
+export const useIBCWhitelist = () =>
   useTerraAssets<IBCTokenResponse>("/ibc/tokens.json");

@@ -6,7 +6,7 @@ import {
   useCustomTokensIBC,
 } from "../settings/CustomTokens";
 import { useTokenInfoCW20 } from "../../queries/wasm";
-import { useCW20Whitelist, useIBCTokens } from "../../queries/assets";
+import { useCW20Whitelist, useIBCWhitelist } from "../../queries/assets";
 import { combineState } from "../../queries/query";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import Fetching from "./Fetching";
@@ -111,7 +111,7 @@ const Component = ({ whitelist, keyword }: Props) => {
 };
 
 const ManageCustomTokens = () => {
-  const { data: ibc, ...ibcWhitelistState } = useIBCTokens();
+  const { data: ibc, ...ibcWhitelistState } = useIBCWhitelist();
   const { data: cw20, ...cw20WhitelistState } = useCW20Whitelist();
   const state = combineState(ibcWhitelistState, cw20WhitelistState);
 

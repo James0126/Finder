@@ -5,7 +5,7 @@ import { AccAddress } from "@terra-money/terra.js";
 import { ASSET } from "../../config/constants";
 import { useCustomTokensCW20 } from "../settings/CustomTokens";
 import { useTokenInfoCW20 } from "../../queries/wasm";
-import { useCW20Whitelist, useIBCTokens } from "../../queries/assets";
+import { useCW20Whitelist, useIBCWhitelist } from "../../queries/assets";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { useIBCBaseDenom } from "../../queries/ibc";
 
@@ -37,10 +37,12 @@ export const useTokenItem = (token: string): CW20TokenItem | undefined => {
 
   /* IBC */
   // 1. Whitelist
-  const { data: ibcWhitelist = {}, ...ibcWhitelistState } = useIBCTokens();
+  const { data: ibcWhitelist = {}, ...ibcWhitelistState } = useIBCWhitelist();
+
   const ibc = ibcWhitelist[network];
+
   const listedIBCTokenItem = isDenomIBC(token)
-    ? ibc[token.replace("ibc/", "")]
+    ? ibc?.[token.replace("ibc/", "")]
     : null;
 
   // 2. Query denom trace

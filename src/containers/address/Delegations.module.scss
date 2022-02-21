@@ -1,0 +1,33 @@
+.card {
+  background-color: white;
+  padding: 20px 24px;
+}
+
+.table {
+  color: #2043b5;
+  border-collapse: collapse;
+
+  td {
+    border-top: 1px solid #ebeff8;
+    padding: 20px;
+    font-size: 14px;
+  }
+
+  th {
+    font-weight: 500;
+    font-size: 12px;
+    padding: 20px;
+    text-align: start;
+  }
+
+  td,
+  th {
+    &:first-child {
+      padding: 20px 20px 20px 0px;
+    }
+
+    &:last-child {
+      padding: 20px 0px 20px 20px;
+    }
+  }
+}

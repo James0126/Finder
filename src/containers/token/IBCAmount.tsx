@@ -1,12 +1,12 @@
 import { readAmount } from "@terra.kitchen/utils";
-import { useIBCTokens } from "../../queries/assets";
+import { useIBCWhitelist } from "../../queries/assets";
 import { useBankBalance } from "../../queries/bank";
 import Amount from "../../components/Amount";
 import { useNetworkName } from "../../contexts/ChainsContext";
 
 const IBCAmount = ({ address, denom }: { address: string; denom: string }) => {
   const network = useNetworkName();
-  const { data: ibcWhitelist } = useIBCTokens();
+  const { data: ibcWhitelist } = useIBCWhitelist();
   const { data: balance } = useBankBalance(address);
 
   if (!ibcWhitelist) return null;

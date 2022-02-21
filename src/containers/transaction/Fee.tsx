@@ -1,7 +1,9 @@
 import { memo } from "react";
-import { readAmount, readDenom } from "@terra.kitchen/utils";
+import { isDenomIBC, readAmount, readDenom } from "@terra.kitchen/utils";
 import Amount from "../../components/Amount";
 import { sortByDenom } from "../../scripts/coin";
+import { useIBCWhitelist } from "../../queries/assets";
+import { useNetworkName } from "../../contexts/ChainsContext";
 
 interface Props {
   coins: CoinData[];
@@ -10,13 +12,25 @@ interface Props {
 }
 
 const Fee = ({ coins, slice, className }: Props) => {
+  const network = useNetworkName();
+  const { data: ibcResponse } = useIBCWhitelist();
+
+  if (!ibcResponse) return null;
+
+  const ibcWhitelist = ibcResponse[network];
   const fee = sortByDenom([...coins]).slice(0, slice);
   return (
     <div className={className}>
-      {fee.map((fee, key) => {
-        const amount = readAmount(fee.amount, { comma: true });
-        const denom = readDenom(fee.denom);
-        return <Amount amount={amount} denom={denom} key={key} />;
+      {fee.map(({ amount, denom }, key) => {
+        const coinDenom = readDenom(denom);
+        const ibc = isDenomIBC(denom) && ibcWhitelist[coinDenom].symbol;
+        return (
+          <Amount
+            amount={readAmount(amount, { comma: true })}
+            denom={ibc || coinDenom}
+            key={key}
+          />
+        );
       })}
     </div>
   );
