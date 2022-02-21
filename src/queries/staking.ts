@@ -73,15 +73,3 @@ export const useValidators = () => {
     { ...RefetchOptions.INFINITY }
   );
 };
-
-export const useDelegationReward = (address: string) => {
-  const lcd = useLCDClient();
-  return useQuery(
-    [lcd.config, address, "delegationReward"],
-    async () => {
-      const reward = await lcd.distribution.rewards(address);
-      return reward;
-    },
-    { ...RefetchOptions.DEFAULT }
-  );
-};
