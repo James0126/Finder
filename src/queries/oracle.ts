@@ -11,7 +11,7 @@ import { RefetchOptions } from "./query";
 export const useActiveDenoms = () => {
   const lcd = useLCDClient();
   return useQuery(
-    ["activeDenoms"],
+    [lcd.config, "activeDenoms"],
     async () => await lcd.oracle.activeDenoms(),
     { ...RefetchOptions.INFINITY }
   );
