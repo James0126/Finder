@@ -6,6 +6,10 @@
 .input {
   width: 400px;
   border-bottom: 1px solid var(--input-border);
+
+  &::placeholder {
+    color: var(--placeholder);
+  }
 }
 
 .button {

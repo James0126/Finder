@@ -3,7 +3,7 @@
 .wrapper {
   @include flex();
   height: 45px;
-  background-color: var(--card-bg);
+  background-color: var(--bg);
   border: 1px solid var(--border);
   color: var(--text);
   border-radius: 8px;
