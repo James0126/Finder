@@ -61,18 +61,18 @@ const Block = () => {
 
     const buttons = (
       <div className={s.buttonWrapper}>
-        <button className={s.button}>
-          <Link to={`../blocks/${Number(height) - 1}`}>
+        <Link to={`../blocks/${Number(height) - 1}`}>
+          <button className={s.button}>
             <ArrowBackIos style={iconStyle} className={s.icon} />
             Previous
-          </Link>
-        </button>
-        <button className={s.button}>
-          <Link to={`../blocks/${Number(height) + 1}`}>
+          </button>
+        </Link>
+        <Link to={`../blocks/${Number(height) + 1}`}>
+          <button className={s.button}>
             Next
             <ArrowForwardIos style={iconStyle} className={s.icon} />
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     );
 
