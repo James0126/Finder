@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@mui/icons-material";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import s from "./SearchInput.module.scss";
 
 interface Props {
@@ -9,11 +9,23 @@ interface Props {
 
 const SearchInput = (props: Props) => {
   const { onSearch, placeholder } = props;
+  const [isFocus, setFocus] = useState(false);
   const [input, setInput] = useState("");
 
+  const onSubmit: (e: FormEvent<HTMLFormElement>) => void = async (e) => {
+    e.preventDefault();
+    onSearch(input);
+    return isFocus;
+  };
+
   return (
-    <div className={s.wrapper}>
-      <button onClick={() => onSearch(input)} className={s.button}>
+    <form
+      onSubmit={onSubmit}
+      className={s.wrapper}
+      onFocus={() => setFocus(true)}
+      onBlur={() => setFocus(false)}
+    >
+      <button className={s.button}>
         <SearchOutlined />
       </button>
       <input
@@ -23,7 +35,7 @@ const SearchInput = (props: Props) => {
         placeholder={placeholder}
         className={s.input}
       />
-    </div>
+    </form>
   );
 };
 

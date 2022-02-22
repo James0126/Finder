@@ -66,6 +66,7 @@ const Search = () => {
     if (keyword) {
       navigate(`/${network}${getEndpointByKeyword(keyword.trim())}`);
     }
+    return isFocus;
   };
 
   return (
