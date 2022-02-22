@@ -30,7 +30,7 @@ const TerraAddress = ({ children: address }: { children: string }) => {
     if (!(contracts && tokens)) return;
     const cw20Token = tokens[network];
     const cw20Contract = contracts[network];
-    const contract = cw20Token[address] ?? cw20Contract[address];
+    const contract = cw20Token?.[address] ?? cw20Contract?.[address];
     if (!contract) return;
     const { protocol, name, symbol } = contract;
     return symbol ?? [protocol, name].join(" ");

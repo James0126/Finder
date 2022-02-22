@@ -25,9 +25,8 @@ export const useTokenItem = (token: string): CW20TokenItem | undefined => {
   //TODO Fix useCW20Whitelist
   const cw20WhitelistResult = useCW20Whitelist(!!customTokenItem);
   const { data: cw20Whitelist = {} } = cw20WhitelistResult;
-  const listedCW20TokenItem = Object.values(cw20Whitelist[network]).find(
-    matchToken
-  );
+  const tokens = cw20Whitelist[network];
+  const listedCW20TokenItem = tokens && Object.values(tokens).find(matchToken);
 
   // 3. Contract query - token info
   const shouldQueryCW20 = cw20WhitelistResult.isSuccess && !listedCW20TokenItem;

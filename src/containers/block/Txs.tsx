@@ -1,12 +1,12 @@
 import { useState } from "react";
+import { fromNow } from "../../scripts/date";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
 import TxHistory from "../txs/TxHistory";
 import TxTypes from "../txs/table/TxTypes";
+import Action from "../transaction/Action";
 import Fee from "../transaction/Fee";
 import s from "./Txs.module.scss";
-import { fromNow } from "../../scripts/date";
-import Action from "../transaction/Action";
 
 type LogData = {
   logs: TxLog[];
@@ -72,7 +72,6 @@ const Txs = ({ height }: { height: string }) => {
     const time = fromNow(new Date(timestamp));
     //TODO: Fix message
     const msgs = code ? [parsed_message[0]] : parsed_message;
-    console.log(parsed_message);
     const logData = { logs, msgs };
     return { txhash, parsed_message, raw_log, fee: amounts, time, logData };
   };
