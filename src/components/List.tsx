@@ -13,7 +13,6 @@ interface Props {
   dataSource: Content[];
 }
 
-//TODO: Refactor codes
 const List = ({ dataSource, itemClassName, mainClassName }: Props) => (
   <article className={mainClassName}>
     {dataSource.map(({ title, content, render, hide }, key) => {

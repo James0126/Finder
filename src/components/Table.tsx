@@ -4,6 +4,7 @@ export interface Column {
   title: ReactNode;
   key: string;
   render?: (data: any) => any;
+  titleClassName?: string;
 }
 
 interface Props<T> {
@@ -19,8 +20,10 @@ function Table<T>(props: Props<T>) {
       <table className={tableClassname}>
         <thead>
           <tr>
-            {columns.map(({ title, key }) => (
-              <th key={key}>{title}</th>
+            {columns.map(({ title, key, titleClassName }) => (
+              <th key={key} className={titleClassName}>
+                {title}
+              </th>
             ))}
           </tr>
         </thead>

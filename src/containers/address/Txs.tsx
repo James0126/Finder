@@ -2,38 +2,39 @@ import { useState } from "react";
 import classnames from "classnames";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
 import Flex from "../../components/Flex";
-import FinderLink from "../../components/FinderLink";
 import { useTxsByAddress } from "../../queries/transaction";
 import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
-import { fromISOTime } from "../../scripts/date";
 import { totalAmounts } from "../../scripts/utility";
 import TxHistory from "../Txs/TxHistory";
 import Action from "../transaction/Action";
 import Coins from "../transaction/Coins";
 import Fee from "../transaction/Fee";
+import TxTypes from "../transaction/table/TxTypes";
+import TxHash from "../transaction/table/TxHash";
+import TxBlock from "../transaction/table/TxBlock";
 import s from "./Txs.module.scss";
 
-type Msg = {
-  msgType: string;
-  msgNum: number;
-};
-
 type LogData = {
-  log: TxLog[];
-  msg: Message[];
+  logs: TxLog[];
+  msgs: Message[];
 };
 
 type HashData = {
   txhash: string;
+  code?: number;
+};
+
+type BlockData = {
   timestamp: string;
+  height: string;
 };
 
 interface Data {
   hashData: HashData;
-  msgInfo: Msg;
-  height: string;
+  compactMessage: Message[];
+  blockData: BlockData;
   raw_log: string;
-  action: LogData;
+  logData: LogData;
   amountOut: CoinData[];
   amountIn: CoinData[];
   fee: CoinData[];
@@ -49,38 +50,23 @@ const Txs = ({ address }: { address: string }) => {
   const columns = [
     {
       title: "Block",
-      key: "height",
-      render: (height: string) => <FinderLink block children={height} />,
+      key: "blockData",
+      render: (data: BlockData) => <TxBlock {...data} className={s.nowrap} />,
     },
     {
       title: "TxHash",
       key: "hashData",
-      render: ({ txhash, timestamp }: HashData) => (
-        <>
-          <FinderLink tx short children={txhash} />
-          <br />
-          <span className={s.nowrap}>{fromISOTime(new Date(timestamp))}</span>
-        </>
-      ),
+      render: (data: HashData) => <TxHash {...data} />,
     },
     {
       title: "Type",
-      key: "msgInfo",
-      render: ({ msgType, msgNum }: Msg) => (
-        <span className={s.nowrap}>
-          <span className={s.type}>{msgType}</span>
-          {msgNum ? (
-            <span className={classnames(s.msgNum, s.type)}>+{msgNum}</span>
-          ) : null}
-        </span>
-      ),
+      key: "compactMessage",
+      render: (messages: Message[]) => <TxTypes messages={messages} />,
     },
     {
       title: "Description",
-      key: "action",
-      render: ({ log, msg }: LogData) => (
-        <Action logs={log} msgs={msg} limit={1} />
-      ),
+      key: "logData",
+      render: (data: LogData) => <Action {...data} limit={1} />,
     },
     {
       title: <Flex end>Fee</Flex>,
@@ -136,24 +122,22 @@ const Txs = ({ address }: { address: string }) => {
       timestamp,
       compactFee,
     } = tx;
-    const { type } = compactMessage[0];
-    const hashData = { txhash, timestamp };
-    const msgType = type.slice(type.indexOf("/") + 1);
-    const msgInfo = { msgType, msgNum: compactMessage.length - 1 };
+    const hashData = { txhash, code };
     const matched = getTxAmounts(logs, compactMessage, logMatcher, address);
     const [amountIn, amountOut] = totalAmounts(address, matched);
     const { amounts: fee } = compactFee;
-    const action = {
-      log: logs,
-      msg: code ? [compactMessage[0]] : compactMessage,
-    };
+    const blockData = { height, timestamp };
+
+    //TODO: Fix message
+    const msgs = code ? [compactMessage[0]] : compactMessage;
+    const logData = { logs, msgs };
 
     return {
       hashData,
-      msgInfo,
-      height,
+      compactMessage,
+      blockData,
       raw_log,
-      action,
+      logData,
       fee,
       amountIn,
       amountOut,

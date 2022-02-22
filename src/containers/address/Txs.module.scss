@@ -4,18 +4,6 @@
   white-space: nowrap;
 }
 
-.type {
-  background-color: #ebeff8;
-  border-radius: 30px;
-  padding: 5px 8px;
-  font-size: 10px;
-  display: inline-flex;
-}
-
-.msgNum {
-  margin-left: 4px;
-}
-
 .amountTitle {
   @include flex(end);
 }

@@ -84,8 +84,8 @@ const Search = () => {
           onBlur={() => setFocus(false)}
           className={s.input}
         />
-        {isFocus && render()}
       </form>
+      {isFocus && render()}
     </div>
   );
 };

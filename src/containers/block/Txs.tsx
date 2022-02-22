@@ -3,10 +3,12 @@ import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
 import TxHistory from "../Txs/TxHistory";
 import Fee from "../transaction/Fee";
+import TxTypes from "../transaction/table/TxTypes";
+import s from "./Txs.module.scss";
 
 interface Data {
   txhash: string;
-  msgType: string;
+  compactMessage: Message[];
   raw_log: string;
   fee: CoinData[];
 }
@@ -20,27 +22,29 @@ const Txs = ({ height }: { height: string }) => {
 
   const columns = [
     {
-      title: "hash",
+      title: "TxHash",
       key: "txhash",
       render: (hash: string) => <FinderLink tx short children={hash} />,
     },
     {
-      title: "type",
-      key: "msgType",
+      title: "Type",
+      key: "compactMessage",
+      render: (msgs: Message[]) => <TxTypes messages={msgs} />,
     },
     {
-      title: "fee",
+      title: "Fee",
       key: "fee",
-      render: (fee: CoinData[]) => <Fee coins={fee} slice={3} />,
+      render: (fee: CoinData[]) => (
+        <Fee coins={fee} slice={3} className={s.textAlignEnd} />
+      ),
+      titleClassName: s.textAlignEnd,
     },
   ];
 
   const getTxRow = (tx: TxInfo): Data => {
     const { compactFee, txhash, compactMessage, raw_log } = tx;
-    const { type } = compactMessage[0];
     const { amounts } = compactFee;
-    const msgType = type.slice(type.indexOf("/") + 1);
-    return { txhash, msgType, raw_log, fee: amounts };
+    return { txhash, compactMessage, raw_log, fee: amounts };
   };
 
   return (

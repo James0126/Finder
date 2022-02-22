@@ -1,9 +1,9 @@
+import { isTerraAddress } from "../../scripts/utility";
 import List from "../../components/List";
 import Card from "../../components/Card";
 import TerraAddress from "../global/TerraAddress";
 import EventLog from "./EventLog";
 import WasmMsg from "./WasmMsg";
-import { isTerraAddress } from "../../scripts/utility";
 
 interface Props {
   msgs: Message[];

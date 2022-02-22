@@ -1,5 +1,4 @@
 @import "../styles/mixins";
-@import "../styles/variables";
 
 //TODO: Refactor
 .overlay {
@@ -22,7 +21,7 @@
   position: relative;
 
   @media (max-width: $breakpoint - 1) {
-    padding: $gutter;
+    padding: 20px;
     height: 100%;
     width: 100%;
   }

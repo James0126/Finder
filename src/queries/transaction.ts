@@ -36,6 +36,7 @@ const queryTxsByAddress = (address: string, offset?: string) => {
                 height
                 raw_log
                 timestamp
+                code
               }
             }
         }
@@ -79,6 +80,7 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
                   txhash
                   height
                   raw_log
+                  code
                 }
             }
         }
