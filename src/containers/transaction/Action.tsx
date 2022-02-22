@@ -1,4 +1,5 @@
 import { getTxCanonicalMsgs } from "@terra-money/log-finder-ruleset";
+import { memo } from "react";
 import { useActionLogMatcher } from "../../store/LogfinderRuleSet";
 import TxMessage from "./TxMessage";
 
@@ -27,4 +28,4 @@ const Action = ({ logs, msgs, limit }: Props) => {
   );
 };
 
-export default Action;
+export default memo(Action);

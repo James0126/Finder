@@ -1,3 +1,4 @@
+import { memo } from "react";
 import FinderLink from "../../../components/FinderLink";
 import { fromISOTime } from "../../../scripts/date";
 
@@ -17,4 +18,4 @@ const TxBlock = ({ height, timestamp, className }: Props) => {
   );
 };
 
-export default TxBlock;
+export default memo(TxBlock);

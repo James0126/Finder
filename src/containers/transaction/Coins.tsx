@@ -7,6 +7,7 @@ import { useCW20Whitelist, useIBCWhitelist } from "../../queries/assets";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import Amount from "../../components/Amount";
 import Flex from "../../components/Flex";
+import { memo } from "react";
 
 interface Props {
   coins: CoinData[];
@@ -54,4 +55,4 @@ const Coins = (props: Props) => {
   );
 };
 
-export default Coins;
+export default memo(Coins);

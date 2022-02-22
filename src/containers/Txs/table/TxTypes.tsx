@@ -1,8 +1,8 @@
 import classnames from "classnames";
+import { memo } from "react";
 import s from "./TxTypes.module.scss";
 
 const TxTypes = ({ messages }: { messages: Message[] }) => {
-  console.log(messages);
   const types = messages.map(({ type }) => type.slice(type.indexOf("/") + 1));
   const leftMsgLength = messages.length - 1;
   return (
@@ -15,4 +15,4 @@ const TxTypes = ({ messages }: { messages: Message[] }) => {
   );
 };
 
-export default TxTypes;
+export default memo(TxTypes);

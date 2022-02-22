@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Error } from "@mui/icons-material";
 import FinderLink from "../../../components/FinderLink";
 import Flex from "../../../components/Flex";
@@ -12,4 +13,4 @@ const TxHash = ({ txhash, code }: { txhash: string; code?: number }) => (
   </Flex>
 );
 
-export default TxHash;
+export default memo(TxHash);
