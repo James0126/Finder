@@ -31,7 +31,7 @@ type BlockData = {
 
 interface Data {
   hashData: HashData;
-  compactMessage: Message[];
+  parsed_message: Message[];
   blockData: BlockData;
   raw_log: string;
   logData: LogData;
@@ -44,8 +44,8 @@ const Txs = ({ address }: { address: string }) => {
   const [pageOffset, setOffset] = useState<string>();
   const { data, ...state } = useTxsByAddress(address, pageOffset);
 
-  const offset = data?.tx.byAddress.offset;
-  const txInfos = data?.tx.byAddress.txInfos;
+  const offset = data?.tx.by_address.offset;
+  const txInfos = data?.tx.by_address.tx_infos;
 
   const columns = [
     {
@@ -60,7 +60,7 @@ const Txs = ({ address }: { address: string }) => {
     },
     {
       title: "Type",
-      key: "compactMessage",
+      key: "parsed_message",
       render: (messages: Message[]) => <TxTypes messages={messages} />,
     },
     {
@@ -114,27 +114,27 @@ const Txs = ({ address }: { address: string }) => {
   const getTxRow = (tx: TxInfo): Data => {
     const {
       txhash,
-      compactMessage,
+      parsed_message,
       height,
       logs,
       raw_log,
       code,
       timestamp,
-      compactFee,
+      parsed_fee,
     } = tx;
     const hashData = { txhash, code };
-    const matched = getTxAmounts(logs, compactMessage, logMatcher, address);
+    const matched = getTxAmounts(logs, parsed_message, logMatcher, address);
     const [amountIn, amountOut] = totalAmounts(address, matched);
-    const { amounts: fee } = compactFee;
+    const { amounts: fee } = parsed_fee;
     const blockData = { height, timestamp };
 
     //TODO: Fix message
-    const msgs = code ? [compactMessage[0]] : compactMessage;
+    const msgs = code ? [parsed_message[0]] : parsed_message;
     const logData = { logs, msgs };
 
     return {
       hashData,
-      compactMessage,
+      parsed_message,
       blockData,
       raw_log,
       logData,

@@ -34,7 +34,7 @@ const Block = () => {
       return null;
     }
 
-    const { header } = blockInfo.tx.byHeight;
+    const { header } = blockInfo.tx.by_height;
     const { tx_count } = header;
     const { proposer_address, chain_id, time } = header;
     const hex =

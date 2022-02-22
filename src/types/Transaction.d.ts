@@ -1,7 +1,7 @@
 interface TxsByAddress {
   tx: {
-    byAddress: {
-      txInfos: TxInfo[];
+    by_address: {
+      tx_infos: TxInfo[];
       offset: string;
     };
   };
@@ -9,9 +9,9 @@ interface TxsByAddress {
 
 interface TxsByHeight {
   tx: {
-    byHeight: {
+    by_height: {
       header: BlockInfo;
-      txInfos: TxInfo[];
+      tx_infos: TxInfo[];
       offset: string;
     };
   };
@@ -19,7 +19,7 @@ interface TxsByHeight {
 
 interface TxByHash {
   tx: {
-    byHash: TxInfo;
+    by_hash: TxInfo;
   };
 }
 
@@ -38,10 +38,10 @@ interface BlockInfo {
 interface TxInfo {
   chainId: string;
   code: number;
-  compactFee: {
+  parsed_fee: {
     amounts: CoinData[];
   };
-  compactMessage: Message[];
+  parsed_message: Message[];
   timestamp: string;
   raw_log: string;
   logs: TxLog[];

@@ -8,15 +8,15 @@ const queryTxsByAddress = (address: string, offset?: string) => {
   return gql`
     query {
         tx {
-            byAddress(address:"${address}" ${offsetField}) {
+            by_address(address:"${address}" ${offsetField}) {
               offset
-              txInfos {
-                chainId
-                compactMessage {
+              tx_infos {
+                chain_id
+                parsed_message {
                   type
                   message
                 }
-                compactFee {
+                parsed_fee {
                   amounts {
                     denom
                     amount
@@ -49,7 +49,7 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
   return gql`
     query {
         tx {
-            byHeight(height: ${height}, chainId: "${chainId}", ${offsetField}) {
+            by_height(height: ${height}, chainId: "${chainId}", ${offsetField}) {
                 header {
                   proposer_address
                   chain_id
@@ -57,13 +57,13 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
                   tx_count
                 }
                 offset
-                txInfos {
-                  chainId
-                  compactMessage {
+                tx_infos {
+                  chain_id
+                  parsed_message {
                     type
                     message
                   }
-                  compactFee {
+                  parsed_fee {
                     amounts {
                       denom
                       amount
@@ -93,14 +93,14 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
 const queryTxByHash = (hash: string) => gql`
     query {
         tx {
-            byHash(txHash:"${hash}") {
-                chainId
+            by_hash(txHash:"${hash}") {
+                chain_id
                 code
-                compactMessage {
+                parsed_message {
                   type
                   message
                 }
-                compactFee {
+                parsed_fee {
                   amounts {
                     denom
                     amount

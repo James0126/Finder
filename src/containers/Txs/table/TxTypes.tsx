@@ -2,6 +2,7 @@ import classnames from "classnames";
 import s from "./TxTypes.module.scss";
 
 const TxTypes = ({ messages }: { messages: Message[] }) => {
+  console.log(messages);
   const types = messages.map(({ type }) => type.slice(type.indexOf("/") + 1));
   const leftMsgLength = messages.length - 1;
   return (

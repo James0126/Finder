@@ -6,21 +6,28 @@ import TxTypes from "../txs/table/TxTypes";
 import Fee from "../transaction/Fee";
 import s from "./Txs.module.scss";
 import { fromNow } from "../../scripts/date";
+import Action from "../transaction/Action";
+
+type LogData = {
+  logs: TxLog[];
+  msgs: Message[];
+};
 
 interface Data {
   txhash: string;
-  compactMessage: Message[];
+  parsed_message: Message[];
   raw_log: string;
   fee: CoinData[];
   time: string;
+  logData: LogData;
 }
 
 const Txs = ({ height }: { height: string }) => {
   const [pageOffset, setOffset] = useState<string>();
   const { data, ...state } = useTxsByHeight(height, pageOffset);
 
-  const offset = data?.tx.byHeight.offset;
-  const txInfos = data?.tx.byHeight.txInfos;
+  const offset = data?.tx.by_height.offset;
+  const txInfos = data?.tx.by_height.tx_infos;
 
   const columns = [
     {
@@ -30,8 +37,13 @@ const Txs = ({ height }: { height: string }) => {
     },
     {
       title: "Type",
-      key: "compactMessage",
+      key: "parsed_message",
       render: (msgs: Message[]) => <TxTypes messages={msgs} />,
+    },
+    {
+      title: "Description",
+      key: "logData",
+      render: (logData: LogData) => <Action {...logData} limit={1} />,
     },
     {
       title: "Fee",
@@ -47,10 +59,22 @@ const Txs = ({ height }: { height: string }) => {
   ];
 
   const getTxRow = (tx: TxInfo): Data => {
-    const { compactFee, txhash, compactMessage, raw_log, timestamp } = tx;
-    const { amounts } = compactFee;
+    const {
+      parsed_fee,
+      txhash,
+      parsed_message,
+      raw_log,
+      timestamp,
+      code,
+      logs,
+    } = tx;
+    const { amounts } = parsed_fee;
     const time = fromNow(new Date(timestamp));
-    return { txhash, compactMessage, raw_log, fee: amounts, time };
+    //TODO: Fix message
+    const msgs = code ? [parsed_message[0]] : parsed_message;
+    console.log(parsed_message);
+    const logData = { logs, msgs };
+    return { txhash, parsed_message, raw_log, fee: amounts, time, logData };
   };
 
   return (

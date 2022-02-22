@@ -19,10 +19,10 @@ const Transaction = () => {
       return null;
     }
 
-    const { chainId, code, compactFee, compactMessage, raw_log, logs, height } =
-      data.tx.byHash;
+    const { chainId, code, parsed_fee, parsed_message, raw_log, logs, height } =
+      data.tx.by_hash;
 
-    const { amounts } = compactFee;
+    const { amounts } = parsed_fee;
     const isSuccess = !code;
 
     const dataSource = [
@@ -48,14 +48,14 @@ const Transaction = () => {
       },
       {
         title: "action",
-        content: <Action logs={logs} msgs={compactMessage} />,
+        content: <Action logs={logs} msgs={parsed_message} />,
       },
     ];
     return (
       <>
         <h1>Trasaction Detail</h1>
         <List dataSource={dataSource} />
-        <Message msgs={compactMessage} logs={logs} isSuccess={isSuccess} />
+        <Message msgs={parsed_message} logs={logs} isSuccess={isSuccess} />
       </>
     );
   };
