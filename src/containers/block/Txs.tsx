@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { fromNow } from "../../scripts/date";
-import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
 import TxHistory from "../txs/TxHistory";
 import TxTypes from "../txs/table/TxTypes";
+import TxHash from "../txs/table/TxHash";
 import Action from "../transaction/Action";
 import Fee from "../transaction/Fee";
 import s from "./Txs.module.scss";
@@ -13,8 +13,13 @@ type LogData = {
   msgs: Message[];
 };
 
-interface Data {
+type hashData = {
   txhash: string;
+  code?: number;
+};
+
+interface Data {
+  hashData: hashData;
   parsed_message: Message[];
   raw_log: string;
   fee: CoinData[];
@@ -32,8 +37,8 @@ const Txs = ({ height }: { height: string }) => {
   const columns = [
     {
       title: "TxHash",
-      key: "txhash",
-      render: (hash: string) => <FinderLink tx short children={hash} />,
+      key: "hashData",
+      render: (hashData: hashData) => <TxHash {...hashData} />,
     },
     {
       title: "Type",
@@ -70,10 +75,11 @@ const Txs = ({ height }: { height: string }) => {
     } = tx;
     const { amounts } = parsed_fee;
     const time = fromNow(new Date(timestamp));
+    const hashData = { txhash, code };
     //TODO: Fix message
     const msgs = code ? [parsed_message[0]] : parsed_message;
     const logData = { logs, msgs };
-    return { txhash, parsed_message, raw_log, fee: amounts, time, logData };
+    return { hashData, parsed_message, raw_log, fee: amounts, time, logData };
   };
 
   return (

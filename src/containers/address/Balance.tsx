@@ -46,7 +46,7 @@ const Balance = ({ address }: { address: string }) => {
 
   return (
     <section>
-      <Card header={header} className={s.coins}>
+      <Card header={header} bordered className={s.coins}>
         {state === "CW20" ? (
           <>
             <Modal buttonLabel="Add">

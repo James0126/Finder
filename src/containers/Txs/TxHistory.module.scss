@@ -11,11 +11,11 @@
 }
 
 .table {
-  color: #2043b5;
+  color: var(--text);
   border-collapse: collapse;
 
   td {
-    border-top: 1px solid #ebeff8;
+    border-top: 1px solid var(--border);
     padding: 10px;
     font-size: 14px;
   }

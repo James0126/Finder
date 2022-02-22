@@ -1,0 +1,19 @@
+@import "./mixins";
+
+:root {
+  --link: hsl(210 89% 61%);
+  --text: hsl(226 70% 42%);
+  --text-muted: hsl(227 51% 70%);
+  --validator: hsl(210 89% 61%);
+
+  --header-bg: hsl(215 100% 33%);
+
+  --bg: hsl(230 100% 100%);
+  --bg-muted: rgb(63, 73, 119);
+  --card-bg: hsl(0 0% 100%);
+  --border: hsl(222 48% 95%);
+  --input-border: hsl(220 39% 50%);
+
+  --success: hsl(168 71% 39%);
+  --danger: hsl(356 100% 67%);
+}

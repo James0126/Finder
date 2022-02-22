@@ -15,7 +15,7 @@
   @include flex(flex-start);
 
   &:not(:first-child) {
-    border-top: 1px solid var(--card-border);
+    border-top: 1px solid var(--border);
   }
 }
 
@@ -26,7 +26,7 @@
 }
 
 .large {
-  border-radius: var(--border-radius);
+  border-radius: 8px
   width: 100%;
   height: auto;
 }

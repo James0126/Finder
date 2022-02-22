@@ -3,10 +3,10 @@
 .wrapper {
   position: sticky;
   top: 0;
-  background-color: #0045a7;
+  background-color: var(--header-bg);
   padding: 21px 24px;
   z-index: 1;
-  color: white;
+  color: var(--bg);
 }
 
 .flex {

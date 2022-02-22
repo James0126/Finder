@@ -3,11 +3,11 @@
 }
 
 .table {
-  color: #2043b5;
+  color: var(--text);
   border-collapse: collapse;
 
   td {
-    border-top: 1px solid #ebeff8;
+    border-top: 1px solid var(--border);
     padding: 20px;
     font-size: 14px;
   }
@@ -39,7 +39,7 @@
 }
 
 .status {
-  background-color: #ebeff8;
+  background-color: var(--border);
   padding: 2px 8px;
   border-radius: 30px;
   font-size: 10px;

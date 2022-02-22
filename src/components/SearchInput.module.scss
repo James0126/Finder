@@ -3,9 +3,9 @@
 .wrapper {
   @include flex();
   height: 45px;
-  background-color: white;
-  border: 1px solid #cfd8ea;
-  color: #2043b5;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
   border-radius: 8px;
   margin-bottom: 8px;
   padding: 0px 19px;

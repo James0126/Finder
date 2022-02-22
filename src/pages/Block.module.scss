@@ -1,7 +1,7 @@
 @import "../styles/mixins";
 
 .wrapper {
-  color: #2043b5;
+  color: var(--text);
 }
 
 .title {
@@ -40,7 +40,7 @@
 }
 
 .button {
-  background-color: #ebeff8;
+  background-color: var(--border);
   padding: 3px 10px;
   font-size: 10px;
   border-radius: 11px;

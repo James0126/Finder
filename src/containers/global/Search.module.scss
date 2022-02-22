@@ -5,11 +5,7 @@
 
 .input {
   width: 400px;
-  border-bottom: 1px solid rgba($color: white, $alpha: 0.5);
-
-  &::placeholder {
-    opacity: 0.5;
-  }
+  border-bottom: 1px solid var(--input-border);
 }
 
 .button {
@@ -21,7 +17,7 @@
 
 .list {
   position: absolute;
-  background-color: white;
+  background-color: var(--bg);
   max-height: 400px;
   overflow: auto;
   margin: 0px;
@@ -31,5 +27,5 @@
 .item {
   padding: 10px;
   list-style: none;
-  border: 1px solid gray;
+  border: 1px solid var(--border);
 }

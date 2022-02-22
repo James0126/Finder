@@ -13,11 +13,11 @@
 }
 
 .in {
-  color: #1daa8e;
+  color: var(--success);
 }
 
 .out {
-  color: #ff5561;
+  color: var(--danger);
 }
 
 .fee {

@@ -2,16 +2,15 @@
   margin-bottom: 10px;
   background: #f3f5fd;
   border-radius: 8px;
-  border: 1px solid #ebeff8;
+  border: 1px solid var(--border);
   overflow: auto;
   font-size: 14px;
   font-weight: 500;
 }
 
 .tap {
-  color: #2043b5;
+  color: var(--text);
   padding: 20px 40px;
-  background: #f3f5fd;
 
   &:first-child {
     border-top-left-radius: 8px;
@@ -20,19 +19,19 @@
 
   &:nth-child(2) {
     border: none;
-    border-left: 1px solid #ebeff8;
-    border-right: 1px solid #ebeff8;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
   }
 
   &:last-child {
-    border-right: 1px solid #ebeff8;
+    border-right: 1px solid var(--border);
   }
 
   &:hover {
-    background: white;
+    background: var(--bg);
   }
 }
 
 .active {
-  background: white;
+  background: var(--bg);
 }
