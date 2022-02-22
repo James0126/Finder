@@ -1,10 +1,12 @@
+import { ReactNode } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { fromISOTime } from "../scripts/date";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { fromISOTime, toNow } from "../scripts/date";
 import FinderLink from "../components/FinderLink";
-import List from "../components/List";
 import State from "../components/State";
 import Txs from "../containers/block/Txs";
+import Flex from "../components/Flex";
 import { combineState } from "../queries/query";
 import { useValidators } from "../queries/staking";
 import { useValidatorSet } from "../queries/tendermint";
@@ -13,6 +15,7 @@ import {
   getFindMoniker,
   getValidatorOperatorAddressByHexAddress,
 } from "../queries/validator";
+import s from "./Block.module.scss";
 
 const Block = () => {
   const { height = "" } = useParams();
@@ -32,6 +35,7 @@ const Block = () => {
     }
 
     const { header } = blockInfo.tx.byHeight;
+    const { tx_count } = header;
     const { proposer_address, chain_id, time } = header;
     const hex =
       chain_id === "columbus-5"
@@ -53,18 +57,46 @@ const Block = () => {
       hex
     );
 
+    const iconStyle = { width: "8px", height: "8px" };
+
+    const buttons = (
+      <div className={s.buttonWrapper}>
+        <button className={s.button}>
+          <Link to={`../blocks/${Number(height) - 1}`}>
+            <ArrowBackIos style={iconStyle} className={s.icon} />
+            Previous
+          </Link>
+        </button>
+        <button className={s.button}>
+          <Link to={`../blocks/${Number(height) + 1}`}>
+            Next
+            <ArrowForwardIos style={iconStyle} className={s.icon} />
+          </Link>
+        </button>
+      </div>
+    );
+
     const dataSource = [
       {
-        title: "height",
-        content: height,
-      },
-      {
-        title: "chain id",
+        title: "Chain ID",
         content: chain_id,
       },
       {
-        title: "time",
-        content: fromISOTime(new Date(time)),
+        title: "Block height",
+        content: (
+          <Flex>
+            {height}
+            {buttons}
+          </Flex>
+        ),
+      },
+      {
+        title: "Timestamp",
+        content: `${toNow(new Date(time))} | ${fromISOTime(new Date(time))}`,
+      },
+      {
+        title: "Transactions",
+        content: `${tx_count} Transactions`,
       },
       {
         title: "proposer",
@@ -72,24 +104,14 @@ const Block = () => {
       },
     ];
 
-    const buttons = (
-      <div>
-        <Link to={`../blocks/${Number(height) - 1}`}>
-          <button>Prev</button>
-        </Link>
-        <Link to={`../blocks/${Number(height) + 1}`}>
-          <button>Next</button>
-        </Link>
-      </div>
-    );
-
     return (
-      <>
-        <h1>Block Page</h1>
-        <List dataSource={dataSource} />
-        {buttons}
+      <section className={s.wrapper}>
+        <h1 className={s.title}>
+          <span className={s.bold}>Block</span> #{height}
+        </h1>
+        <Component dataSource={dataSource} />
         <Txs height={height} />
-      </>
+      </section>
     );
   };
 
@@ -97,3 +119,19 @@ const Block = () => {
 };
 
 export default Block;
+
+type Data = {
+  title: string;
+  content: ReactNode;
+};
+
+const Component = ({ dataSource }: { dataSource: Data[] }) => (
+  <div className={s.list}>
+    {dataSource.map(({ title, content }) => (
+      <Flex start key={title} className={s.row}>
+        <div className={s.listTitle}>{title}</div>
+        <div className={s.content}>{content}</div>
+      </Flex>
+    ))}
+  </div>
+);

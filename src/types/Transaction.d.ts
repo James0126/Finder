@@ -32,6 +32,7 @@ interface BlockInfo {
   proposer_address: string;
   chain_id: string;
   time: string;
+  tx_count: number;
 }
 
 interface TxInfo {

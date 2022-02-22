@@ -5,13 +5,13 @@ import Flex from "../../components/Flex";
 import { useTxsByAddress } from "../../queries/transaction";
 import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
 import { totalAmounts } from "../../scripts/utility";
-import TxHistory from "../Txs/TxHistory";
 import Action from "../transaction/Action";
 import Coins from "../transaction/Coins";
 import Fee from "../transaction/Fee";
-import TxTypes from "../transaction/table/TxTypes";
-import TxHash from "../transaction/table/TxHash";
-import TxBlock from "../transaction/table/TxBlock";
+import TxHistory from "../txs/TxHistory";
+import TxTypes from "../txs/table/TxTypes";
+import TxHash from "../txs/table/TxHash";
+import TxBlock from "../txs/table/TxBlock";
 import s from "./Txs.module.scss";
 
 type LogData = {
@@ -69,13 +69,6 @@ const Txs = ({ address }: { address: string }) => {
       render: (data: LogData) => <Action {...data} limit={1} />,
     },
     {
-      title: <Flex end>Fee</Flex>,
-      key: "fee",
-      render: (fee: CoinData[]) => (
-        <Fee coins={fee} className={classnames(s.nowrap, s.fee)} />
-      ),
-    },
-    {
       title: (
         <Flex end className={s.nowrap}>
           Amount (Out)
@@ -105,6 +98,13 @@ const Txs = ({ address }: { address: string }) => {
           coins={coins}
           className={classnames(s.in, s.amount, s.nowrap)}
         />
+      ),
+    },
+    {
+      title: <Flex end>Fee</Flex>,
+      key: "fee",
+      render: (fee: CoinData[]) => (
+        <Fee coins={fee} className={classnames(s.nowrap, s.fee)} />
       ),
     },
   ];

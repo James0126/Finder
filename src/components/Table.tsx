@@ -4,7 +4,7 @@ export interface Column {
   title: ReactNode;
   key: string;
   render?: (data: any) => any;
-  titleClassName?: string;
+  alignClassname?: string;
 }
 
 interface Props<T> {
@@ -20,8 +20,8 @@ function Table<T>(props: Props<T>) {
       <table className={tableClassname}>
         <thead>
           <tr>
-            {columns.map(({ title, key, titleClassName }) => (
-              <th key={key} className={titleClassName}>
+            {columns.map(({ title, key, alignClassname }) => (
+              <th key={key} className={alignClassname}>
                 {title}
               </th>
             ))}
@@ -32,10 +32,14 @@ function Table<T>(props: Props<T>) {
             const classname = data["classname" as keyof T];
             return (
               <tr className={String(classname)} key={index}>
-                {columns.map(({ key, render }) => {
+                {columns.map(({ key, render, alignClassname }) => {
                   const source = data[key as keyof T];
                   const renderFn = render && render(source);
-                  return <td key={key}>{renderFn || source}</td>;
+                  return (
+                    <td className={alignClassname} key={key}>
+                      {renderFn || source}
+                    </td>
+                  );
                 })}
               </tr>
             );

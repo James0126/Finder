@@ -13,7 +13,9 @@ export const useBankBalance = (address: string) => {
       }
       // TODO: Pagination
       // Required when the number of results exceed 100
-      const [coins] = await lcd.bank.balance(address);
+      const [coins] = await lcd.bank.balance(address, {
+        "pagination.reverse": "true",
+      });
       return coins;
     },
     { ...RefetchOptions.DEFAULT }

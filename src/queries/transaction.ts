@@ -54,6 +54,7 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
                   proposer_address
                   chain_id
                   time
+                  tx_count
                 }
                 offset
                 txInfos {
@@ -81,6 +82,7 @@ const queryTxsByHeight = (height: string, chainId: string, offset?: string) => {
                   height
                   raw_log
                   code
+                  timestamp
                 }
             }
         }

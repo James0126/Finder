@@ -1,16 +1,18 @@
 import { useState } from "react";
 import FinderLink from "../../components/FinderLink";
 import { useTxsByHeight } from "../../queries/transaction";
-import TxHistory from "../Txs/TxHistory";
+import TxHistory from "../txs/TxHistory";
+import TxTypes from "../txs/table/TxTypes";
 import Fee from "../transaction/Fee";
-import TxTypes from "../transaction/table/TxTypes";
 import s from "./Txs.module.scss";
+import { fromNow } from "../../scripts/date";
 
 interface Data {
   txhash: string;
   compactMessage: Message[];
   raw_log: string;
   fee: CoinData[];
+  time: string;
 }
 
 const Txs = ({ height }: { height: string }) => {
@@ -34,17 +36,21 @@ const Txs = ({ height }: { height: string }) => {
     {
       title: "Fee",
       key: "fee",
-      render: (fee: CoinData[]) => (
-        <Fee coins={fee} slice={3} className={s.textAlignEnd} />
-      ),
-      titleClassName: s.textAlignEnd,
+      render: (fee: CoinData[]) => <Fee coins={fee} slice={3} />,
+      alignClassname: s.textAlignEnd,
+    },
+    {
+      title: "Time",
+      key: "time",
+      alignClassname: s.textAlignEnd,
     },
   ];
 
   const getTxRow = (tx: TxInfo): Data => {
-    const { compactFee, txhash, compactMessage, raw_log } = tx;
+    const { compactFee, txhash, compactMessage, raw_log, timestamp } = tx;
     const { amounts } = compactFee;
-    return { txhash, compactMessage, raw_log, fee: amounts };
+    const time = fromNow(new Date(timestamp));
+    return { txhash, compactMessage, raw_log, fee: amounts, time };
   };
 
   return (

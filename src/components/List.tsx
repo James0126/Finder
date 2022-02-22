@@ -13,17 +13,20 @@ interface Props {
   dataSource: Content[];
 }
 
-const List = ({ dataSource, itemClassName, mainClassName }: Props) => (
-  <article className={mainClassName}>
-    {dataSource.map(({ title, content, render, hide }, key) => {
-      const data = render ? render(content) : content;
-      return !hide ? (
-        <div key={key} className={itemClassName}>
-          {title && <b>{title}</b>} <span>{data}</span>
-        </div>
-      ) : null;
-    })}
-  </article>
-);
+const List = (props: Props) => {
+  const { itemClassName, mainClassName, dataSource } = props;
+  return (
+    <article className={mainClassName}>
+      {dataSource.map(({ title, content, render, hide }, key) => {
+        const data = render ? render(content) : content;
+        return !hide ? (
+          <div key={key} className={itemClassName}>
+            {title && <span>{title}</span>} <span>{data}</span>
+          </div>
+        ) : null;
+      })}
+    </article>
+  );
+};
 
 export default List;
