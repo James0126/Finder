@@ -9,9 +9,9 @@ import Action from "../transaction/Action";
 import Coins from "../transaction/Coins";
 import Fee from "../transaction/Fee";
 import TxHistory from "../txs/TxHistory";
+import TxBlock from "../txs/table/TxBlock";
 import TxTypes from "../txs/table/TxTypes";
 import TxHash from "../txs/table/TxHash";
-import TxBlock from "../txs/table/TxBlock";
 import s from "./Txs.module.scss";
 
 type LogData = {

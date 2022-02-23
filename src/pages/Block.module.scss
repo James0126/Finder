@@ -36,6 +36,7 @@
 }
 
 .buttonWrapper {
+  @include flex();
   margin-left: 12px;
 }
 
@@ -48,10 +49,6 @@
   &:last-child {
     margin-left: 4px;
   }
-
-  &:hover {
-    text-decoration: none;
-  }
 }
 
 .icon {
@@ -60,4 +57,12 @@
 
 .textAlignEnd {
   text-align: end;
+}
+
+.link {
+  color: var(--text);
+
+  &:hover {
+    text-decoration: none;
+  }
 }
