@@ -8,10 +8,10 @@ import { totalAmounts } from "../../scripts/utility";
 import Action from "../transaction/Action";
 import Coins from "../transaction/Coins";
 import Fee from "../transaction/Fee";
-import TxHistory from "../txs/TxHistory";
-import TxBlock from "../txs/table/TxBlock";
-import TxTypes from "../txs/table/TxTypes";
-import TxHash from "../txs/table/TxHash";
+import TxHistory from "../history/TxHistory";
+import TxBlock from "../history/table/TxBlock";
+import TxTypes from "../history/table/TxTypes";
+import TxHash from "../history/table/TxHash";
 import s from "./Txs.module.scss";
 
 type LogData = {

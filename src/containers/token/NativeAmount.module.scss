@@ -1,0 +1,24 @@
+@import "../../styles/mixins";
+
+.amount {
+  @include flex(start, end);
+  font-weight: 500;
+  flex-direction: column;
+}
+
+.currency {
+  @include flex();
+  font-weight: 400;
+}
+
+.wrapper {
+  @include flex(space-between);
+}
+
+.logo {
+  font-weight: 500;
+}
+
+.denom {
+  margin-left: 10px;
+}

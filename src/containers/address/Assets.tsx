@@ -10,13 +10,13 @@ import NFTAssets from "../custom/nft/NFTAssets";
 import ManageCustomTokens from "../custom/ManageCustomTokens";
 import ManageCustomTokensCW721 from "../custom/ManageCustomTokensCW721";
 import NativeBalance from "./NativeBalance";
-import s from "./Balance.module.scss";
+import s from "./Assets.module.scss";
 
 const cx = classnames.bind(s);
 
 type Page = "Coins" | "CW20" | "NFT";
 
-const Balance = ({ address }: { address: string }) => {
+const Assets = ({ address }: { address: string }) => {
   const [state, setState] = useState<Page>("Coins");
   const { data: balance } = useBankBalance(address);
   const native = balance?.filter((coin) => !isDenomIBC(coin.denom)).toArray();
@@ -46,7 +46,7 @@ const Balance = ({ address }: { address: string }) => {
 
   return (
     <section>
-      <Card header={header} bordered className={s.coins}>
+      <Card title={header} bordered>
         {state === "CW20" ? (
           <>
             <Modal buttonLabel="Add">
@@ -69,4 +69,4 @@ const Balance = ({ address }: { address: string }) => {
   );
 };
 
-export default Balance;
+export default Assets;

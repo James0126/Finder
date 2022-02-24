@@ -1,0 +1,19 @@
+.wrapper {
+  padding: 2px 14px;
+  font-size: 12px;
+  border-radius: 11px;
+  background-color: var(--border);
+}
+
+.danger {
+  background-color: var(--danger);
+}
+
+.success {
+  background-color: var(--success);
+}
+
+.small {
+  font-size: 10px;
+  padding: 2px 8px;
+}

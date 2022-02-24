@@ -1,0 +1,10 @@
+@import "../../styles/mixins";
+
+.card {
+  padding: 20px;
+  margin-top: 58px;
+}
+
+.price {
+  @include flex(start);
+}

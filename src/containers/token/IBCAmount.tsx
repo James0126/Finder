@@ -1,8 +1,10 @@
 import { readAmount } from "@terra.kitchen/utils";
 import { useIBCWhitelist } from "../../queries/assets";
 import { useBankBalance } from "../../queries/bank";
+import Card from "../../components/Card";
 import Amount from "../../components/Amount";
 import { useNetworkName } from "../../contexts/ChainsContext";
+import s from "./IBCAmount.module.scss";
 
 const IBCAmount = ({ address, denom }: { address: string; denom: string }) => {
   const network = useNetworkName();
@@ -17,7 +19,19 @@ const IBCAmount = ({ address, denom }: { address: string; denom: string }) => {
   const ibc = balance?.get(denom);
   const amount = readAmount(ibc?.amount.toString(), { comma: true });
 
-  return <Amount amount={amount} denom={symbol} iconUrl={icon} key={symbol} />;
+  return (
+    <Card>
+      <Amount
+        amount={amount}
+        denom={symbol}
+        iconUrl={icon}
+        key={symbol}
+        iconSize={24}
+        mainClassName={s.card}
+        hideDenom
+      />
+    </Card>
+  );
 };
 
 export default IBCAmount;

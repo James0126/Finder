@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import classNames from "classnames/bind";
+import s from "./Table.module.scss";
 
 export interface Column {
   title: ReactNode;
@@ -10,14 +12,16 @@ export interface Column {
 interface Props<T> {
   columns: Column[];
   dataSource?: T[];
-  tableClassname?: string;
+  small?: boolean;
 }
 
+const cx = classNames.bind(s);
+
 function Table<T>(props: Props<T>) {
-  const { columns, dataSource, tableClassname } = props;
+  const { columns, dataSource, small } = props;
   return (
     <>
-      <table className={tableClassname}>
+      <table className={cx(s.table, { small })}>
         <thead>
           <tr>
             {columns.map(({ title, key, alignClassname }) => (

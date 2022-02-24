@@ -3,21 +3,27 @@ import classnames from "classnames/bind";
 import s from "./Card.module.scss";
 
 interface Props {
-  header?: ReactNode;
+  title?: ReactNode;
   className?: string;
   bordered?: boolean;
-  headerUnderline?: boolean;
+  small?: boolean;
   onClick?: () => void;
 }
 
 const cx = classnames.bind(s);
 
 const Card: FC<Props> = (props) => {
-  const { header, children, className, bordered, onClick } = props;
+  const { title, children, className, bordered, small, onClick } = props;
+  const style = {
+    default: !small || !bordered,
+    small,
+    bordered,
+  };
+
   return (
-    <div className={cx(className, { bordered: bordered })} onClick={onClick}>
-      {header}
-      {children}
+    <div className={cx(s.card, style, className)} onClick={onClick}>
+      {title && <div className={s.header}>{title}</div>}
+      {children && <div className={cx({ content: bordered })}>{children}</div>}
     </div>
   );
 };

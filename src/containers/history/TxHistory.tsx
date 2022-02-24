@@ -10,14 +10,23 @@ import s from "./TxHistory.module.scss";
 interface Props<T> {
   dataSource?: TxInfo[];
   offset?: string;
+  hideSearch?: boolean;
   state: QueryState;
-  pagination: () => void;
+  pagination?: () => void;
   getTxRow: (tx: TxInfo, classname?: string) => T;
   columns: Column[];
 }
 
 function TxHistory<T>(props: Props<T>) {
-  const { dataSource, offset, state, pagination, getTxRow, columns } = props;
+  const {
+    dataSource,
+    offset,
+    state,
+    pagination,
+    getTxRow,
+    columns,
+    hideSearch,
+  } = props;
   const [row, setRow] = useState<T[]>([]);
   const [input, setInput] = useState<string>();
   const [isSearch, setSearch] = useState<boolean>(false);
@@ -47,18 +56,23 @@ function TxHistory<T>(props: Props<T>) {
     <p>No more transaction.</p>
   ) : (
     <>
-      <SearchInput
-        onSearch={(input) => onSearch(input, row, true)}
-        placeholder="Search"
-      />
-      <Card bordered className={s.card}>
+      {!hideSearch && (
+        <SearchInput
+          onSearch={(input) => onSearch(input, row, true)}
+          placeholder="Search"
+          className={s.search}
+        />
+      )}
+      <Card>
         <section className={s.tableWrapper}>
-          <Table columns={columns} dataSource={row} tableClassname={s.table} />
-          <PaginationButton
-            action={pagination}
-            offset={offset}
-            isLoading={isLoading}
-          />
+          <Table columns={columns} dataSource={row} small />
+          {pagination && (
+            <PaginationButton
+              action={pagination}
+              offset={offset}
+              isLoading={isLoading}
+            />
+          )}
           {isSearch && "Searching..."}
         </section>
       </Card>

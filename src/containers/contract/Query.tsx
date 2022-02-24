@@ -55,18 +55,18 @@ const Query = () => {
   return error ? (
     <>
       {backButton}
-      <Card header={"Error"}>{error.message}</Card>
+      <Card title={"Error"}>{error.message}</Card>
     </>
   ) : data ? (
     <>
       {backButton}
-      <Card header={"Query Result"}>
+      <Card title={"Query Result"}>
         <h2>JSON Output</h2>
         <pre>{data}</pre>
       </Card>
     </>
   ) : (
-    <Card header={"Query"}>
+    <Card title={"Query"}>
       <form onSubmit={submit}>
         <h2>Contract Address</h2>
         <input readOnly value={address} />

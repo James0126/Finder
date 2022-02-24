@@ -1,4 +1,8 @@
-.placeholder {
-  margin: 20px;
-  text-align: center;
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  white-space: nowrap;
 }

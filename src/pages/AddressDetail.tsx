@@ -1,8 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import classnames from "classnames/bind";
-import Delegations from "../containers/address/Delegations";
-import Balance from "../containers/address/Balance";
-import Undelegations from "../containers/address/Undelegations";
+import Assets from "../containers/address/Assets";
 import Txs from "../containers/address/Txs";
 import Flex from "../components/Flex";
 import s from "./AddressDetail.module.scss";
@@ -25,12 +23,6 @@ const AddressDetail = ({ address }: { address: string }) => {
           Assets
         </button>
         <button
-          onClick={() => navigate("?state=Delegations")}
-          className={cx(s.tap, { active: state === "Delegations" })}
-        >
-          Delegations
-        </button>
-        <button
           onClick={() => navigate("?state=Transactions")}
           className={cx(s.tap, { active: state === "Transactions" })}
         >
@@ -38,15 +30,10 @@ const AddressDetail = ({ address }: { address: string }) => {
         </button>
       </Flex>
 
-      {state === "Delegations" ? (
-        <>
-          <Delegations address={address} />
-          <Undelegations address={address} />
-        </>
-      ) : state === "Transactions" ? (
+      {state === "Transactions" ? (
         <Txs address={address} />
       ) : (
-        <Balance address={address} />
+        <Assets address={address} />
       )}
     </>
   );

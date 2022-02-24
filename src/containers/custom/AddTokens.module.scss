@@ -2,14 +2,10 @@
 
 .list {
   display: grid;
+  gap: 10px;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
 .item {
   white-space: nowrap;
-  margin: 10px;
-}
-
-.card {
-  padding: 10px;
 }

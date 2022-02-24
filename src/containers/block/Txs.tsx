@@ -1,29 +1,14 @@
 import { useState } from "react";
 import { fromNow } from "../../scripts/date";
 import { useTxsByHeight } from "../../queries/transaction";
-import TxHistory from "../txs/TxHistory";
-import TxTypes from "../txs/table/TxTypes";
-import TxHash from "../txs/table/TxHash";
+import TxHistory from "../history/TxHistory";
+import TxTypes from "../history/table/TxTypes";
+import TxHash from "../history/table/TxHash";
 import Action from "../transaction/Action";
 import Fee from "../transaction/Fee";
 import s from "./Txs.module.scss";
 
-type LogData = {
-  logs: TxLog[];
-  msgs: Message[];
-};
-
-type hashData = {
-  txhash: string;
-  code?: number;
-};
-
-interface Data {
-  hashData: hashData;
-  parsed_message: Message[];
-  raw_log: string;
-  fee: CoinData[];
-  time: string;
+interface TxsData extends TxRowData {
   logData: LogData;
 }
 
@@ -63,7 +48,7 @@ const Txs = ({ height }: { height: string }) => {
     },
   ];
 
-  const getTxRow = (tx: TxInfo): Data => {
+  const getTxRow = (tx: TxInfo): TxsData => {
     const {
       parsed_fee,
       txhash,

@@ -1,11 +1,12 @@
 import { Coin } from "@terra-money/terra.js";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
+import classNames from "classnames";
 import Amount from "../../components/Amount";
 import { useMemoizedCalcValue } from "../../queries/oracle";
 import { useCurrency } from "../../store/Currency";
 import s from "./Currency.module.scss";
 
-const Currency = ({ coin }: { coin: Coin }) => {
+const Currency = ({ coin, className }: { coin: Coin; className?: string }) => {
   const { denom } = coin;
   const currnecy = useCurrency();
   const calcCurrency = useMemoizedCalcValue(currnecy);
@@ -19,7 +20,7 @@ const Currency = ({ coin }: { coin: Coin }) => {
     <Amount
       denom={readDenom(currnecy)}
       amount={`= ${readAmount(amount, { comma: true })}`}
-      className={s.amount}
+      mainClassName={classNames(s.amount, className)}
     />
   );
 };

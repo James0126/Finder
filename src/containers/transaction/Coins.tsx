@@ -46,7 +46,7 @@ const Coins = (props: Props) => {
             <Amount
               amount={readAmount(amount.toString(), { comma: true })}
               denom={render(denom)}
-              className={className}
+              mainClassName={className}
             />
           </Flex>
         );

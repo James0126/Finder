@@ -125,6 +125,42 @@ const queryTxByHash = (hash: string) => gql`
     }
 `;
 
+const queryLatestTxs = () => gql`
+  query {
+    tx {
+      latest_txs {
+        tx_infos {
+          chain_id
+          parsed_message {
+            type
+            message
+          }
+          parsed_fee {
+            amounts {
+              denom
+              amount
+            }
+          }
+          logs {
+            events {
+              attributes {
+                key
+                value
+              }
+              type
+            }
+          }
+          txhash
+          height
+          raw_log
+          code
+          timestamp
+        }
+      }
+    }
+  }
+`;
+
 export const useTxsByAddress = (
   address: string,
   offset?: string
@@ -144,5 +180,10 @@ export const useTxsByHeight = (
 
 export const useTxByHash = (hash: string): UseQueryResult<TxByHash> => {
   const queryMsg = queryTxByHash(hash);
+  return useGraphQL(queryMsg);
+};
+
+export const useLatestTxs = () => {
+  const queryMsg = queryLatestTxs();
   return useGraphQL(queryMsg);
 };

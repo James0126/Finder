@@ -1,14 +1,13 @@
-.card .main {
-  // to overwrite
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .icon {
-  border-radius: 2px;
+  border-radius: 20px;
+  margin-right: 10px;
 }
 
-.link {
-  font-size: 14px;
-  font-weight: 500;
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  white-space: nowrap;
 }

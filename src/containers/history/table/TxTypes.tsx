@@ -1,5 +1,5 @@
-import classnames from "classnames";
 import { memo } from "react";
+import Tag from "../../../components/Tag";
 import s from "./TxTypes.module.scss";
 
 const TxTypes = ({ messages }: { messages: Message[] }) => {
@@ -7,10 +7,10 @@ const TxTypes = ({ messages }: { messages: Message[] }) => {
   const leftMsgLength = messages.length - 1;
   return (
     <>
-      <span className={s.type}>{types[0]}</span>
-      {leftMsgLength ? (
-        <span className={classnames(s.type, s.more)}>+{leftMsgLength}</span>
-      ) : null}
+      <Tag small className={s.type}>
+        {types[0]}
+      </Tag>
+      {leftMsgLength ? <Tag small>{`+${leftMsgLength}`}</Tag> : null}
     </>
   );
 };

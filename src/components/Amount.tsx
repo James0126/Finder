@@ -4,27 +4,38 @@ import s from "./Amount.module.scss";
 
 interface Props {
   amount: string;
-  denom: string;
+  denom?: string;
   iconUrl?: string;
   iconSize?: number;
-  className?: string;
+  mainClassName?: string;
+  amountClassName?: string;
+  hideDenom?: boolean;
 }
 
 const Amount = (props: Props) => {
-  const { iconUrl, amount, denom, iconSize, className } = props;
+  const {
+    iconUrl,
+    amount,
+    denom,
+    iconSize,
+    mainClassName,
+    amountClassName,
+    hideDenom,
+  } = props;
 
-  const render = `${amount} ${denom}`;
   const header = iconUrl && (
     <div className={s.header}>
-      <Image url={iconUrl} size={iconSize} />
+      <Image url={iconUrl} size={iconSize} className={s.icon} />
       <span>{denom}</span>
     </div>
   );
 
+  const render = !hideDenom ? `${amount} ${denom}` : amount;
+
   return (
-    <div>
+    <div className={mainClassName}>
       {header}
-      <span className={classnames(s.amount, className)}>{render}</span>
+      <span className={classnames(s.amount, amountClassName)}>{render}</span>
     </div>
   );
 };

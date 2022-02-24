@@ -1,5 +1,30 @@
-.bordered {
-  border-radius: 8px;
-  border: 1px solid var(--border);
+@import "../styles/mixins";
+
+.card {
   background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.default {
+  --card-padding: 28px;
+  padding: var(--card-padding);
+}
+
+.small {
+  --card-padding: 20px;
+  padding: var(--card-padding);
+}
+
+.bordered {
+  padding: 0px;
+
+  .header {
+    padding: 16px var(--card-padding);
+  }
+
+  .content {
+    border-top: 1px solid var(--border);
+    padding: var(--card-padding);
+  }
 }

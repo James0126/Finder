@@ -39,14 +39,14 @@ const Delegations = ({ address }: { address: string }) => {
       moniker: (
         <FinderLink validator value={validator_address} children={moniker} />
       ),
-      amount: <Amount amount={amount} denom={denom} className={s.amount} />,
+      amount: <Amount amount={amount} denom={denom} mainClassName={s.amount} />,
       rewards: <Rewards rewards={rewards} limit={5} />,
     };
   });
 
   return delegations.length ? (
     <Card bordered className={s.card}>
-      <Table columns={cols} dataSource={data} tableClassname={s.table} />
+      <Table columns={cols} dataSource={data} />
     </Card>
   ) : null;
 };

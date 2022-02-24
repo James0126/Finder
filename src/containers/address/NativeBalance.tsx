@@ -1,8 +1,7 @@
 import { Coin } from "@terra-money/terra.js";
 import NativeAmount from "../token/NativeAmount";
-import List from "../../components/List";
-import Card from "../../components/Card";
 import { sortByDenom } from "../../scripts/coin";
+import List from "../../components/List";
 import s from "./NativeBalance.module.scss";
 
 const NativeBalance = ({ coins }: { coins?: Coin[] }) => {
@@ -14,11 +13,7 @@ const NativeBalance = ({ coins }: { coins?: Coin[] }) => {
   return (
     <List
       dataSource={native.map((coin) => ({
-        content: (
-          <Card bordered className={s.card}>
-            <NativeAmount coin={coin} />
-          </Card>
-        ),
+        content: <NativeAmount coin={coin} />,
       }))}
       itemClassName={s.item}
       mainClassName={s.list}

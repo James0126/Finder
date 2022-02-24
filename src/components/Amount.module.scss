@@ -2,8 +2,10 @@
 
 .header {
   @include flex(start, center);
+  font-weight: 500;
 }
 
-.amount {
-  display: block;
+.icon {
+  margin-right: 9px;
+  @include flex(center);
 }

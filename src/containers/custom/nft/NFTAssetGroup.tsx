@@ -3,6 +3,8 @@ import Card from "../../../components/Card";
 import Image from "../../../components/Image";
 import NFTAssetItem from "./NFTAssetItem";
 import ExternalLink from "../../../components/ExternalLink";
+import s from "./NFTAssetGroup.module.scss";
+import List from "../../../components/List";
 
 interface Props extends CW721ContractItem {
   address: string;
@@ -20,7 +22,7 @@ const NFTAssetGroup = (props: Props) => {
 
   const title = (
     <>
-      {icon && <Image url={icon} size={100} />}
+      {icon && <Image url={icon} size={24} className={s.icon} />}
       {name} {renderExtra()}
     </>
   );
@@ -29,12 +31,27 @@ const NFTAssetGroup = (props: Props) => {
     if (!data) return null;
     const { tokens } = data;
     if (!tokens.length) return null;
-    return tokens.map((id) => (
-      <NFTAssetItem contract={contract} id={id} compact key={id} />
-    ));
+
+    return (
+      <List
+        dataSource={[
+          ...tokens.map((id) => ({
+            content: (
+              <NFTAssetItem contract={contract} id={id} compact key={id} />
+            ),
+          })),
+        ]}
+        itemClassName={s.item}
+        mainClassName={s.list}
+      />
+    );
   };
 
-  return <Card header={title}>{render()}</Card>;
+  return (
+    <Card bordered title={title}>
+      {render()}
+    </Card>
+  );
 };
 
 export default NFTAssetGroup;

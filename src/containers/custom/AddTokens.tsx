@@ -1,4 +1,3 @@
-import Card from "../../components/Card";
 import List from "../../components/List";
 import {
   useCustomTokensCW20,
@@ -18,18 +17,10 @@ const AddTokens = ({ address }: { address: string }) => {
     <List
       dataSource={[
         ...ibc.map(({ denom }) => ({
-          content: (
-            <Card className={s.card} bordered>
-              <IBCAmount denom={denom} address={address} key={denom} />
-            </Card>
-          ),
+          content: <IBCAmount denom={denom} address={address} key={denom} />,
         })),
         ...cw20.map((item) => ({
-          content: (
-            <Card className={s.card} bordered>
-              <CW20Amount address={address} {...item} key={item.token} />
-            </Card>
-          ),
+          content: <CW20Amount address={address} {...item} key={item.token} />,
         })),
       ]}
       itemClassName={s.item}

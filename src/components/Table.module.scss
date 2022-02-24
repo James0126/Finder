@@ -1,0 +1,37 @@
+.table {
+  color: var(--text);
+  border-collapse: collapse;
+
+  th {
+    font-weight: 500;
+    font-size: 14px;
+    padding-bottom: 8px;
+  }
+
+  td {
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    padding: 16px 100px;
+  }
+
+  td,
+  th {
+    &:first-child {
+      padding-left: 0px;
+    }
+
+    &:last-child {
+      padding-right: 0px;
+    }
+  }
+}
+
+.small {
+  th {
+    padding-bottom: 8px;
+  }
+
+  td {
+    padding: 12px 0px;
+  }
+}

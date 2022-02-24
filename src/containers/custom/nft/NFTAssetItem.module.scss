@@ -1,42 +1,5 @@
-@import "mixins";
+@import "../../../styles/mixins";
 
 .item {
-  @include flex;
-
-  gap: 12px;
-  padding: 20px 0;
-
-  &:not(.compact) {
-    flex-direction: column;
-  }
-}
-
-.compact {
-  @include flex(flex-start);
-
-  &:not(:first-child) {
-    border-top: 1px solid var(--border);
-  }
-}
-
-.image {
-  border-radius: 4px;
-  cursor: zoom-in;
-  overflow: hidden;
-}
-
-.large {
-  border-radius: 8px;
-  width: 100%;
-  height: auto;
-}
-
-.name {
-  flex: 1;
-}
-
-/* placeholder */
-.placeholder {
-  content: "";
-  background: var(--bg-muted);
+  margin-bottom: 20px;
 }
