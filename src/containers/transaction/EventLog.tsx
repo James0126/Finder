@@ -1,6 +1,7 @@
 import List from "../../components/List";
 import { isTerraAddress } from "../../scripts/utility";
 import TerraAddress from "../global/TerraAddress";
+import s from "./EventLog.module.scss";
 
 const EventLog = ({ log }: { log: TxLog }) => {
   const { events } = log;
@@ -13,12 +14,16 @@ const EventLog = ({ log }: { log: TxLog }) => {
       {events.map(({ type, attributes }) => {
         const dataSource = attributes.map(({ key, value }) => {
           const content = getAddress(value);
-          return { title: key, content: content };
+          return {
+            title: <span className={s.key}>{key}</span>,
+            content: content,
+          };
         });
 
         return (
           <div key={type}>
-            <h2>{type}</h2>
+            <h2 className={s.type}>{type}</h2>
+            <hr />
             <List dataSource={dataSource} />
           </div>
         );

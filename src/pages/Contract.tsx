@@ -1,5 +1,6 @@
 import { ContractInfo } from "@terra-money/terra.js";
 import Card from "../components/Card";
+import Page from "../components/Page";
 import ContractDetails from "../containers/contract/ContractDetails";
 import AddressDetail from "./AddressDetail";
 import s from "./Contract.module.scss";
@@ -10,13 +11,12 @@ interface Props {
 }
 
 const Contract = ({ contractInfo, address }: Props) => (
-  <section>
-    <h1 className={s.title}>Contract</h1>
+  <Page title="Contract">
     <Card bordered className={s.info}>
       <ContractDetails contractInfo={contractInfo} />
     </Card>
     <AddressDetail address={address} />
-  </section>
+  </Page>
 );
 
 export default Contract;

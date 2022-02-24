@@ -36,7 +36,7 @@ interface BlockInfo {
 }
 
 interface TxInfo {
-  chainId: string;
+  chain_id: string;
   code: number;
   parsed_fee: {
     amounts: CoinData[];

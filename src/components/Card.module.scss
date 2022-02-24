@@ -4,6 +4,7 @@
   background-color: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
+  overflow-x: auto;
 }
 
 .default {
@@ -27,4 +28,8 @@
     border-top: 1px solid var(--border);
     padding: var(--card-padding);
   }
+}
+
+.titleBackground {
+  background-color: #f3f5fd;
 }

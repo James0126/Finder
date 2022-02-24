@@ -3,6 +3,7 @@ import { combineState } from "../queries/query";
 import { useValidator } from "../queries/staking";
 import ValidatorDetails from "../containers/validator/ValidatorDetails";
 import State from "../components/State";
+import Page from "../components/Page";
 
 const Validator = () => {
   const { address = "" } = useParams();
@@ -11,16 +12,14 @@ const Validator = () => {
 
   const render = () => {
     if (!validator) return null;
-
-    return (
-      <>
-        <h1>Validator Page</h1>
-        <ValidatorDetails validator={validator} />
-      </>
-    );
+    return <ValidatorDetails validator={validator} />;
   };
 
-  return <State state={status}>{render()}</State>;
+  return (
+    <Page title="Validator">
+      <State state={status}>{render()}</State>
+    </Page>
+  );
 };
 
 export default Validator;

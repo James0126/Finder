@@ -1,10 +1,10 @@
 import { useParams } from "react-router";
 import Fee from "../containers/transaction/Fee";
 import Message from "../containers/transaction/Message";
-import Action from "../containers/transaction/Action";
 import FinderLink from "../components/FinderLink";
+import { ListColumn } from "../components/List";
 import State from "../components/State";
-import List from "../components/List";
+import Page from "../components/Page";
 import { useTxByHash } from "../queries/transaction";
 import { combineState } from "../queries/query";
 
@@ -19,7 +19,7 @@ const Transaction = () => {
       return null;
     }
 
-    const { chainId, code, parsed_fee, parsed_message, raw_log, logs, height } =
+    const { chain_id, code, parsed_fee, parsed_message, logs, height } =
       data.tx.by_hash;
 
     const { amounts } = parsed_fee;
@@ -28,15 +28,11 @@ const Transaction = () => {
     const dataSource = [
       {
         title: "chain ID",
-        content: chainId,
+        content: chain_id,
       },
       {
         title: "status",
         content: isSuccess ? "Success" : "Failed",
-      },
-      {
-        content: raw_log,
-        hide: isSuccess,
       },
       {
         title: "height",
@@ -46,21 +42,21 @@ const Transaction = () => {
         title: "fee",
         content: <Fee coins={amounts} />,
       },
-      {
-        title: "action",
-        content: <Action logs={logs} msgs={parsed_message} />,
-      },
     ];
     return (
       <>
-        <h1>Trasaction Detail</h1>
-        <List dataSource={dataSource} />
+        {/* TODO: Failed Message */}
+        <ListColumn dataSource={dataSource} />
         <Message msgs={parsed_message} logs={logs} isSuccess={isSuccess} />
       </>
     );
   };
 
-  return <State state={status}>{render()}</State>;
+  return (
+    <Page title="Trasaction Detail">
+      <State state={status}>{render()}</State>
+    </Page>
+  );
 };
 
 export default Transaction;

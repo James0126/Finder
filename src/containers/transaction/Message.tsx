@@ -4,6 +4,8 @@ import Card from "../../components/Card";
 import TerraAddress from "../global/TerraAddress";
 import EventLog from "./EventLog";
 import WasmMsg from "./WasmMsg";
+import Action from "./Action";
+import s from "./Message.module.scss";
 
 interface Props {
   msgs: Message[];
@@ -11,7 +13,6 @@ interface Props {
   isSuccess: boolean;
 }
 
-//TODO: Refactor codes
 const getContent = (msg: any, key: string) => {
   const data = msg[key];
 
@@ -26,15 +27,19 @@ const getContent = (msg: any, key: string) => {
 
 const Message = ({ msgs, logs, isSuccess }: Props) => (
   <article>
-    {msgs.map(({ type, message }, key) => {
+    {msgs.map((msg, key) => {
+      const { message, type } = msg;
       const keys = Object.keys(message);
+
       const dataSource = keys.map((key) => {
         const render = getContent(message, key);
-        return { title: key, content: render };
+        return { title: <span className={s.key}>{key}</span>, content: render };
       });
 
+      const title = <Action logs={[logs[key]]} msgs={[msg]} />;
       return (
-        <Card title={type} key={key}>
+        <Card title={title} bordered titleBackground key={key}>
+          <h2 className={s.messageType}>{type}</h2>
           <List dataSource={dataSource} />
           {isSuccess && <EventLog log={logs[key]} />}
         </Card>

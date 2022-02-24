@@ -1,34 +1,7 @@
 @import "../styles/mixins";
 
-.wrapper {
-  color: var(--text);
-}
-
-.title {
-  font-size: 36px;
-  margin: 60px 0px 30px 0px;
-}
-
-.bold {
-  font-weight: 500;
-}
-
 .list {
   margin-bottom: 36px;
-}
-
-.listTitle {
-  width: 90px;
-  white-space: nowrap;
-  font-weight: 500;
-}
-
-.content {
-  margin-left: 40px;
-}
-
-.row {
-  margin-bottom: 16px;
 }
 
 .block {
