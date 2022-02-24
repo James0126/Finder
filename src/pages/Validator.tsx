@@ -16,7 +16,7 @@ const Validator = () => {
   };
 
   return (
-    <Page title="Validator">
+    <Page title="Validator Details">
       <State state={status}>{render()}</State>
     </Page>
   );

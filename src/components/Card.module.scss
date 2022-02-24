@@ -20,11 +20,11 @@
 .bordered {
   padding: 0px;
 
-  .header {
+  > .header {
     padding: 16px var(--card-padding);
   }
 
-  .content {
+  > .content {
     border-top: 1px solid var(--border);
     padding: var(--card-padding);
   }

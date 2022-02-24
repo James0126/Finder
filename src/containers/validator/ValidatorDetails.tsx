@@ -7,8 +7,10 @@ import { toNow } from "../../scripts/date";
 import FinderLink from "../../components/FinderLink";
 import Card from "../../components/Card";
 import List from "../../components/List";
+import Tag from "../../components/Tag";
+import Flex from "../../components/Flex";
+import s from "./ValidatorDetails.module.scss";
 
-//Station 병합?
 const ValidatorDetails = ({ validator }: { validator: Validator }) => {
   const { description, commission, operator_address, consensus_pubkey } =
     validator;
@@ -63,17 +65,61 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
         <FinderLink>{AccAddress.fromValAddress(operator_address)}</FinderLink>
       ),
     },
-    { title: "Validator", content: <span>{operator_address}</span> },
+    { title: "Validator", content: operator_address },
   ];
 
+  const dataSource = [...contents, ...commissions];
+
+  const title = (
+    <section>
+      <Flex start>
+        <h2 className={s.moniker}>{moniker}</h2>
+        {/* TODO: Add status */}
+        <Tag success>{"Active"}</Tag>
+      </Flex>
+      <p className={s.details}>{details}</p>
+    </section>
+  );
+
   return (
-    <Card>
-      <h2>{moniker}</h2>
-      {/* TODO: Add status */}
-      <span>{"status"}</span>
-      <p>{details}</p>
-      <List dataSource={[...contents, ...commissions, ...addresses]} />
-    </Card>
+    <>
+      <Card title={title} bordered>
+        <List
+          dataSource={[
+            ...dataSource.map(({ title, content }) => {
+              const header = <span className={s.dataHeader}>{title}</span>;
+              return {
+                content: (
+                  <Card title={header} small>
+                    <span className={s.dataContent}>{content}</span>
+                  </Card>
+                ),
+              };
+            }),
+          ]}
+          mainClassName={s.list}
+          itemClassName={s.item}
+        />
+      </Card>
+      <Card className={s.address}>
+        <List
+          dataSource={[
+            ...addresses.map(({ title, content }) => {
+              const header = <span className={s.dataHeader}>{title}</span>;
+              return {
+                content: (
+                  <Card title={header} small>
+                    <span className={s.dataContent}>{content}</span>
+                  </Card>
+                ),
+              };
+            }),
+          ]}
+          mainClassName={s.list}
+          itemClassName={s.item}
+        />
+      </Card>
+    </>
   );
 };
 

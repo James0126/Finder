@@ -1,0 +1,27 @@
+.moniker {
+  font-size: 20px;
+  font-weight: 500;
+  margin-right: 12px;
+}
+
+.details {
+  font-size: 13px;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.dataHeader {
+  font-weight: 500;
+}
+
+.dataContent {
+  font-size: 20px;
+}
+
+.address {
+  margin-top: 20px;
+}
