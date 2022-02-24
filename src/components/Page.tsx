@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import s from "./Page.module.scss";
 
 interface Props {
-  title: string;
+  title: ReactNode;
 }
 
 const Page: FC<Props> = (props) => {
