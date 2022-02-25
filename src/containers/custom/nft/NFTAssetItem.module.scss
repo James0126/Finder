@@ -3,3 +3,12 @@
 .item {
   margin-bottom: 20px;
 }
+
+.icon {
+  border-radius: 20px;
+  margin-right: 20px;
+}
+
+.card {
+  @include flex(start);
+}

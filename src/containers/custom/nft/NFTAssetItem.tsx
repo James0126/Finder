@@ -1,10 +1,12 @@
 import { truncate } from "@terra.kitchen/utils";
 import { getIpfsGateway } from "../../../scripts/utility";
 import { useTokenInfoCW721 } from "../../../queries/wasm";
+import Card from "../../../components/layout/Card";
 import Image from "../../../components/Image";
 import Modal from "../../../components/Modal";
 import { WithFetching } from "../Fetching";
 import NFTDetails from "./NFTDetails";
+import s from "./NFTAssetItem.module.scss";
 
 interface Props {
   contract: string;
@@ -31,19 +33,19 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
     const name = extension?.name ?? truncate(id);
     const image = extension?.image;
 
-    return (
-      <article>
+    const viewButton = compact && extension && (
+      <Modal buttonLabel="View">
         <Image url={getIpfsGateway(image)} size={100} />
+        <NFTDetails data={extension} />
+      </Modal>
+    );
+
+    return (
+      <Card className={s.card}>
+        <Image url={getIpfsGateway(image)} size={30} className={s.icon} />
         <span>{name}</span>
-        {compact && extension && (
-          <Modal buttonLabel="View">
-            <>
-              <Image url={getIpfsGateway(image)} size={100} />
-              <NFTDetails data={extension} />
-            </>
-          </Modal>
-        )}
-      </article>
+        {viewButton}
+      </Card>
     );
   };
 

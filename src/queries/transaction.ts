@@ -120,6 +120,7 @@ const queryTxByHash = (hash: string) => gql`
               timestamp
               raw_log
               height
+              memo
             }
         }
     }

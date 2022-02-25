@@ -57,6 +57,7 @@ interface TxInfo {
   logs: TxLog[];
   height: string;
   txhash: string;
+  memo: string;
 }
 
 interface TxLog {

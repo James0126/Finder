@@ -48,7 +48,7 @@ const NFTAssetGroup = (props: Props) => {
   };
 
   return (
-    <Card bordered title={title}>
+    <Card titleBackground bordered title={title}>
       {render()}
     </Card>
   );

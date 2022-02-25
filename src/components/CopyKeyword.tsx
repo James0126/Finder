@@ -4,7 +4,8 @@ import Copy from "./Copy";
 interface Prop {
   className?: string;
 }
-const CopyAddress: FC<Prop> = (props) => {
+
+const CopyKeyword: FC<Prop> = (props) => {
   const { children, className } = props;
   return (
     <section className={className}>
@@ -13,4 +14,4 @@ const CopyAddress: FC<Prop> = (props) => {
   );
 };
 
-export default CopyAddress;
+export default CopyKeyword;
