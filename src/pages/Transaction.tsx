@@ -41,10 +41,6 @@ const Transaction = () => {
         content: chain_id,
       },
       {
-        title: "Status",
-        content: isSuccess ? "Success" : "Failed",
-      },
-      {
         title: "Height",
         content: <FinderLink block>{height}</FinderLink>,
       },

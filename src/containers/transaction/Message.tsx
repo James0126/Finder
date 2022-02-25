@@ -1,6 +1,6 @@
 import { isTerraAddress } from "../../scripts/utility";
 import Card from "../../components/layout/Card";
-import List from "../../components/List";
+import { ListColumn } from "../../components/List";
 import TerraAddress from "../global/TerraAddress";
 import EventLog from "./EventLog";
 import WasmMsg from "./WasmMsg";
@@ -36,11 +36,22 @@ const Message = ({ msgs, logs, isSuccess }: Props) => (
         return { title: <span className={s.key}>{key}</span>, content: render };
       });
 
-      const title = <Action logs={[logs[key]]} msgs={[msg]} />;
+      const title = <Action logs={logs} msgs={msgs} />;
       return (
-        <Card title={title} bordered titleBackground key={key}>
+        <Card
+          title={title}
+          className={s.message}
+          bordered
+          titleBackground
+          key={key}
+        >
           <h2 className={s.messageType}>{type}</h2>
-          <List dataSource={dataSource} />
+          <ListColumn
+            dataSource={dataSource}
+            rowClassname={s.row}
+            itemClassname={s.item}
+            mainClassname={s.list}
+          />
           {isSuccess && <EventLog log={logs[key]} />}
         </Card>
       );

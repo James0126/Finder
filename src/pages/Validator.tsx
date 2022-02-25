@@ -4,6 +4,7 @@ import { useValidator } from "../queries/staking";
 import ValidatorDetails from "../containers/validator/ValidatorDetails";
 import State from "../components/State";
 import Page from "../components/Page";
+import s from "./Validator.module.scss";
 
 const Validator = () => {
   const { address = "" } = useParams();
@@ -16,7 +17,7 @@ const Validator = () => {
   };
 
   return (
-    <Page title="Validator Details">
+    <Page title="Validator Details" titleClassName={s.title}>
       <State state={status}>{render()}</State>
     </Page>
   );

@@ -23,8 +23,11 @@ const EventLog = ({ log }: { log: TxLog }) => {
         return (
           <div key={type}>
             <h2 className={s.type}>{type}</h2>
-            <hr />
-            <ListColumn dataSource={dataSource} rowClassname={s.row} />
+            <ListColumn
+              dataSource={dataSource}
+              rowClassname={s.row}
+              mainClassname={s.list}
+            />
           </div>
         );
       })}

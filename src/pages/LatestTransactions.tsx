@@ -7,7 +7,6 @@ const LatestTransactions = () => {
       title="Latest Transactions"
       sentence="View up to 5 blocks of the latest transactions"
     >
-      <span></span>
       <LatestTxs />
     </Page>
   );
