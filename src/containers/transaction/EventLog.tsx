@@ -1,4 +1,4 @@
-import List from "../../components/List";
+import { ListColumn } from "../../components/List";
 import { isTerraAddress } from "../../scripts/utility";
 import TerraAddress from "../global/TerraAddress";
 import s from "./EventLog.module.scss";
@@ -24,7 +24,7 @@ const EventLog = ({ log }: { log: TxLog }) => {
           <div key={type}>
             <h2 className={s.type}>{type}</h2>
             <hr />
-            <List dataSource={dataSource} />
+            <ListColumn dataSource={dataSource} rowClassname={s.row} />
           </div>
         );
       })}

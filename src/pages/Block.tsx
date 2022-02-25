@@ -85,7 +85,7 @@ const Block = () => {
       {
         title: "Block height",
         content: (
-          <Flex>
+          <Flex start>
             {height}
             {buttons}
           </Flex>
@@ -107,7 +107,12 @@ const Block = () => {
 
     return (
       <>
-        <ListColumn dataSource={dataSource} mainClassname={s.list} />
+        <ListColumn
+          dataSource={dataSource}
+          mainClassname={s.list}
+          titleClassname={s.title}
+          rowClassname={s.row}
+        />
         <Txs height={height} />
       </>
     );

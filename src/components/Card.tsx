@@ -23,6 +23,7 @@ const Card: FC<Props> = (props) => {
     small,
     onClick,
   } = props;
+
   const style = {
     default: !small || !bordered,
     small,

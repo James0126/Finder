@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
-import Flex from "./Flex";
-import s from "./List.module.scss";
+import { Auto } from "./Grid";
 
 interface Content {
   title?: ReactNode;
@@ -36,22 +35,36 @@ export default List;
 interface ColumnData {
   dataSource: Content[];
   mainClassname?: string;
+  titleClassname?: string;
+  itemClassname?: string;
+  rowClassname?: string;
 }
 
 export const ListColumn = (props: ColumnData) => {
-  const { dataSource, mainClassname } = props;
+  const {
+    dataSource,
+    mainClassname,
+    titleClassname,
+    itemClassname,
+    rowClassname,
+  } = props;
   return (
     <div className={mainClassname}>
-      {dataSource.map(({ title, content, hide }, key) => (
-        <Flex start key={key} className={s.row}>
-          {!hide && (
-            <>
-              <div className={s.title}>{title}</div>
-              <div className={s.content}>{content}</div>
-            </>
-          )}
-        </Flex>
-      ))}
+      {dataSource.map(
+        ({ title, content, hide }, key) =>
+          !hide && (
+            <Auto
+              firstSpan={1}
+              lastSpan={5}
+              columns={[
+                <span className={titleClassname}>{title}</span>,
+                <span className={itemClassname}>{content}</span>,
+              ]}
+              className={rowClassname}
+              key={key}
+            />
+          )
+      )}
     </div>
   );
 };

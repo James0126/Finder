@@ -4,8 +4,13 @@ import styles from "./Grid.module.scss";
 
 const cx = classNames.bind(styles);
 
-export const Row: FC<{ align?: "start" }> = ({ align, children }) => {
-  return <div className={cx(styles.row, align)}>{children}</div>;
+interface RowProps {
+  align?: "start";
+  className?: string;
+}
+
+export const Row: FC<RowProps> = ({ align, children, className }) => {
+  return <div className={cx(styles.row, align, className)}>{children}</div>;
 };
 
 interface ColProps {
@@ -44,13 +49,21 @@ const Grid: FC<Props> = ({ gap, className, columns, rows, children }) => {
 export default Grid;
 
 /* derive */
-export const Auto = ({ columns }: { columns: [ReactNode, ReactNode] }) => {
+interface AutoProps {
+  columns: [ReactNode, ReactNode];
+  firstSpan: number;
+  lastSpan: number;
+  className?: string;
+}
+
+export const Auto = (props: AutoProps) => {
+  const { columns, firstSpan, lastSpan, className } = props;
   const [component0, component1] = columns;
 
   return (
-    <Row align="start">
-      <Col span={3}>{component0}</Col>
-      <Col span={2}>{component1}</Col>
+    <Row align="start" className={className}>
+      <Col span={firstSpan}>{component0}</Col>
+      <Col span={lastSpan}>{component1}</Col>
     </Row>
   );
 };

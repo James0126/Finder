@@ -37,19 +37,19 @@ const Transaction = () => {
 
     const dataSource = [
       {
-        title: "chain ID",
+        title: "Chain ID",
         content: chain_id,
       },
       {
-        title: "status",
+        title: "Status",
         content: isSuccess ? "Success" : "Failed",
       },
       {
-        title: "height",
+        title: "Height",
         content: <FinderLink block>{height}</FinderLink>,
       },
       {
-        title: "fee",
+        title: "Fee",
         content: <Fee coins={amounts} />,
       },
     ];
@@ -67,7 +67,11 @@ const Transaction = () => {
           <span className={s.time}>{toNow(new Date(timestamp))}</span>
           <span>{fromISOTime(new Date(timestamp))}</span>
         </div>
-        <ListColumn dataSource={dataSource} />
+        <ListColumn
+          dataSource={dataSource}
+          titleClassname={s.title}
+          rowClassname={s.row}
+        />
         <Message msgs={parsed_message} logs={logs} isSuccess={isSuccess} />
       </>
     );
