@@ -23,6 +23,16 @@ interface TxByHash {
   };
 }
 
+interface LatestTxs {
+  tx: {
+    latest_txs: {
+      header: BlockInfo;
+      tx_infos: TxInfo[];
+      offset: string;
+    };
+  };
+}
+
 interface CoinData {
   amount: number;
   denom: string;

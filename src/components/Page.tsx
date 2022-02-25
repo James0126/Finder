@@ -1,18 +1,21 @@
 import { FC, ReactNode } from "react";
+import classNames from "classnames";
 import Flex from "./Flex";
 import s from "./Page.module.scss";
 
 interface Props {
   title: ReactNode;
   tag?: ReactNode;
+  mainClassName?: string;
+  titleClassName?: string;
 }
 
 const Page: FC<Props> = (props) => {
-  const { children, title, tag } = props;
+  const { children, title, tag, mainClassName, titleClassName } = props;
   return (
-    <section className={s.wrapper}>
-      <Flex start>
-        <h1 className={s.title}>{title}</h1>
+    <section className={mainClassName}>
+      <Flex start className={s.wrapper}>
+        <h1 className={classNames(s.title, titleClassName)}>{title}</h1>
         <div className={s.tag}>{tag}</div>
       </Flex>
       {children}

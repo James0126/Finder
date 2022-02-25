@@ -1,8 +1,3 @@
-type hashData = {
-  txhash: string;
-  code?: number;
-};
-
 interface TxRowData {
   hashData: hashData;
   parsed_message: Message[];
@@ -10,6 +5,11 @@ interface TxRowData {
   fee: CoinData[];
   time: string;
 }
+
+type HashData = {
+  txhash: string;
+  code?: number;
+};
 
 type LogData = {
   logs: TxLog[];

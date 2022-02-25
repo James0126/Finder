@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { fromNow } from "../../scripts/date";
 import { useLatestTxs } from "../../queries/transaction";
 import TxHistory from "../history/TxHistory";
@@ -7,16 +8,17 @@ import Fee from "../transaction/Fee";
 import s from "./LatestTxs.module.scss";
 
 const LatestTxs = () => {
-  const { data, ...state } = useLatestTxs();
+  const [pageOffset, setOffset] = useState<string>();
+  const { data, ...state } = useLatestTxs(pageOffset);
 
-  const offset = data?.tx.by_height.offset;
-  const txInfos = data?.tx.by_height.tx_infos;
+  const offset = data?.tx.latest_txs.offset;
+  const txInfos = data?.tx.latest_txs.tx_infos;
 
   const columns = [
     {
       title: "TxHash",
       key: "hashData",
-      render: (hashData: hashData) => <TxHash {...hashData} />,
+      render: (hashData: HashData) => <TxHash {...hashData} />,
     },
     {
       title: "Type",
@@ -47,6 +49,7 @@ const LatestTxs = () => {
     <TxHistory
       columns={columns}
       getTxRow={getTxRow}
+      pagination={() => setOffset(offset)}
       dataSource={txInfos}
       offset={offset}
       state={state}

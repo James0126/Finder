@@ -125,41 +125,45 @@ const queryTxByHash = (hash: string) => gql`
     }
 `;
 
-const queryLatestTxs = () => gql`
-  query {
-    tx {
-      latest_txs {
-        tx_infos {
-          chain_id
-          parsed_message {
-            type
-            message
-          }
-          parsed_fee {
-            amounts {
-              denom
-              amount
-            }
-          }
-          logs {
-            events {
-              attributes {
-                key
-                value
-              }
+const queryLatestTxs = (offset?: string) => {
+  const offsetField = offset ? `(offset:"${offset}")` : "";
+  return gql`
+    query {
+      tx {
+        latest_txs${offsetField} {
+          offset
+          tx_infos {
+            chain_id
+            parsed_message {
               type
+              message
             }
+            parsed_fee {
+              amounts {
+                denom
+                amount
+              }
+            }
+            logs {
+              events {
+                attributes {
+                  key
+                  value
+                }
+                type
+              }
+            }
+            txhash
+            height
+            raw_log
+            code
+            timestamp
           }
-          txhash
-          height
-          raw_log
-          code
-          timestamp
         }
       }
     }
-  }
-`;
+  `;
+};
 
 export const useTxsByAddress = (
   address: string,
@@ -183,7 +187,7 @@ export const useTxByHash = (hash: string): UseQueryResult<TxByHash> => {
   return useGraphQL(queryMsg);
 };
 
-export const useLatestTxs = () => {
-  const queryMsg = queryLatestTxs();
+export const useLatestTxs = (offset?: string): UseQueryResult<LatestTxs> => {
+  const queryMsg = queryLatestTxs(offset);
   return useGraphQL(queryMsg);
 };

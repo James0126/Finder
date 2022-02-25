@@ -1,20 +1,17 @@
 import { readAmount, readDenom } from "@terra.kitchen/utils";
 import { getFindMoniker } from "../../queries/validator";
 import { useDelegations, useValidators } from "../../queries/staking";
-import { useDelegationReward } from "../../queries/distribution";
-import Card from "../../components/Card";
+import FinderLink from "../../components/FinderLink";
 import Amount from "../../components/Amount";
 import Table from "../../components/Table";
-import FinderLink from "../../components/FinderLink";
-import Rewards from "./Rewards";
+import Card from "../../components/Card";
 import s from "./Delegations.module.scss";
 
 const Delegations = ({ address }: { address: string }) => {
   const { data: delegation } = useDelegations(address);
-  const { data: delegationReward } = useDelegationReward(address);
   const { data: validators } = useValidators();
 
-  if (!delegation || !validators || !delegationReward) {
+  if (!delegation || !validators) {
     return null;
   }
 
@@ -24,13 +21,11 @@ const Delegations = ({ address }: { address: string }) => {
     { title: "Status", key: "status" },
     { title: "Validator", key: "moniker" },
     { title: "Amount", key: "amount" },
-    { title: "Rewards", key: "rewards" },
   ];
 
   const data = delegations.map((validator) => {
     const { validator_address, balance } = validator;
     const moniker = getFindMoniker(validators)(validator_address);
-    const rewards = delegationReward.rewards[validator_address];
     const amount = readAmount(balance.amount.toString(), { comma: true });
     const denom = readDenom(balance.denom);
     //TODO : Status
@@ -40,7 +35,6 @@ const Delegations = ({ address }: { address: string }) => {
         <FinderLink validator value={validator_address} children={moniker} />
       ),
       amount: <Amount amount={amount} denom={denom} mainClassName={s.amount} />,
-      rewards: <Rewards rewards={rewards} limit={5} />,
     };
   });
 

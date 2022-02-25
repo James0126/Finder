@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import useWorker from "../../hooks/useWorker";
 import PaginationButton from "../../components/PaginationButton";
 import SearchInput from "../../components/SearchInput";
-import Card from "../../components/Card";
 import Table, { Column } from "../../components/Table";
+import Card from "../../components/Card";
 import txSearch from "../../worker/txSearch";
 import s from "./TxHistory.module.scss";
 

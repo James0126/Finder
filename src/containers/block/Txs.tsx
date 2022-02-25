@@ -23,7 +23,7 @@ const Txs = ({ height }: { height: string }) => {
     {
       title: "TxHash",
       key: "hashData",
-      render: (hashData: hashData) => <TxHash {...hashData} />,
+      render: (hashData: HashData) => <TxHash {...hashData} />,
     },
     {
       title: "Type",
