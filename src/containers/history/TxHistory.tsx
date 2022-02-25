@@ -62,10 +62,11 @@ function TxHistory<T>(props: Props<T>) {
       {!hideSearch && (
         <SearchInput
           onSearch={(input) => onSearch(input, row, true)}
-          placeholder="Search"
+          placeholder="Search by Address / Message Type / Event Log Keyword"
           className={s.search}
         />
       )}
+
       <Card>
         <section className={s.tableWrapper}>
           <Table columns={columns} dataSource={row} small />

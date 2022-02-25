@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Grid from "../components/Grid";
 import BlockHeight from "../containers/index/BlockHeight";
 import LatestTxs from "../containers/index/LatestTxs";
@@ -12,17 +13,23 @@ const Index = () => {
   return (
     <section>
       <Grid className={s.header} gap={20} columns={header.length}>
-        {header.map((data) => data)}
+        {header.map((data, key) => (
+          <Fragment key={key}>{data}</Fragment>
+        ))}
       </Grid>
       <Grid gap={10} columns={2}>
         <section>
           {/* TODO: Change Latest Blocks */}
           <h1 className={s.title}>Latest Transactions</h1>
-          <LatestTxs />
+          <div className={s.txs}>
+            <LatestTxs />
+          </div>
         </section>
         <section>
           <h1 className={s.title}>Latest Transactions</h1>
-          <LatestTxs />
+          <div className={s.txs}>
+            <LatestTxs />
+          </div>
           <button>View more transactions</button>
         </section>
       </Grid>

@@ -5,8 +5,11 @@ import FinderLink from "../components/FinderLink";
 import { ListColumn } from "../components/List";
 import State from "../components/State";
 import Page from "../components/Page";
+import Tag from "../components/Tag";
 import { useTxByHash } from "../queries/transaction";
 import { combineState } from "../queries/query";
+import { toNow, fromISOTime } from "../scripts/date";
+import s from "./Transaction.module.scss";
 
 const Transaction = () => {
   const { hash = "" } = useParams();
@@ -19,8 +22,15 @@ const Transaction = () => {
       return null;
     }
 
-    const { chain_id, code, parsed_fee, parsed_message, logs, height } =
-      data.tx.by_hash;
+    const {
+      chain_id,
+      code,
+      parsed_fee,
+      parsed_message,
+      logs,
+      height,
+      timestamp,
+    } = data.tx.by_hash;
 
     const { amounts } = parsed_fee;
     const isSuccess = !code;
@@ -43,9 +53,20 @@ const Transaction = () => {
         content: <Fee coins={amounts} />,
       },
     ];
+
+    const status = isSuccess ? (
+      <Tag success>Success</Tag>
+    ) : (
+      <Tag danger>Failed</Tag>
+    );
+
     return (
       <>
-        {/* TODO: Failed Message */}
+        <div className={s.header}>
+          {status}
+          <span className={s.time}>{toNow(new Date(timestamp))}</span>
+          <span>{fromISOTime(new Date(timestamp))}</span>
+        </div>
         <ListColumn dataSource={dataSource} />
         <Message msgs={parsed_message} logs={logs} isSuccess={isSuccess} />
       </>
