@@ -53,7 +53,10 @@ function TxHistory<T>(props: Props<T>) {
   };
 
   return isSuccess && !row.length ? (
-    <p>No more transaction.</p>
+    <p>
+      {/* TODO */}
+      No more transaction.
+    </p>
   ) : (
     <>
       {!hideSearch && (
