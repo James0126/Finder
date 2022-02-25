@@ -24,7 +24,7 @@ const LunaPrice = () => {
   };
 
   return (
-    <Card title={"Luna price"} bordered className={s.card}>
+    <Card title="Luna price" bordered className={s.card}>
       {render()}
     </Card>
   );
