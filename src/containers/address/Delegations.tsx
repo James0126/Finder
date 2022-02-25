@@ -1,10 +1,10 @@
 import { readAmount, readDenom } from "@terra.kitchen/utils";
 import { getFindMoniker } from "../../queries/validator";
 import { useDelegations, useValidators } from "../../queries/staking";
+import Card from "../../components/layout/Card";
 import FinderLink from "../../components/FinderLink";
 import Amount from "../../components/Amount";
 import Table from "../../components/Table";
-import Card from "../../components/Card";
 import s from "./Delegations.module.scss";
 
 const Delegations = ({ address }: { address: string }) => {

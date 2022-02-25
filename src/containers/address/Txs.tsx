@@ -1,7 +1,7 @@
 import { useState } from "react";
 import classnames from "classnames";
 import { getTxAmounts } from "@terra-money/log-finder-ruleset";
-import Flex from "../../components/Flex";
+import Flex from "../../components/layout/Flex";
 import { useTxsByAddress } from "../../queries/transaction";
 import { useAmountLogMatcher } from "../../store/LogfinderRuleSet";
 import { totalAmounts } from "../../scripts/utility";

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import classNames from "classnames";
-import Flex from "./Flex";
+import Flex from "./layout/Flex";
 import s from "./Page.module.scss";
 
 interface Props {

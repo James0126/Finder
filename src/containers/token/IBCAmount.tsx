@@ -1,7 +1,7 @@
 import { readAmount } from "@terra.kitchen/utils";
 import { useIBCWhitelist } from "../../queries/assets";
 import { useBankBalance } from "../../queries/bank";
-import Card from "../../components/Card";
+import Card from "../../components/layout/Card";
 import Amount from "../../components/Amount";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import s from "./IBCAmount.module.scss";

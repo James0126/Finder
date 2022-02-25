@@ -1,6 +1,6 @@
 import { readAmount } from "@terra.kitchen/utils";
+import Card from "../../components/layout/Card";
 import Amount from "../../components/Amount";
-import Card from "../../components/Card";
 import { DEFAULT_CW20_ICON } from "../../config/constants";
 import { useNetworkName } from "../../contexts/ChainsContext";
 import { useCW20Whitelist } from "../../queries/assets";

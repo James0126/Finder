@@ -1,10 +1,10 @@
 import { useCW721Tokens } from "../../../queries/wasm";
-import Card from "../../../components/Card";
+import Card from "../../../components/layout/Card";
 import Image from "../../../components/Image";
-import NFTAssetItem from "./NFTAssetItem";
-import ExternalLink from "../../../components/ExternalLink";
-import s from "./NFTAssetGroup.module.scss";
 import List from "../../../components/List";
+import ExternalLink from "../../../components/ExternalLink";
+import NFTAssetItem from "./NFTAssetItem";
+import s from "./NFTAssetGroup.module.scss";
 
 interface Props extends CW721ContractItem {
   address: string;

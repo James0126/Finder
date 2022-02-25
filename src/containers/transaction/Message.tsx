@@ -1,6 +1,6 @@
 import { isTerraAddress } from "../../scripts/utility";
+import Card from "../../components/layout/Card";
 import List from "../../components/List";
-import Card from "../../components/Card";
 import TerraAddress from "../global/TerraAddress";
 import EventLog from "./EventLog";
 import WasmMsg from "./WasmMsg";

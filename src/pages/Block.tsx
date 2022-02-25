@@ -4,7 +4,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { fromISOTime, toNow } from "../scripts/date";
 import FinderLink from "../components/FinderLink";
 import State from "../components/State";
-import Flex from "../components/Flex";
+import Flex from "../components/layout/Flex";
 import { ListColumn } from "../components/List";
 import Txs from "../containers/block/Txs";
 import { combineState } from "../queries/query";

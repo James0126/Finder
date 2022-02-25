@@ -1,5 +1,5 @@
 import { readAmount } from "@terra.kitchen/utils";
-import Card from "../../components/Card";
+import Card from "../../components/layout/Card";
 import Table from "../../components/Table";
 import Amount from "../../components/Amount";
 import { fromISOTime } from "../../scripts/date";

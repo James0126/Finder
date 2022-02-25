@@ -5,10 +5,10 @@ import { useUptime } from "../../queries/oracle";
 import { useSelfDelegation, useVotingPowerRate } from "../../queries/validator";
 import { toNow } from "../../scripts/date";
 import FinderLink from "../../components/FinderLink";
-import Card from "../../components/Card";
+import Card from "../../components/layout/Card";
+import Flex from "../../components/layout/Flex";
 import List from "../../components/List";
 import Tag from "../../components/Tag";
-import Flex from "../../components/Flex";
 import s from "./ValidatorDetails.module.scss";
 
 const ValidatorDetails = ({ validator }: { validator: Validator }) => {
@@ -115,7 +115,7 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
               };
             }),
           ]}
-          mainClassName={s.list}
+          mainClassName={s.addressList}
           itemClassName={s.item}
         />
       </Card>

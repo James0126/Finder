@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import classnames from "classnames/bind";
 import Assets from "../containers/address/Assets";
 import Txs from "../containers/address/Txs";
-import Flex from "../components/Flex";
+import Flex from "../components/layout/Flex";
 import s from "./AddressDetail.module.scss";
 
 const cx = classnames.bind(s);

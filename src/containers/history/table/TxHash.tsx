@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Error } from "@mui/icons-material";
+import Flex from "../../../components/layout/Flex";
 import FinderLink from "../../../components/FinderLink";
-import Flex from "../../../components/Flex";
 import s from "./TxHash.module.scss";
 
 const TxHash = ({ txhash, code }: { txhash: string; code?: number }) => (

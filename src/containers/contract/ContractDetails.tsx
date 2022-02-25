@@ -1,9 +1,10 @@
 import { ContractInfo } from "@terra-money/terra.js";
 import Dropdown from "../../components/Dropdown";
 import FinderLink from "../../components/FinderLink";
-import List from "../../components/List";
+import { ListColumn } from "../../components/List";
 import Modal from "../../components/Modal";
 import Query from "./Query";
+import s from "./ContractDetails.module.scss";
 
 const ContractDetails = ({ contractInfo }: { contractInfo: ContractInfo }) => {
   const { init_msg, admin, code_id } = contractInfo;
@@ -31,7 +32,11 @@ const ContractDetails = ({ contractInfo }: { contractInfo: ContractInfo }) => {
       <Modal buttonLabel={"Query"}>
         <Query />
       </Modal>
-      <List dataSource={dataSource} />
+      <ListColumn
+        dataSource={dataSource}
+        titleClassname={s.title}
+        rowClassname={s.row}
+      />
     </article>
   );
 };

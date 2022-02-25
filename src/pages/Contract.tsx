@@ -1,5 +1,5 @@
 import { ContractInfo } from "@terra-money/terra.js";
-import Card from "../components/Card";
+import Card from "../components/layout/Card";
 import Page from "../components/Page";
 import CopyAddress from "../components/CopyAddress";
 import ContractDetails from "../containers/contract/ContractDetails";

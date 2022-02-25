@@ -1,7 +1,7 @@
 import { Coin } from "@terra-money/terra.js";
 import { readAmount, readDenom } from "@terra.kitchen/utils";
 import { ASSET } from "../../config/constants";
-import Card from "../../components/Card";
+import Card from "../../components/layout/Card";
 import Amount from "../../components/Amount";
 import Image from "../../components/Image";
 import Currency from "./Currency";

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Auto } from "./Grid";
+import { Auto } from "./layout/Grid";
 
 interface Content {
   title?: ReactNode;
@@ -8,13 +8,13 @@ interface Content {
   hide?: boolean;
 }
 
-interface ListData {
+interface Props {
   itemClassName?: string;
   mainClassName?: string;
   dataSource: Content[];
 }
 
-const List = (props: ListData) => {
+const List = (props: Props) => {
   const { itemClassName, mainClassName, dataSource } = props;
   return (
     <article className={mainClassName}>
@@ -32,7 +32,7 @@ const List = (props: ListData) => {
 
 export default List;
 
-interface ColumnData {
+interface ColumnProps {
   dataSource: Content[];
   mainClassname?: string;
   titleClassname?: string;
@@ -40,7 +40,7 @@ interface ColumnData {
   rowClassname?: string;
 }
 
-export const ListColumn = (props: ColumnData) => {
+export const ListColumn = (props: ColumnProps) => {
   const {
     dataSource,
     mainClassname,

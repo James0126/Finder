@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import Grid from "../components/Grid";
+import Grid from "../components/layout/Grid";
 import BlockHeight from "../containers/index/BlockHeight";
 import LatestTxs from "../containers/index/LatestTxs";
 import LunaPrice from "../containers/index/LunaPrice";
@@ -19,7 +19,7 @@ const Index = () => {
       </Grid>
       <Grid gap={10} columns={2}>
         <section>
-          {/* TODO: Change Latest Blocks */}
+          {/* TODO: Latest Blocks */}
           <h1 className={s.title}>Latest Transactions</h1>
           <div className={s.txs}>
             <LatestTxs />

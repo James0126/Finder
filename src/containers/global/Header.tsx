@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../styles/Images/logo.svg";
-import Flex from "../../components/Flex";
+import Flex from "../../components/layout/Flex";
 import SelectCurrency from "./SelectCurrency";
 import SelectNetworks from "./SelectNetwork";
 import Search from "./Search";

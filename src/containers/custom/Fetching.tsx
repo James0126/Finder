@@ -1,7 +1,7 @@
 import { FC, ReactNode, useState } from "react";
 import LinearProgress from "@mui/material/LinearProgress";
 import useTimeout from "../settings/useTimeout";
-import Card from "../../components/Card";
+import Card from "../../components/layout/Card";
 import styles from "./Fetching.module.scss";
 
 //station component

@@ -6,8 +6,8 @@ import {
 } from "@terra.kitchen/utils";
 import { useCW20Whitelist, useIBCWhitelist } from "../../queries/assets";
 import { useNetworkName } from "../../contexts/ChainsContext";
+import Flex from "../../components/layout/Flex";
 import Amount from "../../components/Amount";
-import Flex from "../../components/Flex";
 
 interface Props {
   coins: CoinData[];

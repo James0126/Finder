@@ -1,13 +1,13 @@
 import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
+import AceEditor from "react-ace";
 import "ace-builds";
 import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";
-import AceEditor from "react-ace";
-import { isJson } from "../../scripts/utility";
 import { useLCDClient } from "../../queries/lcdClient";
-import Card from "../../components/Card";
+import { isJson } from "../../scripts/utility";
+import Card from "../../components/layout/Card";
 
 const ACE_PROPS = {
   mode: "json",
