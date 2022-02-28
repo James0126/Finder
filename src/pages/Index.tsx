@@ -6,9 +6,12 @@ import LunaPrice from "../containers/index/LunaPrice";
 import MarketCap from "../containers/index/MarketCap";
 import Issuance from "../containers/index/Issuance";
 import s from "./Index.module.scss";
+import { Link } from "react-router-dom";
+import { useNetworkName } from "../contexts/ChainsContext";
 
 const Index = () => {
   const header = [<LunaPrice />, <MarketCap />, <BlockHeight />, <Issuance />];
+  const network = useNetworkName();
   return (
     <section>
       <Grid className={s.header} gap={20} columns={header.length}>
@@ -24,7 +27,10 @@ const Index = () => {
         </section>
         <section>
           <h1 className={s.title}>Latest Transactions</h1>
-          <LatestTxs limit={10} />
+          <LatestTxs
+            limit={10}
+            extra={<Link to={`/${network}/transactions`}>View more</Link>}
+          />
         </section>
       </Grid>
     </section>

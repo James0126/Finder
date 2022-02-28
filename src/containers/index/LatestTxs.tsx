@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import { Refresh } from "@mui/icons-material";
+import classNames from "classnames/bind";
+import Flex from "../../components/layout/Flex";
 import { fromNow } from "../../scripts/date";
 import { useLatestTxs } from "../../queries/transaction";
 import TxHistory from "../history/TxHistory";
@@ -6,14 +9,16 @@ import TxTypes from "../history/table/TxTypes";
 import TxHash from "../history/table/TxHash";
 import Fee from "../transaction/Fee";
 import s from "./LatestTxs.module.scss";
-import { Refresh } from "@mui/icons-material";
+
+const cx = classNames.bind(s);
 
 interface Props {
   limit?: number;
   pagination?: boolean;
+  extra?: ReactNode;
 }
 
-const LatestTxs = ({ limit, pagination }: Props) => {
+const LatestTxs = ({ limit, pagination, extra }: Props) => {
   const [pageOffset, setOffset] = useState<string>();
   const { data, refetch, ...state } = useLatestTxs(pageOffset, limit);
 
@@ -53,9 +58,12 @@ const LatestTxs = ({ limit, pagination }: Props) => {
 
   return (
     <section className={s.wrapper}>
-      <button onClick={() => refetch()} className={s.button}>
-        <Refresh /> Reload
-      </button>
+      <Flex end>
+        <button onClick={() => refetch()} className={cx({ extra })}>
+          <Refresh /> Reload
+        </button>
+        {extra}
+      </Flex>
       <TxHistory
         columns={columns}
         getTxRow={getTxRow}

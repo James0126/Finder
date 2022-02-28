@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import ReactModal from "react-modal";
 import Card from "./layout/Card";
+import Button from "./Button";
 import s from "./Modal.module.scss";
 
 ReactModal.setAppElement("#root");
@@ -10,11 +11,18 @@ interface Prop {
   modalTitle?: string;
   mainClassname?: string;
   titleClassname?: string;
+  buttonClassname?: string;
 }
 
 const Modal: FC<Prop> = (props) => {
-  const { children, buttonLabel, mainClassname, modalTitle, titleClassname } =
-    props;
+  const {
+    children,
+    buttonLabel,
+    mainClassname,
+    modalTitle,
+    titleClassname,
+    buttonClassname,
+  } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
@@ -32,9 +40,9 @@ const Modal: FC<Prop> = (props) => {
 
   return (
     <article>
-      <button onClick={open} className={s.button}>
+      <Button onClick={open} className={buttonClassname}>
         {buttonLabel}
-      </button>
+      </Button>
 
       <ReactModal {...modal} className={mainClassname}>
         <Card

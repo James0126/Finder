@@ -4,7 +4,6 @@
   text-align: end;
 }
 
-.button {
-  @include flex;
-  justify-content: flex-end;
+.extra {
+  margin-right: 30px;
 }

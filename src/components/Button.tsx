@@ -8,17 +8,23 @@ interface Props {
   primary?: boolean;
   danger?: boolean;
   small?: boolean;
+  onClick?: () => void;
+  className?: string;
 }
 
 const Button: FC<Props> = (props) => {
-  const { children, primary, danger, small } = props;
+  const { children, primary, danger, small, className, onClick } = props;
   const style = {
     small,
     primary,
     danger,
     default: !small,
   };
-  return <button className={cx(s.button, style)}>{children}</button>;
+  return (
+    <button onClick={onClick} className={cx(className, s.button, style)}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

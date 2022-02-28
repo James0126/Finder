@@ -34,6 +34,7 @@ const Issuance = () => {
           modalTitle="Issuance"
           mainClassname={s.modal}
           titleClassname={s.modalTitle}
+          buttonClassname={s.button}
         >
           <NativeBalance prefix coins={list} className={s.list} />
         </Modal>
