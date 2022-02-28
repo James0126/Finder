@@ -38,8 +38,8 @@ const Card: FC<Props> = (props) => {
   return (
     <div className={cx(s.card, style, mainClassname)} onClick={onClick}>
       {title && (
-        <header className={cx(s.header, titleClassname, { titleBackground })}>
-          {title}
+        <header className={cx(s.header, { titleBackground })}>
+          <div className={titleClassname}>{title}</div>
           <Flex end className={s.extra}>
             {extra}
           </Flex>

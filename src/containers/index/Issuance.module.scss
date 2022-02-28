@@ -1,6 +1,5 @@
 .modal {
   padding: 20px;
-  overflow: hidden;
 }
 
 .title {
@@ -10,4 +9,11 @@
 .modalTitle {
   font-weight: 500;
   margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.list {
+  max-height: 370px;
+  overflow-y: auto;
 }

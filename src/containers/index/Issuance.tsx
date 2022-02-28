@@ -35,7 +35,7 @@ const Issuance = () => {
           mainClassname={s.modal}
           titleClassname={s.modalTitle}
         >
-          <NativeBalance prefix coins={list} />
+          <NativeBalance prefix coins={list} className={s.list} />
         </Modal>
       </>
     );
