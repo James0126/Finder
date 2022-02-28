@@ -40,7 +40,7 @@ const Message = ({ msgs, logs, isSuccess }: Props) => (
       return (
         <Card
           title={title}
-          className={s.message}
+          mainClassname={s.message}
           bordered
           titleBackground
           key={key}

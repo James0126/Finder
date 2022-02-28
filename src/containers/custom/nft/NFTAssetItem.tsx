@@ -41,7 +41,7 @@ const NFTAssetItem = ({ contract, id, compact }: Props) => {
     );
 
     return (
-      <Card className={s.card}>
+      <Card mainClassname={s.card}>
         <Image url={getIpfsGateway(image)} size={30} className={s.icon} />
         <span>{name}</span>
         {viewButton}

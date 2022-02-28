@@ -9,7 +9,6 @@ import s from "./Index.module.scss";
 
 const Index = () => {
   const header = [<LunaPrice />, <MarketCap />, <BlockHeight />, <Issuance />];
-
   return (
     <section>
       <Grid className={s.header} gap={20} columns={header.length}>
@@ -20,17 +19,12 @@ const Index = () => {
       <Grid gap={10} columns={2}>
         <section>
           {/* TODO: Latest Blocks */}
-          <h1 className={s.title}>Latest Transactions</h1>
-          <div className={s.txs}>
-            <LatestTxs />
-          </div>
+          <h1 className={s.title}>Latest Blocks</h1>
+          <LatestTxs limit={10} />
         </section>
         <section>
           <h1 className={s.title}>Latest Transactions</h1>
-          <div className={s.txs}>
-            <LatestTxs />
-          </div>
-          <button>View more transactions</button>
+          <LatestTxs limit={10} />
         </section>
       </Grid>
     </section>

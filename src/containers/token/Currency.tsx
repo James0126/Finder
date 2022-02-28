@@ -6,20 +6,25 @@ import { useMemoizedCalcValue } from "../../queries/oracle";
 import { useCurrency } from "../../store/Currency";
 import s from "./Currency.module.scss";
 
-const Currency = ({ coin, className }: { coin: Coin; className?: string }) => {
-  const { denom } = coin;
+interface Props {
+  coin: Coin;
+  className?: string;
+  prefix?: boolean;
+}
+
+const Currency = ({ coin, className, prefix }: Props) => {
   const currnecy = useCurrency();
   const calcCurrency = useMemoizedCalcValue(currnecy);
   const amount = calcCurrency(coin);
 
-  if (!amount || denom === currnecy) {
+  if (!amount) {
     return null;
   }
 
   return (
     <Amount
       denom={readDenom(currnecy)}
-      amount={`= ${readAmount(amount, { comma: true })}`}
+      amount={`= ${readAmount(amount, { comma: true, prefix })}`}
       mainClassName={classNames(s.amount, className)}
     />
   );

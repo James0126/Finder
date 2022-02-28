@@ -6,10 +6,16 @@ import TxTypes from "../history/table/TxTypes";
 import TxHash from "../history/table/TxHash";
 import Fee from "../transaction/Fee";
 import s from "./LatestTxs.module.scss";
+import { Refresh } from "@mui/icons-material";
 
-const LatestTxs = () => {
+interface Props {
+  limit?: number;
+  pagination?: boolean;
+}
+
+const LatestTxs = ({ limit, pagination }: Props) => {
   const [pageOffset, setOffset] = useState<string>();
-  const { data, ...state } = useLatestTxs(pageOffset);
+  const { data, refetch, ...state } = useLatestTxs(pageOffset, limit);
 
   const offset = data?.tx.latest_txs.offset;
   const txInfos = data?.tx.latest_txs.tx_infos;
@@ -46,15 +52,21 @@ const LatestTxs = () => {
   };
 
   return (
-    <TxHistory
-      columns={columns}
-      getTxRow={getTxRow}
-      pagination={() => setOffset(offset)}
-      dataSource={txInfos}
-      offset={offset}
-      state={state}
-      hideSearch
-    />
+    <section className={s.wrapper}>
+      <button onClick={() => refetch()} className={s.button}>
+        <Refresh /> Reload
+      </button>
+      <TxHistory
+        columns={columns}
+        getTxRow={getTxRow}
+        pagination={pagination ? () => setOffset(offset) : undefined}
+        dataSource={txInfos}
+        offset={offset}
+        state={state}
+        hideSearch
+        refresh
+      />
+    </section>
   );
 };
 

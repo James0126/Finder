@@ -9,14 +9,23 @@ interface Props {
   sentence?: ReactNode;
   mainClassName?: string;
   titleClassName?: string;
+  alignCenter?: boolean;
 }
 
 const Page: FC<Props> = (props) => {
-  const { children, title, tag, mainClassName, titleClassName, sentence } =
-    props;
+  const {
+    children,
+    title,
+    tag,
+    mainClassName,
+    titleClassName,
+    sentence,
+    alignCenter,
+  } = props;
+
   return (
     <section className={mainClassName}>
-      <Flex start className={s.wrapper}>
+      <Flex start={!alignCenter} className={s.wrapper}>
         <h1 className={classNames(s.title, titleClassName)}>{title}</h1>
         <div className={s.tag}>{tag}</div>
       </Flex>

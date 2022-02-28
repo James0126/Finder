@@ -11,6 +11,7 @@ interface Props<T> {
   dataSource?: TxInfo[];
   offset?: string;
   hideSearch?: boolean;
+  refresh?: boolean;
   state: QueryState;
   pagination?: () => void;
   getTxRow: (tx: TxInfo, classname?: string) => T;
@@ -26,9 +27,13 @@ function TxHistory<T>(props: Props<T>) {
     getTxRow,
     columns,
     hideSearch,
+    refresh,
   } = props;
   const [row, setRow] = useState<T[]>([]);
+
+  /* Search keyword */
   const [input, setInput] = useState<string>();
+
   const [isSearch, setSearch] = useState<boolean>(false);
   const worker = useWorker(txSearch);
   const { isSuccess, isLoading } = state;
@@ -36,7 +41,13 @@ function TxHistory<T>(props: Props<T>) {
   useEffect(() => {
     if (dataSource && isSuccess) {
       const rows = dataSource.map((tx) => getTxRow(tx));
-      input ? onSearch(input, rows) : setRow((stack) => [...stack, ...rows]);
+
+      /* if refresh is true do not stacking row data */
+      input
+        ? onSearch(input, rows)
+        : refresh
+        ? setRow(rows)
+        : setRow((stack) => [...stack, ...rows]);
     }
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [dataSource, isSuccess]);

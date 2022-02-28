@@ -14,7 +14,7 @@ interface Props {
 const Contract = ({ contractInfo, address }: Props) => (
   <Page title="Contract">
     <CopyKeyword className={s.copy}>{address}</CopyKeyword>
-    <Card className={s.info}>
+    <Card mainClassname={s.info}>
       <ContractDetails contractInfo={contractInfo} />
     </Card>
     <AddressDetail address={address} />

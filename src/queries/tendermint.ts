@@ -18,3 +18,14 @@ export const useValidatorSet = (height?: number) => {
     { ...RefetchOptions.INFINITY }
   );
 };
+
+export const useLatestBlock = () => {
+  const lcd = useLCDClient();
+  return useQuery(
+    [lcd.config, "latestBlock"],
+    async () => {
+      return await lcd.tendermint.blockInfo();
+    },
+    { ...RefetchOptions.DEFAULT }
+  );
+};

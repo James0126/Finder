@@ -2,6 +2,7 @@ import Card from "../../components/layout/Card";
 import Read from "../../components/Read";
 import { useMemoizedPrices } from "../../queries/oracle";
 import { useCurrency } from "../../store/Currency";
+import s from "./LunaPrice.module.scss";
 
 const LunaPrice = () => {
   const currency = useCurrency();
@@ -15,7 +16,7 @@ const LunaPrice = () => {
   };
 
   return (
-    <Card title="Luna price" bordered>
+    <Card title="Luna price" small titleClassname={s.title}>
       {render()}
     </Card>
   );

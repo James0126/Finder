@@ -101,7 +101,7 @@ const ValidatorDetails = ({ validator }: { validator: Validator }) => {
           itemClassName={s.item}
         />
       </Card>
-      <Card className={s.address}>
+      <Card mainClassname={s.address}>
         <List
           dataSource={[
             ...addresses.map(({ title, content }) => {

@@ -4,7 +4,12 @@ import { sortByDenom } from "../../scripts/coin";
 import List from "../../components/List";
 import s from "./NativeBalance.module.scss";
 
-const NativeBalance = ({ coins }: { coins?: Coin[] }) => {
+interface Props {
+  coins?: Coin[];
+  prefix?: boolean;
+}
+
+const NativeBalance = ({ coins, prefix }: Props) => {
   if (!coins || !coins.length) {
     return <p>This account doesn't hold any coins yet.</p>;
   }
@@ -13,7 +18,7 @@ const NativeBalance = ({ coins }: { coins?: Coin[] }) => {
   return (
     <List
       dataSource={native.map((coin) => ({
-        content: <NativeAmount coin={coin} />,
+        content: <NativeAmount prefix={prefix} coin={coin} />,
       }))}
       itemClassName={s.item}
       mainClassName={s.list}

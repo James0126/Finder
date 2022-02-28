@@ -126,12 +126,20 @@ const queryTxByHash = (hash: string) => gql`
     }
 `;
 
-const queryLatestTxs = (offset?: string) => {
-  const offsetField = offset ? `(offset:"${offset}")` : "";
+const queryLatestTxs = (offset?: string, limit?: number) => {
+  const field =
+    offset && limit
+      ? `(offset:"${offset}" limit:${limit})`
+      : offset
+      ? `(offset:"${offset}")`
+      : limit
+      ? `(limit:${limit})`
+      : "";
+
   return gql`
     query {
       tx {
-        latest_txs${offsetField} {
+        latest_txs${field} {
           offset
           tx_infos {
             chain_id
@@ -178,7 +186,9 @@ export const useTxsByHeight = (
   height: string,
   offset?: string
 ): UseQueryResult<TxsByHeight> => {
-  const chainID = Number(height) > 1378000 ? "columbus-5" : "columbus-4";
+  // TODO: Fix chainID variable
+  // 4724000 is last block height of columbus-4
+  const chainID = Number(height) > 4724000 ? "columbus-5" : "columbus-4";
   const queryMsg = queryTxsByHeight(height, chainID, offset);
   return useGraphQL(queryMsg, height);
 };
@@ -188,7 +198,10 @@ export const useTxByHash = (hash: string): UseQueryResult<TxByHash> => {
   return useGraphQL(queryMsg);
 };
 
-export const useLatestTxs = (offset?: string): UseQueryResult<LatestTxs> => {
-  const queryMsg = queryLatestTxs(offset);
+export const useLatestTxs = (
+  offset?: string,
+  limit?: number
+): UseQueryResult<LatestTxs> => {
+  const queryMsg = queryLatestTxs(offset, limit);
   return useGraphQL(queryMsg);
 };

@@ -37,14 +37,6 @@
   }
 }
 
-.close {
-  @include flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 15px;
-}
-
 .main {
   @include flex();
   flex: 1;

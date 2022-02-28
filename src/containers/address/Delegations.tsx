@@ -39,7 +39,7 @@ const Delegations = ({ address }: { address: string }) => {
   });
 
   return delegations.length ? (
-    <Card bordered className={s.card}>
+    <Card bordered>
       <Table columns={cols} dataSource={data} />
     </Card>
   ) : null;

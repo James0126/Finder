@@ -7,8 +7,13 @@ import Image from "../../components/Image";
 import Currency from "./Currency";
 import s from "./NativeAmount.module.scss";
 
-const NativeAmount = ({ coin }: { coin: Coin }) => {
-  const amount = readAmount(coin.amount.toString(), { comma: true });
+interface Props {
+  coin: Coin;
+  prefix?: boolean;
+}
+
+const NativeAmount = ({ coin, prefix }: Props) => {
+  const amount = readAmount(coin.amount.toString(), { comma: true, prefix });
   const denom = readDenom(coin.denom);
   const iconUrl = `${ASSET}/icon/60/${denom}.png`;
 
@@ -21,7 +26,7 @@ const NativeAmount = ({ coin }: { coin: Coin }) => {
         </div>
         <div className={s.amount}>
           <Amount denom={denom} amount={amount} hideDenom />
-          <Currency coin={coin} className={s.currency} />
+          <Currency coin={coin} prefix={prefix} className={s.currency} />
         </div>
       </section>
     </Card>
