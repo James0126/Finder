@@ -73,6 +73,9 @@ const useFoundationStaking = (address: string) => {
   if (!delegations || !undelegations) return null;
 
   const [delegation] = delegations;
+
+  if (!delegation.length) return null;
+
   const delegationBalance = delegation
     .map((data) => data.balance)
     .reduce((prev, current) => prev.add(current));

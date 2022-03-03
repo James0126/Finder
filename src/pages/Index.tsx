@@ -21,8 +21,8 @@ const Index = () => {
       </Grid>
       <Grid gap={10} columns={2}>
         <section>
-          {/* TODO: Latest Blocks */}
           <h1 className={s.title}>Latest Blocks</h1>
+          {/* TODO: Latest Blocks */}
           <LatestTxs limit={10} />
         </section>
         <section>

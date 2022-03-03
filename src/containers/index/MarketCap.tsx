@@ -9,6 +9,7 @@ const MarketCap = () => {
   const data = useMarketCap();
   const currency = useCurrency();
   const calcCurrency = useMemoizedCalcValue(currency);
+
   const render = () => {
     if (!data) return null;
     const coin = calcCurrency(data);
@@ -16,6 +17,7 @@ const MarketCap = () => {
       <Read amount={String(coin)} denom={currency} decimals={6} prefix auto />
     );
   };
+
   return (
     <Card title="Market Cap" small titleClassname={s.title}>
       {render()}

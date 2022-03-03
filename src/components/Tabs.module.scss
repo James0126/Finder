@@ -32,7 +32,7 @@
 
 .card .tab {
   height: 60px;
-  border-right: var(--border-width) solid var(--card-border);
+  border-right: var(--border-width) solid var(--border);
   color: var(--text-muted);
 
   @include mobile {
@@ -81,7 +81,7 @@
   padding-bottom: 5px;
 
   &.active {
-    border-bottom: 2px solid var(--border);
+    border-bottom: 2px solid var(--text);
     padding-bottom: 4px;
   }
 }

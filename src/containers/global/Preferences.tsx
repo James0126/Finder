@@ -30,7 +30,7 @@ const Preferences = () => {
       placement="bottom"
       theme="none"
     >
-      <LanguageIcon style={{ fontSize: 18 }} />
+      <LanguageIcon style={{ fontSize: 20, cursor: "pointer" }} />
     </Popover>
   );
 };
