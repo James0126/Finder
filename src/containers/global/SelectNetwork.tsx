@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
+import RadioGroup from "../../components/form/RadioGroup";
 import { useChains, useCurrentChain } from "../../contexts/ChainsContext";
 
-const SelectNetworks = ({ className }: { className: string }) => {
+const SelectNetworks = () => {
   const chains = useChains();
   const currentChain = useCurrentChain();
   const params = useParams();
@@ -15,15 +16,13 @@ const SelectNetworks = ({ className }: { className: string }) => {
   };
 
   return (
-    <select
+    <RadioGroup
+      options={chains.map((chain) => {
+        return { value: chain.name, label: chain.name };
+      })}
       value={currentChain.name}
-      onChange={(e) => changeChain(e.target.value)}
-      className={className}
-    >
-      {chains.map(({ name }) => (
-        <option key={name}>{name}</option>
-      ))}
-    </select>
+      onChange={(value) => changeChain(value)}
+    />
   );
 };
 

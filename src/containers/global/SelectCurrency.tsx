@@ -1,3 +1,5 @@
+import { readDenom } from "@terra.kitchen/utils";
+import RadioGroup from "../../components/form/RadioGroup";
 import { useActiveDenoms } from "../../queries/oracle";
 import { useCurrencyState } from "../../store/Currency";
 
@@ -10,15 +12,13 @@ const SelectCurrency = () => {
   }
 
   return (
-    <select
-      value={currency.substring(1).toUpperCase()}
-      onChange={(e) => setCurrency(`u${e.target.value}`.toLowerCase())}
-    >
-      {data.map((denom, key) => {
-        const render = denom.substring(1).toUpperCase();
-        return <option key={key}>{render}</option>;
+    <RadioGroup
+      options={data.map((denom) => {
+        return { value: denom, label: readDenom(denom) };
       })}
-    </select>
+      value={currency}
+      onChange={setCurrency}
+    />
   );
 };
 

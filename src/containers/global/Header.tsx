@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../styles/Images/logo.svg";
 import Flex from "../../components/layout/Flex";
-import SelectCurrency from "./SelectCurrency";
-import SelectNetworks from "./SelectNetwork";
 import Search from "./Search";
 import s from "./Header.module.scss";
+import Preferences from "./Preferences";
 
 const Header = () => (
   <section className={s.wrapper}>
@@ -16,8 +15,7 @@ const Header = () => (
         <Search />
       </Flex>
       <Flex>
-        <SelectNetworks className={s.network} />
-        <SelectCurrency />
+        <Preferences />
       </Flex>
     </Flex>
   </section>

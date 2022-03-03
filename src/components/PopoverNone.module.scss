@@ -1,0 +1,29 @@
+@import "../styles/mixins";
+
+.component {
+  @include flex-column(space-between, stretch);
+  background: hsl(0 0% 100%);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.inner {
+  padding: 24px;
+}
+
+.footer {
+  @include flex;
+
+  background: hsl(230 100% 99%);
+  border-top: solid 1px var(--border);
+  font-weight: 500;
+  line-height: 1;
+  padding: 12px;
+  transition: color 100ms;
+
+  &:hover {
+    color: var(--text);
+    text-decoration: none;
+  }
+}

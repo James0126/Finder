@@ -1,0 +1,57 @@
+@import "../../styles/mixins";
+
+.component {
+  display: block;
+  font-weight: 400;
+  width: 100%;
+  transition: opacity 100ms;
+
+  &.disabled {
+    cursor: not-allowed;
+
+    .label {
+      opacity: 0.5;
+    }
+  }
+
+  .indicator {
+    opacity: 0;
+    transition: opacity 100ms;
+  }
+
+  &:hover .indicator {
+    opacity: 0.5;
+  }
+
+  &.checked .indicator {
+    opacity: 1;
+  }
+}
+
+/* indicator */
+.track {
+  border: solid 1px var(--input-border);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.indicator {
+  background: var(--text);
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+}
+
+/* reversed */
+.reversed {
+  justify-content: space-between;
+
+  .track {
+    border-color: var(--card-bg);
+  }
+
+  .indicator {
+    background: var(--card-bg);
+  }
+}

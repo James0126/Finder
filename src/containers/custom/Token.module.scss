@@ -1,0 +1,9 @@
+@import "../../styles/mixins";
+
+.header {
+  @include flex(start);
+}
+
+.card {
+  @include flex(space-between);
+}

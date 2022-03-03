@@ -6,6 +6,7 @@ import {
 } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { WithTokenItem } from "./tokens";
+import Flex from "../../components/layout/Flex";
 
 //station component
 
@@ -39,12 +40,12 @@ export default Input;
 export const SearchInput = forwardRef(
   (
     attrs: InputHTMLAttributes<HTMLInputElement>,
-    ref: ForwardedRef<HTMLInputElement>
+    ref: ForwardedRef<HTMLInputElement>,
+    className?: string
   ) => (
-    <div>
-      <input {...attrs} inputMode="search" autoComplete="off" ref={ref} />
-
+    <Flex start className={className}>
       <SearchIcon />
-    </div>
+      <input {...attrs} inputMode="search" autoComplete="off" ref={ref} />
+    </Flex>
   )
 );

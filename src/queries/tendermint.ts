@@ -19,7 +19,7 @@ export const useValidatorSet = (height?: number) => {
   );
 };
 
-export const useLatestBlock = () => {
+export const useBlockInfo = () => {
   const lcd = useLCDClient();
   return useQuery(
     [lcd.config, "latestBlock"],
